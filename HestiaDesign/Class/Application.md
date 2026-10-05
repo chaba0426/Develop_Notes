@@ -2,7 +2,7 @@
 
 Application.exeの中核となるクラス群。
 ApplicationがWindow・Engine・Editorのライフタイムとメインループを管理し、
-EngineからApplicationへのアクセスにはApplicationAPIを使用する。
+Window Messageの取得・配送とEngineへの橋渡しを担当する。
 
 ## Application
 
@@ -38,6 +38,12 @@ private:
     void ProcessMessages();
     void WaitUntil(Clock::time_point target);
 
+    static LRESULT CALLBACK WindowProc(
+        HWND hwnd,
+        UINT message,
+        WPARAM wParam,
+        LPARAM lParam);
+
 private:
     Window m_window;
 
@@ -65,6 +71,7 @@ private:
 ```
 
 [ApplicationAPI](#applicationapi)  
+[Window](#window)  
 [Engine](./Engine.md#engine)  
 [EngineAPI](./Engine.md#engineapi)
 
@@ -73,6 +80,10 @@ Engine.dllはApplicationによってロード・破棄される。Applicationか
 時間計測・フレーム制御は `double` 精度で行い、Engine以下へ渡す際に `float` へ変換する。
 
 フレーム先頭で `ProcessMessages()` により溜まったWindow Messageを処理する。フレーム待機中は高精度Waitable Timerと `MsgWaitForMultipleObjectsEx` を使用し、メッセージ到着時には起床して `ProcessMessages()` を実行する。
+
+`ProcessMessages()` がMessage Queueを処理し、`DispatchMessage()` によって `Application::WindowProc()` を呼び出す。
+
+`WindowProc()` は受け取ったWindow Messageを `Hestia::EngineAPI::ProcessMessage()` へ配送する。Application自身で処理する必要があるメッセージのみApplication側で処理する。
 
 目標時刻直前のみ短時間スピンし、スピン中に到着したメッセージは次フレーム先頭で処理する。
 
@@ -132,3 +143,53 @@ private:
 [Application](#application)
 
 Applicationが生成時に自身をContextとして登録する。Engine側はContextを意識せず `ApplicationAPI::SetTargetFPS()` などを呼び出す。
+
+### Window
+
+**役割**
+
+Win32 Windowの生成・破棄と `HWND` の保持を担当する。
+
+Window Messageの処理やMessage Pumpは持たず、Window生成時にApplicationの `WindowProc` を登録する。
+
+```cpp
+class Window
+{
+public:
+    bool Initialize(
+        WNDPROC windowProc,
+        void* userData,
+        const wchar_t* title,
+        uint32_t width,
+        uint32_t height);
+
+    void Finalize();
+
+    HWND GetHandle() const;
+
+private:
+    HWND m_handle = nullptr;
+};
+```
+
+[Application](#application)
+
+Window生成時に渡された `WNDPROC` をWindow Classへ登録し、`userData` は `CreateWindowEx()` の生成引数として渡す。
+
+Window Messageの流れは以下とする。
+
+```text
+Windows Message Queue
+        ↓
+Application::ProcessMessages()
+        ↓
+DispatchMessage()
+        ↓
+Application::WindowProc()
+        ↓
+Hestia::EngineAPI::ProcessMessage()
+        ↓
+Hestia::Engine
+        ↓
+各Subsystem
+```
