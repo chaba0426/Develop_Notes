@@ -43,6 +43,7 @@ namespace Hestia
         InputSystem m_input;
         AudioSystem m_audio;
         PhysicsSystem m_physics;
+        TimeSystem m_time;
         // ...
 
         // Application機能へのアクセス
@@ -65,6 +66,7 @@ namespace Hestia
 ```
 
 [ApplicationAPI](./Application.md#applicationapi)  
+[TimeSystem](./Time.md#timesystem)  
 [GameEngineAPI](#gameengineapi)  
 [GameRuntimeAPI](#gameruntimeapi)
 
@@ -82,6 +84,7 @@ Hestia::Engine
     ├─ InputSystem
     ├─ AudioSystem
     ├─ PhysicsSystem
+    ├─ TimeSystem
     │
     ├─ GameEngineAPI
     │      ↓
@@ -171,17 +174,20 @@ namespace Hestia
 {
     struct GameEngineAPI
     {
-        AssetAPI Assets;
-        GraphicsAPI Graphics;
-        InputAPI Input;
-        AudioAPI Audio;
-        PhysicsAPI Physics;
+        AssetAPI m_assets;
+        GraphicsAPI m_graphics;
+        InputAPI m_input;
+        AudioAPI m_audio;
+        PhysicsAPI m_physics;
+        TimeAPI m_time;
         // ...
     };
 }
 ```
 
 各SubsystemがGame向けAPIを提供し、EngineがそれらをまとめてGame.dllへ渡す。
+
+[TimeAPI](./Time.md#timeapi)
 
 ### GameRuntimeAPI
 
