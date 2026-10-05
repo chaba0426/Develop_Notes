@@ -2,7 +2,7 @@
 
 ## 目的
 
-Engine内部のSubsystemを直接Game.dllへ公開せず、DLL境界では必要な機能だけを公開する。
+Engine内部のSubsystemを直接Game.dllへ公開せず、DLL境界では必要な機能だけを公開する。Engine側および境界共有型は `Hestia`、Game Script向けFacadeは `HestiaGame` 名前空間を使用する。
 一方で、Engine内部ではSubsystemを使いやすく保ち、Gameコード側ではstatic Facadeによる簡潔なアクセスを提供する。
 
 設計上は次の3層に分ける。
@@ -15,7 +15,7 @@ DLL境界公開面
     XxxAPI
         ↓
 Game.dll向けFacade
-    Game::Xxx
+    HestiaGame::Xxx
 ```
 
 ---
@@ -46,7 +46,7 @@ private:
     AssetHandle LoadImpl(AssetID id);
     bool IsLoadedImpl(AssetHandle handle) const;
 
-    AssetStorage m_Storage;
+    AssetStorage m_storage;
 };
 ```
 
@@ -68,7 +68,7 @@ AssetSystem instance
         ↓
 LoadImpl()
         ↓
-m_Storage               // 非static状態
+m_storage               // 非static状態
 ```
 
 ### static / non-static の意味
@@ -96,7 +96,7 @@ class ENGINE_API AssetAPI
 {
 public:
     explicit AssetAPI(AssetSystem& system)
-        : m_System(system)
+        : m_system(system)
     {}
 
     AssetHandle Load(AssetID id);
@@ -104,7 +104,7 @@ public:
     AssetInfo GetInfo(AssetHandle handle) const;
 
 private:
-    AssetSystem& m_System;
+    AssetSystem& m_system;
 };
 ```
 
@@ -132,7 +132,7 @@ System側で広く公開しているstatic入口は、そのまま利用して�
 ```cpp
 AssetInfo AssetAPI::GetInfo(AssetHandle handle) const
 {
-    return m_System.GetDetailedInfo(handle);
+    return m_system.GetDetailedInfo(handle);
 }
 ```
 
@@ -159,33 +159,33 @@ Gameへ公開するか
 Gameコードからは境界APIを直接触らせず、Game.dll側にstatic Facadeを置く。
 
 ```cpp
-namespace Game
+namespace HestiaGame
 {
     class Assets
     {
     public:
         static AssetHandle Load(AssetID id)
         {
-            return s_API->Load(id);
+            return s_api->Load(id);
         }
 
         static bool IsLoaded(AssetHandle handle)
         {
-            return s_API->IsLoaded(handle);
+            return s_api->IsLoaded(handle);
         }
 
     private:
         static void Bind(AssetAPI* api)
         {
-            s_API = api;
+            s_api = api;
         }
 
         static void Unbind()
         {
-            s_API = nullptr;
+            s_api = nullptr;
         }
 
-        inline static AssetAPI* s_API = nullptr;
+        inline static AssetAPI* s_api = nullptr;
     };
 }
 ```
@@ -193,7 +193,7 @@ namespace Game
 ゲームコードからは次のように利用する。
 
 ```cpp
-auto texture = Game::Assets::Load(textureID);
+auto texture = HestiaGame::Assets::Load(textureID);
 ```
 
 Facadeの役割は次の通り。
@@ -238,11 +238,11 @@ InputAPI
 
 Game.dll
 
-Game::Assets
+HestiaGame::Assets
     ↓ AssetAPI*
-Game::Graphics
+HestiaGame::Graphics
     ↓ GraphicsAPI*
-Game::Input
+HestiaGame::Input
     ↓ InputAPI*
 
         ↓
@@ -274,18 +274,18 @@ void InitializeGame(
     GraphicsAPI* graphics,
     InputAPI* input)
 {
-    Game::Assets::Bind(assets);
-    Game::Graphics::Bind(graphics);
-    Game::Input::Bind(input);
+    HestiaGame::Assets::Bind(assets);
+    HestiaGame::Graphics::Bind(graphics);
+    HestiaGame::Input::Bind(input);
 }
 ```
 
 ### 最終形
 
-System/APIが増えたら `GameAPI` にまとめる。
+System/APIが増えたら `GameEngineAPI` にまとめる。
 
 ```cpp
-struct GameAPI
+struct GameEngineAPI
 {
     uint32_t version;
 
@@ -297,11 +297,11 @@ struct GameAPI
 ```
 
 ```cpp
-void InitializeGame(const GameAPI& api)
+void InitializeGame(const GameEngineAPI& api)
 {
-    Game::Assets::Bind(api.assets);
-    Game::Graphics::Bind(api.graphics);
-    Game::Input::Bind(api.input);
+    HestiaGame::Assets::Bind(api.assets);
+    HestiaGame::Graphics::Bind(api.graphics);
+    HestiaGame::Input::Bind(api.input);
 }
 ```
 
@@ -324,7 +324,7 @@ Game.dll unload
     ↓
 新Game.dll load
     ↓
-GameAPI再注入
+GameEngineAPI再注入
     ↓
 各Facade Bind
 ```
@@ -404,9 +404,9 @@ public:
 5. DLL境界にはSystem本体を出さず、`XxxAPI` を置く。
 6. `XxxAPI` は対応するSystem instanceを保持する。
 7. `XxxAPI` はGameへ許可する処理だけラップする。
-8. Game.dll側では `Game::Xxx` FacadeにBoundary APIをBindする。
+8. Game.dll側では `HestiaGame::Xxx` FacadeにBoundary APIをBindする。
 9. Game ScriptはFacadeだけを利用する。
-10. 最初はAPIを個別注入し、増えたら `GameAPI` にまとめる。
+10. 最初はAPIを個別注入し、増えたら `GameEngineAPI` にまとめる。
 11. Hot Reload時はFacadeをUnbindしてからGame.dllをUnloadする。
 12. lifecycle APIは当面public。必要になった場合のみPasskey等で制限する。
 
@@ -429,7 +429,7 @@ XxxAPI
 
         ↓ API*
 
-Game::Xxx
+HestiaGame::Xxx
     Game.dll側Facade
     API instanceを保持
     Game Scriptにはstatic APIとして提供
