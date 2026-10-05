@@ -1,92 +1,8 @@
-## ApplicationAPI
+# Application
 
-**役割**
-
-EngineからApplicationのフレーム制御や終了要求を行うためのFacade。
-内部でApplicationへのContextと関数ポインタを保持し、Engine側には通常のメンバ関数として公開する。
-
-```cpp
-struct ApplicationAPI
-{
-public:
-    void SetTargetFPS(double fps) const;
-    double GetTargetFPS() const;
-
-    void SetUnlimitedFrameRate(bool unlimited) const;
-    bool IsUnlimitedFrameRate() const;
-
-    void SetFixedDeltaTime(double deltaTime) const;
-    double GetFixedDeltaTime() const;
-
-    void RequestQuit() const;
-
-private:
-    using SetTargetFPSFunc = void (*)(void*, double);
-    using GetTargetFPSFunc = double (*)(void*);
-
-    using SetUnlimitedFrameRateFunc = void (*)(void*, bool);
-    using IsUnlimitedFrameRateFunc = bool (*)(void*);
-
-    using SetFixedDeltaTimeFunc = void (*)(void*, double);
-    using GetFixedDeltaTimeFunc = double (*)(void*);
-
-    using RequestQuitFunc = void (*)(void*);
-
-    void* m_Context = nullptr;
-
-    SetTargetFPSFunc m_SetTargetFPS = nullptr;
-    GetTargetFPSFunc m_GetTargetFPS = nullptr;
-
-    SetUnlimitedFrameRateFunc m_SetUnlimitedFrameRate = nullptr;
-    IsUnlimitedFrameRateFunc m_IsUnlimitedFrameRate = nullptr;
-
-    SetFixedDeltaTimeFunc m_SetFixedDeltaTime = nullptr;
-    GetFixedDeltaTimeFunc m_GetFixedDeltaTime = nullptr;
-
-    RequestQuitFunc m_RequestQuit = nullptr;
-
-    friend class Application;
-};
-```
-
-Applicationが生成時に自身をContextとして登録する。Engine側はContextを意識せず `ApplicationAPI::SetTargetFPS()` などを呼び出す。
-
-## EngineAPI
-
-**役割**
-
-ApplicationからEngine.dllを操作するためのAPIテーブル。
-Engine.dllからは `GetEngineAPI` のみをC関数として公開し、Applicationは取得したAPIテーブル経由でEngineを操作する。
-
-```cpp
-struct EngineAPI
-{
-    using UpdateFunc = void (*)(Engine*, float);
-
-    Engine* (*Create)(const ApplicationAPI*);
-    void (*Destroy)(Engine*);
-
-    bool (*Initialize)(Engine*);
-    void (*Finalize)(Engine*);
-
-    void (*ProcessMessage)(
-        Engine*,
-        HWND,
-        UINT,
-        WPARAM,
-        LPARAM);
-
-    UpdateFunc FixedUpdate;
-    UpdateFunc FrameExecute;
-};
-
-extern "C"
-{
-    const EngineAPI* GetEngineAPI();
-}
-```
-
-`GetProcAddress()` で取得するのは `GetEngineAPI` のみとし、それ以降のEngine操作は `EngineAPI` の関数ポインタを使用する。
+Application.exeの中核となるクラス群。
+ApplicationがWindow・Engine・Editorのライフタイムとメインループを管理し、
+EngineからApplicationへのアクセスにはApplicationAPIを使用する。
 
 ## Application
 
@@ -148,6 +64,10 @@ private:
 };
 ```
 
+[ApplicationAPI](#applicationapi)  
+[Engine](./Engine.md#engine)  
+[EngineAPI](./Engine.md#engineapi)
+
 Engine.dllはApplicationによってロード・破棄される。ApplicationからEngineへの操作は `EngineAPI`、EngineからApplicationへの操作は `ApplicationAPI` を使用する。
 
 時間計測・フレーム制御は `double` 精度で行い、Engine以下へ渡す際に `float` へ変換する。
@@ -157,3 +77,58 @@ Engine.dllはApplicationによってロード・破棄される。Applicationか
 目標時刻直前のみ短時間スピンし、スピン中に到着したメッセージは次フレーム先頭で処理する。
 
 Unlimited時はフレーム待機のみを行わず、Fixed Updateの時間管理は通常通り継続する。
+
+### ApplicationAPI
+
+**役割**
+
+EngineからApplicationのフレーム制御や終了要求を行うためのFacade。
+内部でApplicationへのContextと関数ポインタを保持し、Engine側には通常のメンバ関数として公開する。
+
+```cpp
+struct ApplicationAPI
+{
+public:
+    void SetTargetFPS(double fps) const;
+    double GetTargetFPS() const;
+
+    void SetUnlimitedFrameRate(bool unlimited) const;
+    bool IsUnlimitedFrameRate() const;
+
+    void SetFixedDeltaTime(double deltaTime) const;
+    double GetFixedDeltaTime() const;
+
+    void RequestQuit() const;
+
+private:
+    using SetTargetFPSFunc = void (*)(void*, double);
+    using GetTargetFPSFunc = double (*)(void*);
+
+    using SetUnlimitedFrameRateFunc = void (*)(void*, bool);
+    using IsUnlimitedFrameRateFunc = bool (*)(void*);
+
+    using SetFixedDeltaTimeFunc = void (*)(void*, double);
+    using GetFixedDeltaTimeFunc = double (*)(void*);
+
+    using RequestQuitFunc = void (*)(void*);
+
+    void* m_Context = nullptr;
+
+    SetTargetFPSFunc m_SetTargetFPS = nullptr;
+    GetTargetFPSFunc m_GetTargetFPS = nullptr;
+
+    SetUnlimitedFrameRateFunc m_SetUnlimitedFrameRate = nullptr;
+    IsUnlimitedFrameRateFunc m_IsUnlimitedFrameRate = nullptr;
+
+    SetFixedDeltaTimeFunc m_SetFixedDeltaTime = nullptr;
+    GetFixedDeltaTimeFunc m_GetFixedDeltaTime = nullptr;
+
+    RequestQuitFunc m_RequestQuit = nullptr;
+
+    friend class Application;
+};
+```
+
+[Application](#application)
+
+Applicationが生成時に自身をContextとして登録する。Engine側はContextを意識せず `ApplicationAPI::SetTargetFPS()` などを呼び出す。
