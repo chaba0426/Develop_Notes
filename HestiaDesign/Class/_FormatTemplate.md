@@ -17,8 +17,8 @@ public:
     void Function();
 
 private:
-    RelatedAPI m_RelatedAPI;
-    ExternalType* m_ExternalType = nullptr;
+    RelatedAPI m_relatedAPI;
+    ExternalType* m_externalType = nullptr;
 };
 ```
 
@@ -39,7 +39,7 @@ struct RelatedAPI
     void Function() const;
 
 private:
-    void* m_Context = nullptr;
+    void* m_context = nullptr;
 };
 ```
 
@@ -56,7 +56,7 @@ private:
 ```cpp
 struct OtherSubClass
 {
-    RelatedAPI API;
+    RelatedAPI m_api;
 };
 ```
 
@@ -79,4 +79,5 @@ struct OtherSubClass
 - 同一ファイル内の参照は `[Type](#type)` とする。
 - 別ファイルへの参照は `[Type](./File.md#type)` とする。
 - `HWND`、`HMODULE` など標準API・外部ライブラリ由来の型には原則として参照リンクを付けない。
+- C++識別子は [NamingConvention](../NamingConvention.md) に従う。
 - 設計上必要のない説明や実装詳細は書きすぎない。
