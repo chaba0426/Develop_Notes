@@ -2,8 +2,8 @@
 
 ## 目的
 
-Engine内部のSubsystemを直接Game.dllへ公開せず、DLL境界では必要な機能だけを公開する。Engine側および境界共有型は `Hestia`、Game Script向けFacadeは `HestiaGame` 名前空間を使用する。
-一方で、Engine内部ではSubsystemを使いやすく保ち、Gameコード側ではstatic Facadeによる簡潔なアクセスを提供する。
+Engine内部のSubsystemを直接Game.dllへ公開せず、DLL境界では必要な機能だけを `XxxAPI` として公開する。
+Engine側および境界共有型は `Hestia`、Game Script向けFacadeは `HestiaGame` 名前空間を使用する。
 
 設計上は次の3層に分ける。
 
@@ -28,14 +28,11 @@ SubsystemはEngine内部の本体であり、状態・実装・管理処理を�
 class AssetSystem
 {
 public:
-    // Engine内部でどこからでも使わせたい便利API
     static AssetHandle Load(AssetID id);
     static bool IsLoaded(AssetHandle handle);
 
-    // Systemを明示的に保持する側から使うAPI
     AssetInfo GetDetailedInfo(AssetHandle handle) const;
 
-    // ライフサイクル管理
     void Initialize();
     void Update();
     void Shutdown();
@@ -50,113 +47,90 @@ private:
 };
 ```
 
-### static APIの方針
+Systemの状態はinstance memberに保持する。
+Engine内部でどこからでも利用したい一部機能のみ、必要に応じてstatic入口を用意する。
 
-staticにするのは「入口」であり、状態そのものは通常のinstance memberに保持する。
-
-```cpp
-AssetHandle AssetSystem::Load(AssetID id)
-{
-    return Instance().LoadImpl(id);
-}
-```
-
-```text
-AssetSystem::Load()      // static入口
-        ↓
-AssetSystem instance
-        ↓
-LoadImpl()
-        ↓
-m_storage               // 非static状態
-```
-
-### static / non-static の意味
-
-static / non-static はGameへの公開権限とは別軸で考える。
-
-- static API
-  - Engine内部で広く利用してよい便利な入口
-- instance API
-  - Systemを明示的に持つ側から利用する処理
-  - 管理処理や文脈依存処理など
-- private
-  - System内部専用
-
-Gameへ公開するかどうかは後述する `XxxAPI` 側で決める。
+static / non-static とGameへの公開可否は別軸で判断する。
 
 ---
 
 ## 2. Boundary API
 
-Game.dllにはSubsystem本体を直接公開せず、Subsystemごとに薄い境界クラスを置く。
+Game.dllにはSubsystem本体を直接公開せず、Subsystemごとに薄いBoundary APIを置く。
+
+`XxxAPI` の実体はEngineが所有し、Engine初期化時に初期化済みの `XxxSystem*` を設定する。
 
 ```cpp
 class ENGINE_API AssetAPI
 {
 public:
-    explicit AssetAPI(AssetSystem& system)
-        : m_system(system)
-    {}
+    void Initialize(AssetSystem* system);
 
     AssetHandle Load(AssetID id);
     bool IsLoaded(AssetHandle handle) const;
     AssetInfo GetInfo(AssetHandle handle) const;
 
 private:
-    AssetSystem& m_system;
+    AssetSystem* m_system = nullptr;
 };
 ```
 
-`AssetAPI` は実データを持たず、基本的には以下だけを持つ。
-
-```text
-AssetSystem&
-+
-Gameへ公開するAPIのラッパ
-```
-
-### System側static APIを呼ぶ場合
+`AssetAPI` はSubsystemの実データを所有せず、対応するSystemへの非所有ポインタとGameへ公開する処理だけを持つ。
 
 ```cpp
-AssetHandle AssetAPI::Load(AssetID id)
+void AssetAPI::Initialize(AssetSystem* system)
 {
-    return AssetSystem::Load(id);
+    m_system = system;
 }
-```
 
-System側で広く公開しているstatic入口は、そのまま利用してよい。
-
-### System側instance APIを公開する場合
-
-```cpp
 AssetInfo AssetAPI::GetInfo(AssetHandle handle) const
 {
-    return m_system.GetDetailedInfo(handle);
+    return m_system->GetDetailedInfo(handle);
 }
 ```
 
-今はstatic APIしか公開しなくても、将来的にGameへ公開したい処理がinstance APIだった場合に対応できるため、`XxxAPI` はSystem instanceを保持する。
-
-### 重要
-
-Subsystemでnon-staticになっている処理をGame向けAPIから公開しても矛盾しない。
-
-```text
-Engine内部でのアクセス方法
-    static / instance
-
-Gameへ公開するか
-    XxxAPIに載せる / 載せない
-```
-
-この2つは独立した判断とする。
+System側のstatic入口を利用する処理では、Systemポインタを経由せずstatic APIをそのまま呼んでもよい。
 
 ---
 
-## 3. Game.dll側 Facade
+## 3. GameEngineAPI
 
-Gameコードからは境界APIを直接触らせず、Game.dll側にstatic Facadeを置く。
+Engineが所有する各Boundary APIへのポインタを、Game.dllへまとめて渡す。
+
+```cpp
+struct GameEngineAPI
+{
+    AssetAPI* m_assets = nullptr;
+    GraphicsAPI* m_graphics = nullptr;
+    InputAPI* m_input = nullptr;
+    AudioAPI* m_audio = nullptr;
+    PhysicsAPI* m_physics = nullptr;
+    TimeAPI* m_time = nullptr;
+    // ...
+};
+```
+
+`GameEngineAPI` はBoundary APIを所有しない。
+
+Engine初期化時の流れは以下とする。
+
+```text
+各XxxSystemをInitialize
+        ↓
+各XxxAPI.Initialize(&XxxSystem)
+        ↓
+GameEngineAPIへ各XxxAPI*を設定
+        ↓
+Game.dllをLoad
+        ↓
+GameRuntimeへGameEngineAPIを渡す
+```
+
+---
+
+## 4. Game.dll側 Facade
+
+GameコードからはBoundary APIを直接触らせず、Game.dll側にstatic Facadeを置く。
 
 ```cpp
 namespace HestiaGame
@@ -175,7 +149,7 @@ namespace HestiaGame
         }
 
     private:
-        static void Bind(AssetAPI* api)
+        static void Bind(Hestia::AssetAPI* api)
         {
             s_api = api;
         }
@@ -185,7 +159,7 @@ namespace HestiaGame
             s_api = nullptr;
         }
 
-        inline static AssetAPI* s_api = nullptr;
+        inline static Hestia::AssetAPI* s_api = nullptr;
     };
 }
 ```
@@ -196,54 +170,47 @@ namespace HestiaGame
 auto texture = HestiaGame::Assets::Load(textureID);
 ```
 
-Facadeの役割は次の通り。
-
-- Gameコードからの呼び出しを簡潔にする
-- Engine側のAPI形状を直接露出しない
-- Game向けの名前・引数・返り値へ整形できる
-- Gameに許可する機能だけ公開する
-- 将来Engine側APIが変わってもGame側表面を維持しやすくする
-
-Facade自身はEngineの実データを持たず、注入されたBoundary APIへの参照のみを保持する。
+Facade自身はEngineの実データを持たず、注入されたBoundary APIへのポインタのみを保持する。
 
 ---
 
-## 4. 全体構造
+## 5. 全体構造
 
 ```text
 Engine.dll
 ────────────────────────────────────
 
-AssetSystem
-├─ 状態 / Storage / Cache
-├─ static便利API
-├─ instance API
-└─ lifecycle API
-       ↑
-       │ AssetSystem&
-       │
-AssetAPI
-├─ Gameへ公開する機能のみ
-└─ AssetSystem& を保持
-
-GraphicsSystem
-       ↑
-GraphicsAPI
-
-InputSystem
-       ↑
-InputAPI
+Engine
+├─ AssetSystem
+├─ AssetAPI ─────────→ AssetSystem*
+│
+├─ GraphicsSystem
+├─ GraphicsAPI ──────→ GraphicsSystem*
+│
+├─ TimeSystem
+├─ TimeAPI ──────────→ TimeSystem*
+│
+└─ GameEngineAPI
+     ├─ AssetAPI*
+     ├─ GraphicsAPI*
+     ├─ TimeAPI*
+     └─ ...
 
 ──────────── DLL Boundary ────────────
 
 Game.dll
 
+GameRuntime
+    ↓ GameEngineAPI
+
 HestiaGame::Assets
     ↓ AssetAPI*
+
 HestiaGame::Graphics
     ↓ GraphicsAPI*
-HestiaGame::Input
-    ↓ InputAPI*
+
+HestiaGame::Time
+    ↓ TimeAPI*
 
         ↓
 
@@ -252,66 +219,9 @@ Game Scripts
 
 ---
 
-## 5. Game.dllへの注入
-
-### 初期段階
-
-API数が少ない間は個別に渡してよい。
-
-```cpp
-InitializeGame(
-    AssetAPI* assets,
-    GraphicsAPI* graphics,
-    InputAPI* input
-);
-```
-
-Game.dll側で各Facadeへ分配する。
-
-```cpp
-void InitializeGame(
-    AssetAPI* assets,
-    GraphicsAPI* graphics,
-    InputAPI* input)
-{
-    HestiaGame::Assets::Bind(assets);
-    HestiaGame::Graphics::Bind(graphics);
-    HestiaGame::Input::Bind(input);
-}
-```
-
-### 最終形
-
-System/APIが増えたら `GameEngineAPI` にまとめる。
-
-```cpp
-struct GameEngineAPI
-{
-    uint32_t version;
-
-    AssetAPI* assets;
-    GraphicsAPI* graphics;
-    InputAPI* input;
-    AudioAPI* audio;
-};
-```
-
-```cpp
-void InitializeGame(const GameEngineAPI& api)
-{
-    HestiaGame::Assets::Bind(api.assets);
-    HestiaGame::Graphics::Bind(api.graphics);
-    HestiaGame::Input::Bind(api.input);
-}
-```
-
-Engine側が各Boundary API instanceを所有し、Game.dllロード時にまとめて渡す。
-
----
-
 ## 6. Hot Reload
 
-Game.dllのHot Reload時は、Facadeが古い境界ポインタを保持し続けないようBind/Unbindを明確にする。
+Game.dllのHot Reload時は、FacadeがBoundary APIポインタを保持したままGame.dllを破棄しないようBind / Unbindを行う。
 
 ```text
 Game.dll実行
@@ -320,16 +230,18 @@ Reload開始
     ↓
 各Facade Unbind
     ↓
+GameRuntime破棄
+    ↓
 Game.dll unload
     ↓
 新Game.dll load
     ↓
-GameEngineAPI再注入
+同じGameEngineAPIを再注入
     ↓
 各Facade Bind
 ```
 
-Engine側のSubsystem / Boundary API instanceはEngineが所有するため、Game.dllを差し替えても継続して利用できる。
+Engine側のSubsystem・Boundary API・GameEngineAPIはEngineが所有するため、Game.dllを差し替えても継続して利用できる。
 
 ---
 
@@ -344,7 +256,7 @@ std::vector
 std::string
 std::unordered_map
 所有権が不明な生ポインタ
-Engine内部実装型
+Engine内部実装型そのもの
 ```
 
 基本は以下を利用する。
@@ -365,33 +277,8 @@ POD struct
 
 現段階では `Initialize / Update / Shutdown` は普通にpublicでよい。
 
-```cpp
-class AssetSystem
-{
-public:
-    void Initialize();
-    void Update();
-    void Shutdown();
-};
-```
-
-実際に誤用防止が必要になった場合のみ、Passkey方式などへ変更する。
-
-```cpp
-class EngineKey
-{
-    friend class Engine;
-    EngineKey() = default;
-};
-
-class AssetSystem
-{
-public:
-    void Update(EngineKey);
-};
-```
-
-最初からfriendやPasskeyを大量導入せず、必要になった時点でアクセス制御を強化する。
+共通基底の `ISystem` や `ISystemAPI` は設けない。
+共通化する具体的な必要が出た時点で検討する。
 
 ---
 
@@ -402,13 +289,14 @@ public:
 3. Engine内部で広く使いたい一部機能のみstatic入口を用意する。
 4. static / non-static とGameへの公開可否は別軸で判断する。
 5. DLL境界にはSystem本体を出さず、`XxxAPI` を置く。
-6. `XxxAPI` は対応するSystem instanceを保持する。
-7. `XxxAPI` はGameへ許可する処理だけラップする。
-8. Game.dll側では `HestiaGame::Xxx` FacadeにBoundary APIをBindする。
-9. Game ScriptはFacadeだけを利用する。
-10. 最初はAPIを個別注入し、増えたら `GameEngineAPI` にまとめる。
-11. Hot Reload時はFacadeをUnbindしてからGame.dllをUnloadする。
-12. lifecycle APIは当面public。必要になった場合のみPasskey等で制限する。
+6. EngineがSubsystemとBoundary APIの両方を所有する。
+7. Engine初期化時、System初期化後に `XxxAPI::Initialize(XxxSystem*)` で接続する。
+8. `XxxAPI` は対応するSystemへの非所有ポインタを保持する。
+9. `GameEngineAPI` は各 `XxxAPI*` をまとめる非所有ポインタの集合とする。
+10. Game.dll側では `HestiaGame::Xxx` FacadeにBoundary APIをBindする。
+11. Game ScriptはFacadeを利用する。
+12. Hot Reload時はFacadeをUnbindしてからGameRuntimeとGame.dllを破棄する。
+13. 共通基底 `ISystem` / `ISystemAPI` は現時点では作らない。
 
 ---
 
@@ -418,21 +306,24 @@ public:
 XxxSystem
     Engine内部の本体
     状態・実装・管理処理を保持
-    一部だけstatic便利API
 
-        ↓ System&
+        ↑ System*
 
 XxxAPI
-    DLL境界の公開面
-    System instanceを保持
+    Engine所有
+    Systemへの非所有ポインタを保持
     Gameへ許可する機能だけ公開
 
-        ↓ API*
+        ↑ API*
+
+GameEngineAPI
+    Engine所有
+    各XxxAPI*をまとめてGame.dllへ渡す
+
+        ↓
 
 HestiaGame::Xxx
     Game.dll側Facade
-    API instanceを保持
+    APIポインタを保持
     Game Scriptにはstatic APIとして提供
 ```
-
-この構造により、Engine内部ではSubsystemを直接扱える柔軟性を残しつつ、Game.dllとの境界では公開範囲を制限し、Gameコード側には簡潔なstatic APIを提供する。
