@@ -13,52 +13,55 @@ ApplicationおよびGame.dllとの境界には各種APIを使用する。
 Game.dllのロード・アンロードとGameRuntimeの寿命管理も担当する。
 
 ```cpp
-class Engine
+namespace Hestia
 {
-public:
-    bool Initialize(const ApplicationAPI& applicationAPI);
-    void Finalize();
+    class Engine
+    {
+    public:
+        bool Initialize(const ApplicationAPI& applicationAPI);
+        void Finalize();
 
-    void ProcessMessage(
-        HWND hwnd,
-        UINT message,
-        WPARAM wParam,
-        LPARAM lParam);
+        void ProcessMessage(
+            HWND hwnd,
+            UINT message,
+            WPARAM wParam,
+            LPARAM lParam);
 
-    void FixedUpdate(float deltaTime);
-    void FrameExecute(float deltaTime);
+        void FixedUpdate(float deltaTime);
+        void FrameExecute(float deltaTime);
 
-private:
-    bool LoadGame();
-    void UnloadGame();
+    private:
+        bool LoadGame();
+        void UnloadGame();
 
-    GameEngineAPI CreateGameEngineAPI();
+        GameEngineAPI CreateGameEngineAPI();
 
-private:
-    // 各Subsystem
-    AssetSystem m_Assets;
-    GraphicsSystem m_Graphics;
-    InputSystem m_Input;
-    AudioSystem m_Audio;
-    PhysicsSystem m_Physics;
-    // ...
+    private:
+        // 各Subsystem
+        AssetSystem m_assets;
+        GraphicsSystem m_graphics;
+        InputSystem m_input;
+        AudioSystem m_audio;
+        PhysicsSystem m_physics;
+        // ...
 
-    // Application機能へのアクセス
-    ApplicationAPI m_ApplicationAPI;
+        // Application機能へのアクセス
+        ApplicationAPI m_applicationAPI;
 
-    // Game.dll実体
-    HMODULE m_GameModule = nullptr;
+        // Game.dll実体
+        HMODULE m_gameModule = nullptr;
 
-    // Game.dllへ公開するEngine機能
-    GameEngineAPI m_GameEngineAPI;
+        // Game.dllへ公開するEngine機能
+        GameEngineAPI m_gameEngineAPI;
 
-    // GameRuntime機能へのアクセス
-    const GameRuntimeAPI* m_GameRuntimeAPI = nullptr;
+        // GameRuntime機能へのアクセス
+        const GameRuntimeAPI* m_gameRuntimeAPI = nullptr;
 
-    // GameRuntime実体
-    // 寿命管理兼、GameRuntimeAPIへ渡すハンドル
-    void* m_GameRuntime = nullptr;
-};
+        // GameRuntime実体
+        // 寿命管理兼、GameRuntimeAPIへ渡すハンドル
+        void* m_gameRuntime = nullptr;
+    };
+}
 ```
 
 [ApplicationAPI](./Application.md#applicationapi)  
@@ -72,7 +75,7 @@ Application
     ↑
 ApplicationAPI
     ↑
-Engine
+Hestia::Engine
     │
     ├─ AssetSystem
     ├─ GraphicsSystem
@@ -105,13 +108,13 @@ Engine → GameRuntime
 GameRuntimeの破棄はGame.dllをUnloadする前に行う。
 
 ```cpp
-m_GameRuntimeAPI->Destroy(m_GameRuntime);
-m_GameRuntime = nullptr;
+m_gameRuntimeAPI->Destroy(m_gameRuntime);
+m_gameRuntime = nullptr;
 
-m_GameRuntimeAPI = nullptr;
+m_gameRuntimeAPI = nullptr;
 
-FreeLibrary(m_GameModule);
-m_GameModule = nullptr;
+FreeLibrary(m_gameModule);
+m_gameModule = nullptr;
 ```
 
 ### EngineAPI
@@ -122,30 +125,33 @@ ApplicationからEngine.dllを操作するためのAPIテーブル。
 Engine.dllからは `GetEngineAPI` のみをC関数として公開し、Applicationは取得したAPIテーブル経由でEngineを操作する。
 
 ```cpp
-struct EngineAPI
+namespace Hestia
 {
-    using UpdateFunc = void (*)(Engine*, float);
+    struct EngineAPI
+    {
+        using UpdateFunc = void (*)(Engine*, float);
 
-    Engine* (*Create)(const ApplicationAPI*);
-    void (*Destroy)(Engine*);
+        Engine* (*Create)(const ApplicationAPI*);
+        void (*Destroy)(Engine*);
 
-    bool (*Initialize)(Engine*);
-    void (*Finalize)(Engine*);
+        bool (*Initialize)(Engine*);
+        void (*Finalize)(Engine*);
 
-    void (*ProcessMessage)(
-        Engine*,
-        HWND,
-        UINT,
-        WPARAM,
-        LPARAM);
+        void (*ProcessMessage)(
+            Engine*,
+            HWND,
+            UINT,
+            WPARAM,
+            LPARAM);
 
-    UpdateFunc FixedUpdate;
-    UpdateFunc FrameExecute;
-};
+        UpdateFunc FixedUpdate;
+        UpdateFunc FrameExecute;
+    };
+}
 
 extern "C"
 {
-    const EngineAPI* GetEngineAPI();
+    const Hestia::EngineAPI* GetEngineAPI();
 }
 ```
 
@@ -161,15 +167,18 @@ extern "C"
 Game.dllから利用可能なEngine Subsystem APIをまとめて公開する。
 
 ```cpp
-struct GameEngineAPI
+namespace Hestia
 {
-    AssetAPI Assets;
-    GraphicsAPI Graphics;
-    InputAPI Input;
-    AudioAPI Audio;
-    PhysicsAPI Physics;
-    // ...
-};
+    struct GameEngineAPI
+    {
+        AssetAPI Assets;
+        GraphicsAPI Graphics;
+        InputAPI Input;
+        AudioAPI Audio;
+        PhysicsAPI Physics;
+        // ...
+    };
+}
 ```
 
 各SubsystemがGame向けAPIを提供し、EngineがそれらをまとめてGame.dllへ渡す。
@@ -181,19 +190,22 @@ struct GameEngineAPI
 EngineからGame.dll内部のGameRuntimeを生成・更新・破棄するためのDLL境界API。
 
 ```cpp
-struct GameRuntimeAPI
+namespace Hestia
 {
-    void* (*Create)(const GameEngineAPI*);
-    void (*Destroy)(void*);
+    struct GameRuntimeAPI
+    {
+        void* (*Create)(const GameEngineAPI*);
+        void (*Destroy)(void*);
 
-    void (*FixedUpdate)(void*);
-    void (*Update)(void*);
-};
+        void (*FixedUpdate)(void*);
+        void (*Update)(void*);
+    };
+}
 
 extern "C"
 {
     __declspec(dllexport)
-    const GameRuntimeAPI* GetGameRuntimeAPI();
+    const Hestia::GameRuntimeAPI* GetGameRuntimeAPI();
 }
 ```
 
