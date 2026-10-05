@@ -1,53 +1,8 @@
-## GameEngineAPI
+# Engine
 
-**役割**
-
-Game.dllから利用可能なEngine Subsystem APIをまとめて公開する。
-
-```cpp
-struct GameEngineAPI
-{
-    AssetAPI Assets;
-    GraphicsAPI Graphics;
-    InputAPI Input;
-    AudioAPI Audio;
-    PhysicsAPI Physics;
-    // ...
-};
-```
-
-各SubsystemがGame向けAPIを提供し、EngineがそれらをまとめてGame.dllへ渡す。
-
-## GameRuntimeAPI
-
-**役割**
-
-EngineからGame.dll内部のGameRuntimeを生成・更新・破棄するためのDLL境界API。
-
-```cpp
-struct GameRuntimeAPI
-{
-    void* (*Create)(const GameEngineAPI*);
-    void (*Destroy)(void*);
-
-    void (*FixedUpdate)(void*);
-    void (*Update)(void*);
-};
-
-extern "C"
-{
-    __declspec(dllexport)
-    const GameRuntimeAPI* GetGameRuntimeAPI();
-}
-```
-
-`GameRuntime` 自体はGame.dll内部に隠し、Engine側では `void*` をopaque handleとして保持する。
-
-`Create` はGameRuntimeの生成と初期化、`Destroy` は終了処理と破棄までを担当する。
-
-`GameRuntimeAPI` の実体はGame.dll内の `static const` とし、Engineはそのポインタを非所有で保持する。
-
-GameRuntimeの更新処理には `deltaTime` を直接渡さず、必要な時間情報は `Time` から取得する。
+Engine.dllの中核となるクラス群。
+Engineが各SubsystemとGame.dllのライフタイム・更新を管理し、
+ApplicationおよびGame.dllとの境界には各種APIを使用する。
 
 ## Engine
 
@@ -106,6 +61,10 @@ private:
 };
 ```
 
+[ApplicationAPI](./Application.md#applicationapi)  
+[GameEngineAPI](#gameengineapi)  
+[GameRuntimeAPI](#gameruntimeapi)
+
 関係は以下のようになる。
 
 ```text
@@ -154,3 +113,96 @@ m_GameRuntimeAPI = nullptr;
 FreeLibrary(m_GameModule);
 m_GameModule = nullptr;
 ```
+
+### EngineAPI
+
+**役割**
+
+ApplicationからEngine.dllを操作するためのAPIテーブル。
+Engine.dllからは `GetEngineAPI` のみをC関数として公開し、Applicationは取得したAPIテーブル経由でEngineを操作する。
+
+```cpp
+struct EngineAPI
+{
+    using UpdateFunc = void (*)(Engine*, float);
+
+    Engine* (*Create)(const ApplicationAPI*);
+    void (*Destroy)(Engine*);
+
+    bool (*Initialize)(Engine*);
+    void (*Finalize)(Engine*);
+
+    void (*ProcessMessage)(
+        Engine*,
+        HWND,
+        UINT,
+        WPARAM,
+        LPARAM);
+
+    UpdateFunc FixedUpdate;
+    UpdateFunc FrameExecute;
+};
+
+extern "C"
+{
+    const EngineAPI* GetEngineAPI();
+}
+```
+
+[Engine](#engine)  
+[ApplicationAPI](./Application.md#applicationapi)
+
+`GetProcAddress()` で取得するのは `GetEngineAPI` のみとし、それ以降のEngine操作は `EngineAPI` の関数ポインタを使用する。
+
+### GameEngineAPI
+
+**役割**
+
+Game.dllから利用可能なEngine Subsystem APIをまとめて公開する。
+
+```cpp
+struct GameEngineAPI
+{
+    AssetAPI Assets;
+    GraphicsAPI Graphics;
+    InputAPI Input;
+    AudioAPI Audio;
+    PhysicsAPI Physics;
+    // ...
+};
+```
+
+各SubsystemがGame向けAPIを提供し、EngineがそれらをまとめてGame.dllへ渡す。
+
+### GameRuntimeAPI
+
+**役割**
+
+EngineからGame.dll内部のGameRuntimeを生成・更新・破棄するためのDLL境界API。
+
+```cpp
+struct GameRuntimeAPI
+{
+    void* (*Create)(const GameEngineAPI*);
+    void (*Destroy)(void*);
+
+    void (*FixedUpdate)(void*);
+    void (*Update)(void*);
+};
+
+extern "C"
+{
+    __declspec(dllexport)
+    const GameRuntimeAPI* GetGameRuntimeAPI();
+}
+```
+
+[GameEngineAPI](#gameengineapi)
+
+`GameRuntime` 自体はGame.dll内部に隠し、Engine側では `void*` をopaque handleとして保持する。
+
+`Create` はGameRuntimeの生成と初期化、`Destroy` は終了処理と破棄までを担当する。
+
+`GameRuntimeAPI` の実体はGame.dll内の `static const` とし、Engineはそのポインタを非所有で保持する。
+
+GameRuntimeの更新処理には `deltaTime` を直接渡さず、必要な時間情報は `Time` から取得する。
