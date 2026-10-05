@@ -87,49 +87,9 @@
 
 ## クラスごとの記述形式
 
-```md
-## ClassName
+クラス設計Markdownの具体的な記述形式は [Class/_FormatTemplate.md](./Class/_FormatTemplate.md) に従う。
 
-### 責務
-
-- ...
-
-### 所有 / 参照
-
-- Own:
-- Ref:
-
-### Members
-
-```cpp
-class ClassName
-{
-private:
-    ...
-};
-```
-
-### Public API
-
-```cpp
-class ClassName
-{
-public:
-    ...
-};
-```
-
-### 関係
-
-- ...
-- ...
-
-### TBD
-
-- ...
-```
-
-必要なら Members と Public API は 1 つのクラス宣言にまとめてよい。
+C++識別子の命名は [NamingConvention.md](./NamingConvention.md) に従う。
 
 ---
 
@@ -148,12 +108,12 @@ public:
     void Present();
 
 private:
-    Device* m_Device = nullptr;
+    Device* m_device = nullptr;
 
-    RenderQueue m_RenderQueue;
-    FrameContext m_Frames[FrameCount];
+    RenderQueue m_renderQueue;
+    FrameContext m_frames[FrameCount];
 
-    uint32_t m_FrameIndex = 0;
+    uint32_t m_frameIndex = 0;
 };
 ```
 
