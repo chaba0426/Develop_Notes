@@ -39,28 +39,28 @@ private:
     void WaitUntil(Clock::time_point target);
 
 private:
-    Window m_Window;
+    Window m_window;
 
-    HMODULE m_EngineModule = nullptr;
-    const EngineAPI* m_EngineAPI = nullptr;
-    Engine* m_Engine = nullptr;
+    HMODULE m_engineModule = nullptr;
+    const Hestia::EngineAPI* m_engineAPI = nullptr;
+    Hestia::Engine* m_engine = nullptr;
 
 #if HESTIA_EDITOR
-    Editor m_Editor;
+    Editor m_editor;
 #endif
 
-    double m_TargetFPS = 120.0;
-    double m_TargetFrameTime = 1.0 / 120.0;
+    double m_targetFPS = 120.0;
+    double m_targetFrameTime = 1.0 / 120.0;
 
-    double m_FixedDeltaTime = 1.0 / 60.0;
-    double m_AccumulatedTime = 0.0;
+    double m_fixedDeltaTime = 1.0 / 60.0;
+    double m_accumulatedTime = 0.0;
 
-    bool m_UnlimitedFrameRate = false;
-    bool m_Running = false;
+    bool m_unlimitedFrameRate = false;
+    bool m_running = false;
 
-    Clock::time_point m_LastFrameTime;
+    Clock::time_point m_lastFrameTime;
 
-    HANDLE m_FrameTimer = nullptr;
+    HANDLE m_frameTimer = nullptr;
 };
 ```
 
@@ -68,7 +68,7 @@ private:
 [Engine](./Engine.md#engine)  
 [EngineAPI](./Engine.md#engineapi)
 
-Engine.dllはApplicationによってロード・破棄される。ApplicationからEngineへの操作は `EngineAPI`、EngineからApplicationへの操作は `ApplicationAPI` を使用する。
+Engine.dllはApplicationによってロード・破棄される。ApplicationからEngineへの操作は `Hestia::EngineAPI`、EngineからApplicationへの操作は `ApplicationAPI` を使用する。
 
 時間計測・フレーム制御は `double` 精度で行い、Engine以下へ渡す際に `float` へ変換する。
 
@@ -112,18 +112,18 @@ private:
 
     using RequestQuitFunc = void (*)(void*);
 
-    void* m_Context = nullptr;
+    void* m_context = nullptr;
 
-    SetTargetFPSFunc m_SetTargetFPS = nullptr;
-    GetTargetFPSFunc m_GetTargetFPS = nullptr;
+    SetTargetFPSFunc m_setTargetFPS = nullptr;
+    GetTargetFPSFunc m_getTargetFPS = nullptr;
 
-    SetUnlimitedFrameRateFunc m_SetUnlimitedFrameRate = nullptr;
-    IsUnlimitedFrameRateFunc m_IsUnlimitedFrameRate = nullptr;
+    SetUnlimitedFrameRateFunc m_setUnlimitedFrameRate = nullptr;
+    IsUnlimitedFrameRateFunc m_isUnlimitedFrameRate = nullptr;
 
-    SetFixedDeltaTimeFunc m_SetFixedDeltaTime = nullptr;
-    GetFixedDeltaTimeFunc m_GetFixedDeltaTime = nullptr;
+    SetFixedDeltaTimeFunc m_setFixedDeltaTime = nullptr;
+    GetFixedDeltaTimeFunc m_getFixedDeltaTime = nullptr;
 
-    RequestQuitFunc m_RequestQuit = nullptr;
+    RequestQuitFunc m_requestQuit = nullptr;
 
     friend class Application;
 };
