@@ -113,6 +113,7 @@ namespace Hestia
 
 Game.dllからEngine側の時間情報へアクセスするためのDLL境界API。
 
+Engineの初期化時に、初期化済みの `TimeSystem*` を設定する。
 Getterは `TimeData` を直接参照し、DLL境界の関数呼び出しを行わない。
 値を書き換える `SetTimeScale()` は `TimeSystem` へ処理を渡す。
 
@@ -122,11 +123,7 @@ namespace Hestia
     class ENGINE_API TimeAPI
     {
     public:
-        explicit TimeAPI(TimeSystem& system)
-            : m_system(system)
-            , m_data(&system.GetData())
-        {
-        }
+        void Initialize(TimeSystem* system);
 
         inline float DeltaTime() const
         {
@@ -166,7 +163,7 @@ namespace Hestia
         void SetTimeScale(float scale);
 
     private:
-        TimeSystem& m_system;
+        TimeSystem* m_system = nullptr;
         const TimeData* m_data = nullptr;
     };
 }
@@ -176,12 +173,18 @@ namespace Hestia
 [TimeData](#timedata)  
 [HestiaGame::Time](#hestiagametime)
 
-`SetTimeScale()` はEngine.dll側で以下のように `TimeSystem` へ転送する。
+Engine.dll側では `Initialize()` で参照先を設定する。
 
 ```cpp
+void Hestia::TimeAPI::Initialize(TimeSystem* system)
+{
+    m_system = system;
+    m_data = &system->GetData();
+}
+
 void Hestia::TimeAPI::SetTimeScale(float scale)
 {
-    m_system.SetTimeScale(scale);
+    m_system->SetTimeScale(scale);
 }
 ```
 
