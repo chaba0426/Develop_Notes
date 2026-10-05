@@ -1,14 +1,14 @@
 # Engine
 
 Engine.dllの中核となるクラス群。
-Engineが各SubsystemとGame.dllのライフタイム・更新を管理し、
+Engineが各Subsystem・Boundary API・Game.dllのライフタイムと更新を管理し、
 ApplicationおよびGame.dllとの境界には各種APIを使用する。
 
 ## Engine
 
 **役割**
 
-各Subsystemを保持・更新し、Applicationからのコールバック、Window Message、Fixed Update、フレーム更新を各Subsystemへ分配する。
+各SubsystemとGame向けBoundary APIを所有し、Applicationからのコールバック、Window Message、Fixed Update、フレーム更新を各Subsystemへ分配する。
 
 Game.dllのロード・アンロードとGameRuntimeの寿命管理も担当する。
 
@@ -34,8 +34,6 @@ namespace Hestia
         bool LoadGame();
         void UnloadGame();
 
-        GameEngineAPI CreateGameEngineAPI();
-
     private:
         // 各Subsystem
         AssetSystem m_assets;
@@ -46,14 +44,23 @@ namespace Hestia
         TimeSystem m_time;
         // ...
 
+        // Game.dll向けBoundary API実体
+        AssetAPI m_assetAPI;
+        GraphicsAPI m_graphicsAPI;
+        InputAPI m_inputAPI;
+        AudioAPI m_audioAPI;
+        PhysicsAPI m_physicsAPI;
+        TimeAPI m_timeAPI;
+        // ...
+
         // Application機能へのアクセス
         ApplicationAPI m_applicationAPI;
 
+        // Game.dllへ渡すBoundary API一覧
+        GameEngineAPI m_gameEngineAPI;
+
         // Game.dll実体
         HMODULE m_gameModule = nullptr;
-
-        // Game.dllへ公開するEngine機能
-        GameEngineAPI m_gameEngineAPI;
 
         // GameRuntime機能へのアクセス
         const GameRuntimeAPI* m_gameRuntimeAPI = nullptr;
@@ -67,8 +74,26 @@ namespace Hestia
 
 [ApplicationAPI](./Application.md#applicationapi)  
 [TimeSystem](./Time.md#timesystem)  
+[TimeAPI](./Time.md#timeapi)  
 [GameEngineAPI](#gameengineapi)  
 [GameRuntimeAPI](#gameruntimeapi)
+
+`Initialize()` では以下の順に初期化する。
+
+```text
+各SubsystemをInitialize
+        ↓
+各XxxAPIへ初期化済みXxxSystem*を設定
+        ↓
+GameEngineAPIへ各XxxAPI*を設定
+        ↓
+Game.dllをLoad
+        ↓
+GameRuntimeへGameEngineAPIを渡す
+```
+
+SubsystemとBoundary APIの実体はEngineが所有する。
+`GameEngineAPI` はそれらを所有せず、Game.dllへ公開するBoundary APIへのポインタだけを保持する。
 
 関係は以下のようになる。
 
@@ -80,19 +105,26 @@ ApplicationAPI
 Hestia::Engine
     │
     ├─ AssetSystem
+    │    ↑
+    │  AssetAPI
+    │
     ├─ GraphicsSystem
-    ├─ InputSystem
-    ├─ AudioSystem
-    ├─ PhysicsSystem
+    │    ↑
+    │  GraphicsAPI
+    │
     ├─ TimeSystem
+    │    ↑
+    │  TimeAPI
     │
-    ├─ GameEngineAPI
-    │      ↓
-    │   Game.dll
-    │
-    └─ GameRuntimeAPI
-           ↓
-       GameRuntime
+    └─ GameEngineAPI
+         ├─ AssetAPI*
+         ├─ GraphicsAPI*
+         ├─ TimeAPI*
+         └─ ...
+                ↓
+             Game.dll
+                ↑
+         GameRuntimeAPI
 ```
 
 方向としては、
@@ -167,25 +199,27 @@ extern "C"
 
 **役割**
 
-Game.dllから利用可能なEngine Subsystem APIをまとめて公開する。
+Game.dllから利用可能なEngine Boundary APIへのポインタをまとめて渡す。
 
 ```cpp
 namespace Hestia
 {
     struct GameEngineAPI
     {
-        AssetAPI m_assets;
-        GraphicsAPI m_graphics;
-        InputAPI m_input;
-        AudioAPI m_audio;
-        PhysicsAPI m_physics;
-        TimeAPI m_time;
+        AssetAPI* m_assets = nullptr;
+        GraphicsAPI* m_graphics = nullptr;
+        InputAPI* m_input = nullptr;
+        AudioAPI* m_audio = nullptr;
+        PhysicsAPI* m_physics = nullptr;
+        TimeAPI* m_time = nullptr;
         // ...
     };
 }
 ```
 
-各SubsystemがGame向けAPIを提供し、EngineがそれらをまとめてGame.dllへ渡す。
+各 `XxxAPI` の実体はEngineが所有し、`GameEngineAPI` は非所有ポインタのみを保持する。
+
+Engineの `Initialize()` で各 `XxxAPI` の初期化後にポインタを設定し、その後Game.dllへ渡す。
 
 [TimeAPI](./Time.md#timeapi)
 
@@ -223,4 +257,4 @@ extern "C"
 
 `GameRuntimeAPI` の実体はGame.dll内の `static const` とし、Engineはそのポインタを非所有で保持する。
 
-GameRuntimeの更新処理には `deltaTime` を直接渡さず、必要な時間情報は `Time` から取得する。
+GameRuntimeの更新処理には `deltaTime` を直接渡さず、必要な時間情報は `HestiaGame::Time` から取得する。
