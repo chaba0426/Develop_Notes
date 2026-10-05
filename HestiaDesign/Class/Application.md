@@ -51,34 +51,42 @@ private:
 
 Applicationが生成時に自身をContextとして登録する。Engine側はContextを意識せず `ApplicationAPI::SetTargetFPS()` などを呼び出す。
 
-## Engine DLL API
+## EngineAPI
 
 **役割**
 
-ApplicationからEngine.dllを操作するためのC ABI境界。
+ApplicationからEngine.dllを操作するためのAPIテーブル。
+Engine.dllからは `GetEngineAPI` のみをC関数として公開し、Applicationは取得したAPIテーブル経由でEngineを操作する。
 
 ```cpp
+struct EngineAPI
+{
+    using UpdateFunc = void (*)(Engine*, float);
+
+    Engine* (*Create)(const ApplicationAPI*);
+    void (*Destroy)(Engine*);
+
+    bool (*Initialize)(Engine*);
+    void (*Finalize)(Engine*);
+
+    void (*ProcessMessage)(
+        Engine*,
+        HWND,
+        UINT,
+        WPARAM,
+        LPARAM);
+
+    UpdateFunc FixedUpdate;
+    UpdateFunc FrameExecute;
+};
+
 extern "C"
 {
-    Engine* CreateEngine(const ApplicationAPI* applicationAPI);
-    void DestroyEngine(Engine* engine);
-
-    bool Engine_Initialize(Engine* engine);
-    void Engine_Finalize(Engine* engine);
-
-    void Engine_ProcessMessage(
-        Engine* engine,
-        HWND hwnd,
-        UINT message,
-        WPARAM wParam,
-        LPARAM lParam);
-
-    void Engine_FixedUpdate(Engine* engine, float deltaTime);
-    void Engine_FrameExecute(Engine* engine, float deltaTime);
+    const EngineAPI* GetEngineAPI();
 }
 ```
 
-ApplicationはEngineクラスのメンバ関数をDLL越しに直接呼ばず、このC関数群を `GetProcAddress()` で取得して使用する。
+`GetProcAddress()` で取得するのは `GetEngineAPI` のみとし、それ以降のEngine操作は `EngineAPI` の関数ポインタを使用する。
 
 ## Application
 
@@ -118,6 +126,7 @@ private:
     Window m_Window;
 
     HMODULE m_EngineModule = nullptr;
+    const EngineAPI* m_EngineAPI = nullptr;
     Engine* m_Engine = nullptr;
 
 #if HESTIA_EDITOR
@@ -136,20 +145,10 @@ private:
     Clock::time_point m_LastFrameTime;
 
     HANDLE m_FrameTimer = nullptr;
-
-    CreateEngineFunc m_CreateEngine = nullptr;
-    DestroyEngineFunc m_DestroyEngine = nullptr;
-
-    EngineInitializeFunc m_EngineInitialize = nullptr;
-    EngineFinalizeFunc m_EngineFinalize = nullptr;
-
-    EngineProcessMessageFunc m_EngineProcessMessage = nullptr;
-    EngineFixedUpdateFunc m_EngineFixedUpdate = nullptr;
-    EngineFrameExecuteFunc m_EngineFrameExecute = nullptr;
 };
 ```
 
-Engine.dllはApplicationによってロード・破棄される。Engineへの操作はC関数境界を使用し、EngineからApplicationへの操作は `ApplicationAPI` を使用する。
+Engine.dllはApplicationによってロード・破棄される。ApplicationからEngineへの操作は `EngineAPI`、EngineからApplicationへの操作は `ApplicationAPI` を使用する。
 
 時間計測・フレーム制御は `double` 精度で行い、Engine以下へ渡す際に `float` へ変換する。
 
