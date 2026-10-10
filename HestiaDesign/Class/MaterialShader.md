@@ -111,6 +111,7 @@ namespace Hestia
 [Material](./Material.md#material)
 
 - IDはProperty名から決定的な64bit Hashで作る。同名ならShaderが違っても同じID。生成入口は`Material::MakePropertyID(name)`に統一する。
+- `MaterialPropertyValue`はMaterialShaderとMaterialの双方で必要な共通型。実装ヘッダーではMaterialクラス本体から独立した共有ヘッダーに定義し、相互Includeを避ける。
 - MaterialごとのPropertyIDではなく、**名前そのもののID**。異なる名前のHash衝突はShaderロード時に検出してログ出力・失敗とする。
 - `Range(min,max)`はFloat型＋Editor編集制約であり、別のGPU型にはしない。
 - 数値・Vector・Matrix等は1つの`PerMaterial` CBufferへ格納。`Texture2D`はCBufferではなく個別のSRV Resource宣言を生成する。
