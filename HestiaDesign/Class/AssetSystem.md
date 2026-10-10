@@ -1,7 +1,7 @@
 # Asset System
 
 Engine内部のAsset管理クラスとGame.dll向け公開APIのクラス設計モック。
-**初期対象はMeshとTextureの2型のみ**。AssetSystemが登録情報DB・型別Loader・型別Storageを持ち、GraphicsへGPU資源生成を依頼する。
+**導入順はMesh・Texture → MaterialShader・Material**。AssetSystemが登録情報DB・型別Loader・型別Storageを持ち、GraphicsへGPU資源生成を依頼する。以下のTupleは4型の設計到達形であり、実装中は完成した型から順次有効化する。
 失敗処理はまずエラーログ出力を中心とし、非同期・復旧・詳細な状態管理は設計しない。
 
 ## AssetSystem
@@ -60,12 +60,16 @@ namespace Hestia
 
         std::tuple<
             AssetLoader<Mesh>,
-            AssetLoader<Texture>
+            AssetLoader<Texture>,
+            AssetLoader<MaterialShader>,
+            AssetLoader<Material>
         > m_loaders;
 
         std::tuple<
             AssetStorage<Mesh>,
-            AssetStorage<Texture>
+            AssetStorage<Texture>,
+            AssetStorage<MaterialShader>,
+            AssetStorage<Material>
         > m_storages;
 
         GraphicsSystem* m_graphics = nullptr; // 非所有
@@ -79,6 +83,8 @@ namespace Hestia
 [AssetStorage<T>](#assetstoraget)  
 [AssetHandle<T>](#assethandlet)  
 [Mesh / Texture](./AssetType.md#mesh)  
+[MaterialShader](./MaterialShader.md#materialshader)  
+[Material](./Material.md#material)  
 [Engine](./Engine.md#engine)  
 [AssetAPI](#assetapi)
 
@@ -87,7 +93,8 @@ namespace Hestia
 - `AssetLoader<T>`は**完全特殊化**、`AssetStorage<T>`と`Load/Get/Register/LoadImpl/RegisterImpl`は汎用テンプレート。
 - `GetLoader<T>()`と`GetStorage<T>()`は`std::get<AssetLoader<T>>` / `std::get<AssetStorage<T>>`で取得する。非対応型はコンパイルエラー。
 - Meshの手動RegisterはGPU Uploadまで実行する。Textureは画素を持たないため、**初期はファイルLoadのみGPU Texture生成に対応**する。型の汎用宣言としての`Register<Texture>`は残るが、手動呼出しではGPU Resourceを作れないため利用対象外とする。
-- 個別Unload・RenderTexture Asset・GPUのみの解放・Material/Shader対応は後回し。
+- MaterialShader・Materialの内部型とLoader契約は[MaterialShader](./MaterialShader.md) / [Material](./Material.md)に定義する。実装時はMesh・Textureが動いた後に追加する。
+- 個別Unload・RenderTexture Asset・GPUのみの解放・LightingShader等への対応は後回し。
 
 **Initialize**
 
@@ -108,11 +115,19 @@ bool AssetSystem::Initialize(
     if (!GetLoader<Texture>().Initialize(graphics))
         return false;
 
+    if (!GetLoader<MaterialShader>().Initialize())
+        return false;
+
+    if (!GetLoader<Material>().Initialize())
+        return false;
+
     return true;
 }
 ```
 
 `AssetLoader<Texture>`のみGraphicsSystemの非所有ポインタを持つ。Loaderが一時画素データを保持するため、TextureのGPU UploadはTextureLoader内で実行する。
+`AssetLoader<MaterialShader>`はDSLのParser/Compile/ReflectionからShaderを構築し、`AssetLoader<Material>`は依存ShaderをLoad/GetしてMaterialを登録する。どちらもPSOを生成しない。
+このInitialize例は4型を有効化した際の到達形。段階的実装中は未実装Loaderの初期化をまだ呼ばない。
 `Initialize`失敗はエラーログを出して`false`を返す程度に留める。
 
 **AssetSystem.cppに置く汎用処理**
@@ -230,10 +245,24 @@ template Texture*
 AssetSystem::Get<Texture>(AssetHandle<Texture>);
 template AssetHandle<Texture>
 AssetSystem::Register<Texture>(std::string_view, Texture*);
+
+template AssetHandle<MaterialShader>
+AssetSystem::Load<MaterialShader>(std::string_view);
+template MaterialShader*
+AssetSystem::Get<MaterialShader>(AssetHandle<MaterialShader>);
+template AssetHandle<MaterialShader>
+AssetSystem::Register<MaterialShader>(std::string_view, MaterialShader*);
+
+template AssetHandle<Material>
+AssetSystem::Load<Material>(std::string_view);
+template Material*
+AssetSystem::Get<Material>(AssetHandle<Material>);
+template AssetHandle<Material>
+AssetSystem::Register<Material>(std::string_view, Material*);
 ```
 
 内部テンプレートも同じ`.cpp`内で定義する。`AssetStorage<T>`の汎用実装は基本ヘッダーへ置く。
-AssetSystem.hでは`std::tuple`による値所有のために両Loader特殊化の**完全なクラス定義**が必要。
+AssetSystem.hでは`std::tuple`による値所有のために対応する全Loader特殊化の**完全なクラス定義**が必要。
 LoaderのヘッダーはAssetSystem.hをIncludeせず、必要な場合のみ各Loaderの`.cpp`からIncludeする。
 
 ### AssetDB
@@ -248,7 +277,9 @@ namespace Hestia
     enum class AssetType
     {
         Mesh,
-        Texture
+        Texture,
+        MaterialShader,
+        Material
     };
 
     struct AssetInfo
@@ -272,7 +303,7 @@ namespace Hestia
 [AssetSystem](#assetsystem)
 
 - DBの登録情報は起動時に読み込む。名前は正規化（従来方針では英字の大小文字を区別しない）。PathはAssetsルート相対。
-- ファイルの`type`は初期`Mesh`・`Texture`のみ。検索時に要求型と照合する。
+- AssetDBの`type`は初期`Mesh`・`Texture`から始め、MaterialShader・Materialを順次追加する。検索時に要求型と照合する。
 - 手動`Register`の名前はCacheの名前と衝突させない。YAML登録名との全型共通の衝突判定については後続実装で整理する（Loaderの`Register`はYAML登録名を正常に使用する必要がある）。
 - DBの手動Reload、ファイル移動や名前変更の自動追跡は初期対象から外す。
 
@@ -319,7 +350,8 @@ namespace Hestia
 
 - Storageは汎用テンプレート。型ごとのIndexは0から連番で発行し、IndexとGenerationで照合する。
 - `Slot`がVector再配置で移動しても、`unique_ptr`が指すAsset実体は移動しない。
-- `Register`ではHandleを発行し、Mesh/Textureの`m_handle`に設定する（登録対象はEngineが定義した対応Asset型）。
+- `Register`ではHandleを発行し、各対応Asset（Mesh / Texture / MaterialShader / Material）の`m_handle`に設定する。
+- MaterialはMaterialShader実体を非所有ポインタで参照する。Finalize時は**MaterialをMaterialShaderより先に破棄する**。
 - 初期はUnloadと空きIndex再利用を実装しない。AssetはAssetSystem終了まで保持する。
 - `Find`は正規化した名前を使って検索し、登録時に`m_nameToHandle`へ記録する。
 
@@ -394,12 +426,40 @@ namespace Hestia
     private:
         GraphicsSystem* m_graphics = nullptr; // 非所有
     };
+
+    template<>
+    class AssetLoader<MaterialShader>
+    {
+    public:
+        bool Initialize();
+        AssetHandle<MaterialShader> Load(
+            std::string_view name,
+            std::string_view path);
+
+    private:
+        // DSL Parser / HLSL Compiler / Reflection等
+    };
+
+    template<>
+    class AssetLoader<Material>
+    {
+    public:
+        bool Initialize();
+        AssetHandle<Material> Load(
+            std::string_view name,
+            std::string_view path);
+
+    private:
+        // Shader名・Property値の解析
+    };
 }
 ```
 
 [AssetSystem](#assetsystem)  
 [Mesh / Texture](./AssetType.md#mesh)  
-[Texture](./AssetType.md#texture)
+[Texture](./AssetType.md#texture)  
+[MaterialShader](./MaterialShader.md#materialshader)  
+[Material](./Material.md#material)
 
 **Mesh Loaderの処理例**
 
@@ -453,7 +513,9 @@ AssetHandle<Texture> AssetLoader<Texture>::Load(
 - `Texture`本体はHandleとDescのみで**画素データを所有しない**。`ScratchImage`はLoader内だけで生存する。
 - `UploadTexture`は復帰までに`ScratchImage`の画素をGPU Upload Resourceへコピーし終える契約とする。Upload ResourceはGraphicsがGPU Fence完了まで保持する。
 - `Mesh`も`Texture`もLoader自身がRegisterを呼び、`AssetHandle<T>`を返すため、`LoadImpl<T>`には型別分岐が要らない。
-- 将来Material等のLoaderが依存Assetを読む場合、`AssetSystem::Load<U>()`を再帰的に呼ぶ構成。循環依存は初期対象では扱わない。
+- MaterialShader Loaderは`.matsh`をParser/Compile/Reflectionして共通Property LayoutとPassを構築し、`Register<MaterialShader>`で登録する。PSOはGraphics側が描画時に必要に応じて作成する。
+- Material LoaderはShader名を解決して`Load<MaterialShader>()`・`Get<MaterialShader>()`で実体ポインタを取得し、型付き値とbyteキャッシュを初期化して`Register<Material>`で登録する。
+- Loaderが依存Assetを読む場合は`AssetSystem::Load<U>()`を再帰的に呼ぶ。循環依存は初期対象では扱わない。
 
 ### AssetAPI
 
@@ -533,8 +595,10 @@ CPUとGPUの所有者・同一Handleによる対応関係は維持する。
 ```text
 AssetSystem
 ├─ AssetDB (Name → AssetInfo)
-├─ tuple<AssetStorage<Mesh>, AssetStorage<Texture>>
-└─ tuple<AssetLoader<Mesh>, AssetLoader<Texture>>
+├─ tuple<AssetStorage<Mesh>, AssetStorage<Texture>,
+│        AssetStorage<MaterialShader>, AssetStorage<Material>>
+└─ tuple<AssetLoader<Mesh>, AssetLoader<Texture>,
+         AssetLoader<MaterialShader>, AssetLoader<Material>>
 
 MeshのGPU Upload:
   MeshLoader → AssetSystem::Register<Mesh>
@@ -545,21 +609,31 @@ TextureのGPU Upload:
      → AssetSystem::Register<Texture> (CPUメタ情報登録)
      → Graphics::UploadTexture(handle, image)
 
+MaterialShader Loader → Register<MaterialShader>()
+Material Loader → Load/Get<MaterialShader>()
+                → Material::m_shader (非所有ポインタ)
+                → Register<Material>()
+
 GraphicsSystem
-└─ GPUResourceStorage
-   ├─ DXMesh    [AssetHandle<Mesh>]
-   └─ DXTexture [AssetHandle<Texture>]
+├─ GPUResourceStorage
+│  ├─ DXMesh    [AssetHandle<Mesh>]
+│  └─ DXTexture [AssetHandle<Texture>]
+└─ PSOCache
+   └─ (ShaderHandle, ShaderRevision, PassIndex) → PSO
 
 Graphics内部RenderTarget
 └─ DXRenderTexture m_sceneColor / m_gbuffer... (別管理)
 ```
 
-[AssetType](./AssetType.md#gpuresourcestorageとの対応)
+[AssetType](./AssetType.md#gpuresourcestorageとの対応)  
+[MaterialShader](./MaterialShader.md#materialshader)  
+[Material](./Material.md#material)
 
-- どちらも同じIndex/GenerationでGPU Resourceを解決。別のGraphics専用Handle変換表は初期に持たない。
+- MeshとTextureは同じIndex/GenerationでGPU Resourceを解決。別のGraphics専用Handle変換表は初期に持たない。
 - GPUの実体・Descriptor・Upload Resource・FenceはGraphics側が管理する。
 - CPU AssetとGPU Resourceの論理寿命を合わせる。初期は個別Unloadを持たない。
 - GPU Upload失敗でCPU Assetだけ登録された状態になっても、まずは**エラーログ出力のみ**。Rollbackや再試行機構は設けない。
+- MaterialShaderのBytecode・Pass・共通LayoutとMaterialの型付き値・byteキャッシュはCPU Asset側。GraphicsはPSOとFrame CB領域の所有者。
 
 ## 未決定・後回し
 
@@ -569,11 +643,14 @@ Graphics内部RenderTarget
 - DB手動Reload、個別Unload、Generation更新、CPU AssetとGPU Resourceの再生成。
 - Meshの追加Stream・動的更新、Textureの圧縮形式・Mip生成。
 - Loaderの依存Asset再帰ロードにおける循環依存検出。
+- MaterialShaderのReload / Material値移行 / 逆索引・PSO Cache無効化。
 - DLL境界のテンプレート関数・ABI・所有権譲渡の具体的な実装。
 
 ## 参照元
 
 - [AssetType（このリポジトリ）](./AssetType.md)
+- [MaterialShader（このリポジトリ）](./MaterialShader.md)
+- [Material（このリポジトリ）](./Material.md)
 - [HestiaDesign / AssetType](https://github.com/YokoyamaHaruki64/HestiaDesign/blob/main/Asset/AssetType.md)
 - [HestiaDesign / AssetDB](https://github.com/YokoyamaHaruki64/HestiaDesign/blob/main/Asset/AssetDB.md)
 - [HestiaDesign / AssetManagement](https://github.com/YokoyamaHaruki64/HestiaDesign/blob/main/Asset/AssetManagement.md)
