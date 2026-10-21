@@ -54,3 +54,15 @@ node MusouGame/Web/build.js --check
 ```
 
 編集用HTMLの外部CSS・JSをビルド時に埋め込み、`MusouGame/index.html` を生成する。**単体でオフライン閲覧可能**。生成された `index.html` と編集元ファイルを一緒にコミットする。ビルド前後で意図しない本文・仕様の変更がないか確認する。
+
+### GPTからGitHubを直接更新する場合（標準運用）
+
+この企画書は**GPTが編集し、人間は完成版を閲覧する**運用を基本とする。ユーザーのPCでのclone・ローカルビルドやGitHub Actionsは必須ではない。
+
+1. GPTはGitHub上の対象ファイルと最新のコミットを確認し、必要な `Design/*.md` および `Web/index.html`・`Web/style.css`・`Web/script.js` を更新する。上記の更新ルールを守る。
+2. GPTの実行環境でNode.jsを利用できる場合は、`node MusouGame/Web/build.js` と `node MusouGame/Web/build.js --check` を実行して `MusouGame/index.html` を生成・検証する。リポジトリをユーザー側でcloneする必要はない。
+3. 実行環境でNode.jsが利用できない場合は、`Web/build.js` と同じCSS・JS埋め込み処理で生成物を作成し、可能な範囲で一致・構造を検証する。**実際に実行していないコマンドを実行済みとは報告しない。** ビルド・検証ができなければその旨を明記する。
+4. 編集元ファイルと生成済みの `MusouGame/index.html` を、GitHub連携を使って**原則1コミットでmainに反映**する。コミット直前にブランチの最新状態を確認し、他の更新を上書きしない。変更対象外のファイルは触らない。
+5. 完了時には、変更内容・ビルド検証結果・コミットURLを報告する。HTMLだけを直してMarkdownの正本と食い違わせたり、編集元だけをコミットして生成物を古いまま残したりしない。
+
+GitHub Actionsの自動ビルドは導入しない。将来必要になった場合のみ別途検討する。
