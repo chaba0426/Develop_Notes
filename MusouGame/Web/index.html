@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b101b">
+<title>LEIR — Game Design Blueprint</title>
+<link rel="stylesheet" href="./style.css" data-bundle="css">
+</head>
+<body>
+<header class="header"><div class="wrap">
+  <div class="eyebrow">GAME DESIGN BLUEPRINT / 2026.10.22</div>
+  <h1>LEIR <span style="color:#7daed6;font-weight:400">/</span><br>無双アクション</h1>
+  <p class="lede">敵を<strong>集める</strong> → <strong>斬り払う</strong>。<br>爽快な剣戟を核にした、部屋攻略型3Dローグライト。</p>
+  <div class="row"><span class="pill green">戦闘の方向性：決定</span><span class="pill orange">部屋数・数値：仮</span><span class="pill purple">追加ギミック：後日</span></div>
+</div></header>
+<div class="wrap"><nav class="topnav" aria-label="目次"><a href="#core">コア体験</a><a href="#combo">コンボ</a><a href="#timing">攻撃の隙</a><a href="#boss">ボス戦</a><a href="#loop">ゲームループ</a><a href="#shop">ショップUI</a><a href="#enemy">敵・開発順</a><a href="#world">リア・保留事項</a></nav>
+<main>
+<section class="section" id="core"><div class="heading"><div><span class="kicker">01 / CORE EXPERIENCE</span><h2>3つの柱</h2></div><span class="pill green">方向性確定</span></div>
+  <div class="grid"><div class="tile"><div class="num">01</div><h3>弱攻撃で集める</h3><p class="muted small">素早い広範囲攻撃。敵を散らさず、リアの<strong>前方の一点</strong>へ寄せる。</p></div><div class="tile"><div class="num orange">02</div><h3>強攻撃でなぎ倒す</h3><p class="muted small">範囲殲滅と単体火力を使い分け。<strong>大量撃破</strong>の感触が最優先。</p></div><div class="tile"><div class="num green">03</div><h3>戦闘後に育てる</h3><p class="muted small">撃破で通貨を自動獲得。部屋の間に購入してビルドを伸ばす。</p></div></div>
+  <div class="note" style="margin-top:12px">基本雑魚は<span style="color:#fff">無双寄り</span>：多数が接近・包囲、同時攻撃は控えめ。理不尽な集中攻撃より、気持ちよいリアクションを優先。</div>
+</section>
+<section class="section" id="combo"><div class="heading"><div><span class="kicker">02 / MOVESET</span><h2>基本コンボは3本</h2><p class="muted small">タブを選ぶと役割が切り替わる。JavaScriptなしで動作。</p></div><span class="pill green">確定</span></div>
+  <div class="widget" role="group" aria-label="コンボ切り替え">
+   <input type="radio" id="c0" name="combo" checked><input type="radio" id="c1" name="combo"><input type="radio" id="c2" name="combo">
+   <div class="tabs"><label for="c0">単発：強</label><label for="c1">弱 → 弱 → 強</label><label for="c2">弱 → 強 → 強</label></div>
+   <div class="combo-wrap"><div class="combo" id="p0"><div class="combo-meta"><div class="row"><span class="key heavy">強</span></div><span class="impact">広範囲 / 中威力</span></div><p>一振りの横薙ぎ。すぐに広い範囲を制圧。</p></div>
+   <div class="combo" id="p1"><div class="combo-meta"><div class="row"><span class="key">弱</span><span class="chevron">›</span><span class="key">弱</span><span class="chevron">›</span><span class="key heavy">強</span></div><span class="impact">集敵 / 範囲殲滅</span></div><p>雑魚を前方にまとめ、広範囲・高威力の一撃で一掃。</p></div>
+   <div class="combo" id="p2"><div class="combo-meta"><div class="row"><span class="key">弱</span><span class="chevron">›</span><span class="key heavy">強</span><span class="chevron">›</span><span class="key heavy">強</span></div><span class="impact">対ボス / 狭範囲・高火力</span></div><p>「弱→強」で止めれば短い反撃機会にも対応。最後の強攻撃は<strong>前隙が長い</strong>。</p></div></div>
+  </div>
+  <div class="grid two" style="margin-top:13px"><div class="tile"><h3>攻撃の成立</h3><p class="small">攻撃判定が<strong>発生した時点</strong>でコンボ進行。空振りでも成立。判定前のステップキャンセルは<strong>不発</strong>。</p></div><div class="tile"><h3>ステップ</h3><p class="small">方向入力の短距離ステップ。攻撃中いつでもキャンセル可能。無敵時間・距離は調整対象。</p></div></div>
+  <div class="rule-grid" style="margin-top:12px"><div class="rule good"><h3 style="color:var(--green)">✓ 攻撃の間にステップ1回：継続</h3><div class="row"><span class="key">弱</span><span class="chevron">›</span><span class="key dodge">STEP</span><span class="chevron">›</span><span class="key heavy">強</span><span class="chevron">›</span><span class="key dodge">STEP</span><span class="chevron">›</span><span class="key heavy">強</span></div></div><div class="rule bad"><h3 style="color:var(--red)">× 連続2ステップ：コンボ解除</h3><div class="row"><span class="key">弱</span><span class="chevron">›</span><span class="key dodge">STEP</span><span class="chevron">›</span><span class="key dodge">STEP</span><span class="chevron" style="color:var(--red)">×</span></div></div></div>
+  <p class="muted tiny" style="margin:12px 0 0">※ 攻撃実行ごとに「間へ挟めるステップ1回」を回復。キャンセルされた未成立攻撃は回復しない。コンボの時間切れも別途あり（時間未定）。</p>
+</section>
+<section class="section" id="timing"><div class="heading"><div><span class="kicker">03 / ATTACK TIMING</span><h2>「隙」は前に作る</h2><p class="muted small">ボス用の3段目は、重い<strong>後隙</strong>よりも長い<strong>前隙</strong>でリスクを作る。</p></div><span class="pill green">設計方針</span></div>
+  <div class="tile"><div class="legend" style="margin-bottom:9px"><span><i class="dot gray"></i>前隙 / 溜め</span><span><i class="dot orange"></i>攻撃判定が出る</span><span><i class="dot green"></i>後隙 / 復帰</span></div>
+    <div class="timelines"><div class="timeline"><span class="timeline-label">通常の一撃</span><div class="track"><span class="phase start p1">前隙</span><span class="phase hit p2">斬撃</span><span class="phase end p3">復帰</span></div></div><div class="timeline"><span class="timeline-label">3段目の強</span><div class="track late"><span class="phase start p1">長い前隙</span><span class="phase hit p2">大技</span><span class="phase end p3">復帰</span></div></div></div>
+    <p class="muted tiny" style="margin:12px 0 0">バーの幅は説明用。実フレーム数や相対的な長さは未確定。</p></div>
+  <div class="arena" style="margin-top:13px"><div class="diagram">
+    <svg viewBox="0 0 540 200" role="img" aria-label="前隙中のステップでは攻撃が不発、判定後のステップでは攻撃成立の図">
+      <defs><marker id="ah" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="none" stroke="#c0d4e8" stroke-width="1.5"/></marker></defs>
+      <text x="12" y="23" font-size="15" font-weight="700" fill="#d5e7fa">① 前隙中に回避</text>
+      <rect x="14" y="38" width="174" height="30" rx="6" fill="#516e8b"/><text x="101" y="58" font-size="13" font-weight="700" text-anchor="middle" fill="white">前隙</text>
+      <path d="M189 53H275" stroke="#bad0e7" stroke-width="2" marker-end="url(#ah)"/><rect x="285" y="36" width="108" height="34" rx="7" fill="#51677c"/><text x="339" y="58" text-anchor="middle" font-size="13" fill="white" font-weight="700">STEP</text><text x="402" y="57" font-size="12" fill="#ffb0ad">攻撃なし</text>
+      <path d="M8 102H532" stroke="#334761" stroke-dasharray="4 5"/>
+      <text x="12" y="127" font-size="15" font-weight="700" fill="#d5e7fa">② 判定後に回避</text>
+      <rect x="14" y="140" width="112" height="30" rx="6" fill="#516e8b"/><text x="70" y="159" text-anchor="middle" font-size="12" fill="white">前隙</text><rect x="132" y="140" width="94" height="30" rx="6" fill="#d98a52"/><text x="179" y="159" text-anchor="middle" font-size="12" fill="#1b1010" font-weight="800">判定発生</text>
+      <path d="M228 155H275" stroke="#bad0e7" stroke-width="2" marker-end="url(#ah)"/><rect x="285" y="138" width="108" height="34" rx="7" fill="#51677c"/><text x="339" y="160" text-anchor="middle" font-size="13" fill="white" font-weight="700">STEP</text><text x="402" y="159" font-size="12" fill="#a9efce">攻撃成立</text>
+    </svg>
+    <p class="diagram-caption">ステップは常に出せる。ただし判定前の大技は捨てることになる。</p>
+  </div><div class="tile"><h3>この設計で生まれる判断</h3><p class="small">ボスの攻撃再開までに<strong>3段目が間に合うか？</strong></p><div class="row" style="margin:10px 0"><span class="pill green">短い隙</span><span class="chevron">→</span><strong>弱 → 強で止める</strong></div><div class="row"><span class="pill orange">長い隙</span><span class="chevron">→</span><strong>弱 → 強 → 強を狙う</strong></div><div class="note orange" style="margin-top:15px">欲張ったらステップで中断できるが、<strong>大技のダメージは得られない</strong>。</div></div></div>
+</section>
+<section class="section" id="boss"><div class="heading"><div><span class="kicker">04 / BOSS COMBAT</span><h2>ボスの「隙」を読ませる</h2><p class="muted small">まずは1対1・HP制。2〜3種類の攻撃で反撃時間に差をつける。</p></div><span class="pill green">初期仕様</span></div>
+  <div class="grid two"><div class="tile"><h3>短い攻撃 → 短い隙</h3><div class="boss-track"><span class="bt-prepare">予兆</span><span class="bt-attack">攻撃</span><span class="bt-gap" style="grid-column:span 2">小さな隙</span><span class="bt-next" style="grid-column:span 4">次の行動</span></div><p class="muted small" style="margin:10px 0 0">安全に弱強で切り上げる。</p></div><div class="tile"><h3>大技 → 長い隙</h3><div class="boss-track"><span class="bt-prepare" style="grid-column:span 3">長い予兆</span><span class="bt-attack">大技</span><span class="bt-gap" style="grid-column:span 5">大きな反撃チャンス</span><span class="bt-next" style="grid-column:span 2">再開</span></div><p class="muted small" style="margin:10px 0 0">弱強強を出し切るチャンス。</p></div></div>
+  <div class="note" style="margin-top:12px">通常攻撃ではボスを大きく怯ませない。体勢ゲージやスタンは<strong>後から</strong>。雑魚召喚と「雑魚を吹き飛ばしてボスにぶつける」ギミックも拡張候補。</div>
+  <p class="muted tiny" style="margin:9px 0 0">※ 予兆・隙の図はコンセプト図。確定フレーム数ではない。</p>
+</section>
+<section class="section" id="loop"><div class="heading"><div><span class="kicker">05 / RUN STRUCTURE</span><h2>戦闘 → ショップ → 次の部屋</h2></div><span class="pill orange">5＋1部屋は仮</span></div>
+  <div class="flowbar"><div class="flowbox">戦闘<small>雑魚・継続増援</small></div><div class="flowarrow">➜</div><div class="flowbox">部屋クリア<small>条件達成で終了</small></div><div class="flowarrow">➜</div><div class="flowbox" style="border-color:#856d50">ショップ<small>購入・リロール</small></div></div>
+  <div class="loop-tail">↶ 次の部屋へ繰り返す <span class="pill orange">最後はボス</span></div>
+  <div class="grid"><div class="tile"><h3>討伐戦</h3><div class="num">N体</div><p class="small muted" style="margin:8px 0 0">規定数を倒したらクリア</p></div><div class="tile"><h3>生存戦</h3><div class="num orange">N秒</div><p class="small muted" style="margin:8px 0 0">生存でクリア。倒すほど通貨増</p></div><div class="tile"><h3>出現方式</h3><div class="num green">継続</div><p class="small muted" style="margin:8px 0 0">敵全滅を待たずに補充、同時数には上限</p></div></div>
+  <p class="muted small" style="margin:12px 0 0">少数の平坦なアリーナをランダムに再利用。通常5部屋＋ボス1部屋を仮置き。HP 0で敗北。時間内討伐型は当面なし。</p>
+</section>
+<section class="section" id="shop"><div class="heading"><div><span class="kicker">06 / SHOP UX CONCEPT</span><h2>ショップ画面のイメージ</h2><p class="muted small">部屋クリア後に表示。3枠に基本・特殊強化が混在。</p></div><span class="pill green">挙動確定 / 見た目は仮</span></div>
+  <div class="shop" aria-label="ショップUIモックアップ。表示数値と品目は例示">
+   <div class="shop-top"><div><div class="eyebrow">ROOM CLEAR / UPGRADE</div><div class="shop-title">旅の支度</div></div><div class="currency">◆ 1,250 <span style="font-size:11px;opacity:.7">G</span></div></div>
+   <div class="offers">
+    <div class="offer"><div class="offer-kind"><span class="pill green" style="padding:2px 7px">基本</span><span class="muted">Ⅰ</span></div><div class="offer-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6L42 25 32 58 22 25Z" fill="#76c9fb" opacity=".95"/><path d="M32 6V58M22 25H42" fill="none" stroke="#e4f8ff" stroke-width="2"/><path d="M16 39H48" stroke="#b9d6e9" stroke-width="4" stroke-linecap="round"/></svg></div><div class="offer-name">攻撃力アップ</div><div class="offer-desc">通常攻撃と強攻撃の威力を上昇</div><div class="buy">◆ 300 で購入</div></div>
+    <div class="offer special"><div class="offer-kind"><span class="pill purple" style="padding:2px 7px">特殊</span><span style="color:var(--purple)">NEW</span></div><div class="offer-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M11 46Q34 6 55 29Q36 17 21 49" stroke="#cab6ff" stroke-width="8" stroke-linecap="round" fill="none" opacity=".86"/><path d="M15 19L20 8L24 19L34 23L23 26L20 37L16 26L6 23Z" fill="#ffdf9f"/></svg></div><div class="offer-name">旋風の追撃</div><div class="offer-desc">強攻撃時に追撃が発生する（例）</div><div class="buy">◆ 700 で購入</div></div>
+    <div class="offer"><div class="offer-kind"><span class="pill green" style="padding:2px 7px">基本</span><span class="muted">Ⅰ</span></div><div class="offer-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 56Q7 39 9 23Q11 7 27 13L32 18L37 13Q53 7 55 23Q57 39 32 56Z" fill="#ef819b" stroke="#ffbdc9" stroke-width="2"/><path d="M32 19V43M20 31H44" stroke="#fff1f4" stroke-width="4" stroke-linecap="round"/></svg></div><div class="offer-name">最大HPアップ</div><div class="offer-desc">最大HPを増加（増加量は未定）</div><div class="buy">◆ 300 で購入</div></div>
+   </div>
+   <div class="shop-bottom"><div><div class="small"><strong>↻ 有料リロール</strong></div><div class="muted tiny">使用するほど値上がり</div></div><div class="reroll">◆ 150 / 全3枠更新</div></div>
+  </div>
+  <div class="grid" style="margin-top:12px"><div class="tile" style="border-color:#5c7d93"><h3>① どれか1つ購入</h3><div class="row"><span class="pill green">1枠購入</span><span class="chevron">→</span><span class="pill">3枠すべて再抽選</span></div><p class="muted small" style="margin:8px 0 0">購入が続けられる限り繰り返せる。</p></div><div class="tile"><h3>② 手動リロール</h3><div class="row"><span class="pill orange">通貨消費</span><span class="chevron">→</span><span class="pill">3枠すべて再抽選</span></div><p class="muted small" style="margin:8px 0 0">価格は同ショップ内で上昇、次の部屋でリセット。</p></div><div class="tile"><h3>③ 特殊スキルを育成</h3><div class="row"><span class="pill purple">特殊を取得</span><span class="chevron">→</span><span class="pill purple">Lv UPも抽選候補</span></div><p class="muted small" style="margin:8px 0 0">別枠を増やさず3枠の中に登場。</p></div></div>
+  <p class="muted tiny" style="margin:10px 0 0">※ 通貨1,250G・品名・アイコン・価格は画面デザイン用のダミー。クリックできる購入UIではなく配置イメージ。</p>
+</section>
+<section class="section" id="enemy"><div class="heading"><div><span class="kicker">07 / ENEMIES & PRODUCTION</span><h2>小さく作って、確かめながら追加</h2></div><span class="pill green">実装順確定</span></div>
+  <div class="step-cards"><div class="stepcard" data-no="PHASE 01"><h3>雑魚敵 1種類</h3><span class="small">集敵・怯み・吹き飛び・大量撃破</span></div><div class="stepcard" data-no="PHASE 02"><h3>単独ボス</h3><span class="small">HP制・攻撃予兆・大小の隙</span></div><div class="stepcard" data-no="PHASE 03"><h3>雑魚敵 2種類目</h3><span class="small">群れの中に行動差をつける</span></div><div class="stepcard" data-no="PHASE 04"><h3>中ボス級の敵</h3><span class="small">ウェーブ / 部屋に1〜2体</span></div></div>
+  <div class="compare" style="margin-top:12px"><div class="vs"><span class="pill green">初回プロトタイプ</span><strong>1部屋だけ</strong><div class="legend">雑魚1種 ＋ リアの弱/強 ＋ ステップ</div><div class="bar"><i style="width:40%"></i></div><p class="small muted">「集めて斬る」を何度も繰り返したくなるか検証。ショップやボスはまだ不要。</p></div><div class="vs"><span class="pill purple">後から広げる</span><strong>ローグライト化</strong><div class="legend">部屋目標 ＋ ショップ ＋ スキル成長</div><div class="bar"><i style="width:75%;background:#a898eb"></i></div><p class="small muted">基本戦闘 → ボス戦を確かめた後、周回の面白さを積み上げる。</p></div></div>
+  <div class="note orange" style="margin-top:12px">拡張候補：雑魚を吹き飛ばしてボスへ衝突させる ／ 体勢崩し ／ ボスの雑魚召喚。いずれも<strong>基礎戦闘完成後</strong>に判断。</div>
+</section>
+<section class="section" id="world"><div class="heading"><div><span class="kicker">08 / CHARACTER & OPEN QUESTIONS</span><h2>キャラクターと保留事項</h2></div></div>
+  <div class="char"><div class="tile"><h3>リア / Leir</h3><p class="small">金髪の外ハネショートボブ、青い瞳。ネイビーの短いジャケット、白シャツ、ダークグレーの短パン、茶色の編み上げブーツ。片手剣を使う身軽な若い冒険者。</p><p class="small muted" style="margin-bottom:0">女性寄りの中性的な造形 / 王道ファンタジー / 柔らかいアニメ調3D。長髪・マントなど複雑な揺れ物は避ける。</p><div class="row" style="margin-top:15px"><span class="pill">C++20</span><span class="pill">DirectX 12</span><span class="pill">Blender / Tripo</span><span class="pill orange">HestiaEngine 検討</span></div></div><div class="tile"><h3>未決定 → プロトタイプで検証</h3><div class="list-row"><span>各攻撃の当たり判定・モーション</span><span class="pill orange">調整</span></div><div class="list-row"><span>前隙 / 無敵時間 / コンボ猶予</span><span class="pill orange">調整</span></div><div class="list-row"><span>同時出現数 / 増援ペース</span><span class="pill orange">調整</span></div><div class="list-row"><span>強化費用・抽選率・特殊スキル</span><span class="pill orange">設計</span></div><div class="list-row"><span>1ランの部屋数・プレイ時間</span><span class="pill orange">仮置き</span></div></div></div>
+</section>
+<div class="foot">LEIR — GAME DESIGN BLUEPRINT / v0.2 · 1ファイルHTML · CSSのみでタブ切り替え · オフライン閲覧対応</div>
+</main></div>
+<script defer src="./script.js" data-bundle="js"></script>
+</body></html>
