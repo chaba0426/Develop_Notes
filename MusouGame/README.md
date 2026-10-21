@@ -29,3 +29,14 @@
 1部屋・雑魚敵1種・リアの弱/強攻撃とステップで、「集めて斬り払う」を繰り返したくなるか。ショップ・ボス・ローグライト要素は初回プロトタイプには含めない。
 
 最終更新: 2026-10-22。実装値（フレーム数、倍率、価格など）は特記がなければ未確定。
+
+## HTMLを再生成する
+
+プレゼンテーションは [Presentation/README.md](Presentation/README.md) を参照。Node.js 18以上・追加パッケージ不要。
+
+```sh
+node MusouGame/Renderer/renderer.js
+node MusouGame/Renderer/test.js
+```
+
+`index.html` は生成物なので直接編集せず、仕様は `Design/*.md`、表示データは `Presentation/presentation.json` で管理する。
