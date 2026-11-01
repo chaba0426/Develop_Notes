@@ -10,52 +10,56 @@
 <body>
 <a class="skip-link" href="#main-content">本文へスキップ</a>
 <div class="wiki-mobile-bar">
-  <button type="button" class="wiki-menu-toggle" id="wiki-menu-toggle" aria-controls="wiki-sidebar" aria-expanded="false" aria-label="メニューを開く"><span aria-hidden="true">☰</span><span>メニュー</span></button>
-  <a href="#overview" class="wiki-mobile-brand">LEIR <span>/ DESIGN WIKI</span></a>
+  <button type="button" class="wiki-menu-toggle" id="wiki-menu-toggle" aria-controls="wiki-sidebar" aria-expanded="false" aria-label="メニューを開く"><span aria-hidden="true">☰</span></button>
+  <a href="#overview" class="wiki-mobile-brand">LEIR</a>
 </div>
 <div class="wiki-backdrop" id="wiki-backdrop" aria-hidden="true"></div>
 <div class="wiki-layout">
   <aside class="wiki-sidebar" id="wiki-sidebar" aria-label="資料のサイドメニュー">
-    <a class="wiki-brand" href="#overview"><span class="wiki-brand-name">LEIR</span><span class="wiki-brand-sub">GAME DESIGN WIKI</span></a>
+    <a class="wiki-brand" href="#overview"><span class="wiki-brand-name">LEIR</span></a>
     <nav class="wiki-nav" aria-label="設計資料">
-      <div class="wiki-nav-group">
-        <div class="wiki-nav-label">ゲームデザイン</div>
-        <a class="wiki-nav-main" href="#overview" data-page-link="overview">ゲーム全体・企画書</a>
-        <a class="wiki-nav-sub" href="#core">コア体験</a>
-        <a class="wiki-nav-sub" href="#combo">コンボ・ステップ</a>
-        <a class="wiki-nav-sub" href="#timing">攻撃の隙</a>
-        <a class="wiki-nav-sub" href="#boss">ボス戦</a>
-        <a class="wiki-nav-sub" href="#loop">ゲームループ</a>
-        <a class="wiki-nav-sub" href="#shop">ショップ</a>
-        <a class="wiki-nav-sub" href="#enemy">敵・制作順</a>
-        <a class="wiki-nav-sub" href="#world">キャラクター</a>
-      </div>
-      <div class="wiki-nav-group">
-        <div class="wiki-nav-label">モーション制作</div>
-        <a class="wiki-nav-main" href="#motion" data-page-link="motion">攻撃モーション詳細</a>
-        <a class="wiki-nav-sub" href="#motion-weak1">弱1：斜め斬り</a>
-        <a class="wiki-nav-sub" href="#motion-weak2">弱2：斬り上げ</a>
-        <a class="wiki-nav-sub" href="#motion-strong3">強3：回転斬り</a>
-        <a class="wiki-nav-main" href="#shooting" data-page-link="shooting">撮影チェックシート</a>
-      </div>
+      <details class="wiki-nav-section" data-nav-section="overview" name="wiki-nav">
+        <summary class="wiki-nav-heading">ゲーム全体・企画書</summary>
+        <div class="wiki-nav-items">
+          <a class="wiki-nav-sub" href="#overview" data-page-link="overview">概要</a>
+          <a class="wiki-nav-sub" href="#core">コア体験</a>
+          <a class="wiki-nav-sub" href="#combo">コンボ・ステップ</a>
+          <a class="wiki-nav-sub" href="#timing">攻撃の隙</a>
+          <a class="wiki-nav-sub" href="#boss">ボス戦</a>
+          <a class="wiki-nav-sub" href="#loop">ゲームループ</a>
+          <a class="wiki-nav-sub" href="#shop">ショップ</a>
+          <a class="wiki-nav-sub" href="#enemy">敵・制作順</a>
+          <a class="wiki-nav-sub" href="#world">キャラクター</a>
+        </div>
+      </details>
+      <details class="wiki-nav-section" data-nav-section="motion" name="wiki-nav">
+        <summary class="wiki-nav-heading">モーション詳細</summary>
+        <div class="wiki-nav-items">
+          <a class="wiki-nav-sub" href="#motion" data-page-link="motion">概要</a>
+          <a class="wiki-nav-sub" href="#motion-weak1">弱1：斜め斬り</a>
+          <a class="wiki-nav-sub" href="#motion-weak2">弱2：斬り上げ</a>
+          <a class="wiki-nav-sub" href="#motion-strong3">強3：回転斬り</a>
+          <a class="wiki-nav-sub" href="#motion-production">制作・調整</a>
+        </div>
+      </details>
+      <a class="wiki-nav-single" href="#shooting" data-page-link="shooting">撮影チェック</a>
     </nav>
-    <div class="wiki-sidebar-bottom">仕様の正本：<code>MusouGame/Design/*.md</code><br>HTMLは閲覧用の資料。</div>
   </aside>
   <div class="wiki-content">
     <main id="main-content">
       <div class="wiki-page" id="overview" data-wiki-page="overview">
 <header class="header"><div class="wrap">
-  <div class="eyebrow">GAME DESIGN WIKI / 2026.11.01</div>
+  
   <h1>LEIR <span style="color:#7daed6;font-weight:400">/</span><br>無双アクション</h1>
   <p class="lede">敵を<strong>集める</strong> → <strong>斬り払う</strong>。<br>爽快な剣戟を核にした、部屋攻略型3Dローグライト。</p>
   <div class="row"><span class="pill green">戦闘の方向性：決定</span><span class="pill orange">部屋数・数値：仮</span><span class="pill purple">追加ギミック：後日</span></div>
 </div></header>
-<div class="wrap"><nav class="topnav" aria-label="目次"><a href="#core">コア体験</a><a href="#combo">コンボ</a><a href="#timing">攻撃の隙</a><a href="#boss">ボス戦</a><a href="#loop">ゲームループ</a><a href="#shop">ショップUI</a><a href="#enemy">敵・開発順</a><a href="#world">リア・保留事項</a></nav>
+<div class="wrap">
 <section class="section" id="core"><div class="heading"><div><span class="kicker">01 / CORE EXPERIENCE</span><h2>3つの柱</h2></div><span class="pill green">方向性確定</span></div>
   <div class="grid"><div class="tile"><div class="num">01</div><h3>弱攻撃で集める</h3><p class="muted small">素早い広範囲攻撃。敵を散らさず、リアの<strong>前方の一点</strong>へ寄せる。</p></div><div class="tile"><div class="num orange">02</div><h3>強攻撃でなぎ倒す</h3><p class="muted small">範囲殲滅と単体火力を使い分け。<strong>大量撃破</strong>の感触が最優先。</p></div><div class="tile"><div class="num green">03</div><h3>戦闘後に育てる</h3><p class="muted small">撃破で通貨を自動獲得。部屋の間に購入してビルドを伸ばす。</p></div></div>
   <div class="note" style="margin-top:12px">基本雑魚は<span style="color:#fff">無双寄り</span>：多数が接近・包囲、同時攻撃は控えめ。理不尽な集中攻撃より、気持ちよいリアクションを優先。</div>
 </section>
-<section class="section" id="combo"><div class="heading"><div><span class="kicker">02 / MOVESET</span><h2>基本コンボは3本</h2><p class="muted small">タブを選ぶと役割が切り替わる。JavaScriptなしで動作。</p></div><span class="pill green">確定</span></div>
+<section class="section" id="combo"><div class="heading"><div><span class="kicker">02 / MOVESET</span><h2>基本コンボは3本</h2></div><span class="pill green">確定</span></div>
   <div class="widget" role="group" aria-label="コンボ切り替え">
    <input type="radio" id="c0" name="combo" checked><input type="radio" id="c1" name="combo"><input type="radio" id="c2" name="combo">
    <div class="tabs"><label for="c0">単発：強</label><label for="c1">弱 → 弱 → 強</label><label for="c2">弱 → 強 → 強</label></div>
@@ -117,7 +121,7 @@
 <section class="section" id="world"><div class="heading"><div><span class="kicker">08 / CHARACTER & OPEN QUESTIONS</span><h2>キャラクターと保留事項</h2></div></div>
   <div class="char"><div class="tile"><h3>リア / Leir</h3><p class="small">金髪の外ハネショートボブ、青い瞳。ネイビーの短いジャケット、白シャツ、ダークグレーの短パン、茶色の編み上げブーツ。片手剣を使う身軽な若い冒険者。</p><p class="small muted" style="margin-bottom:0">女性寄りの中性的な造形 / 王道ファンタジー / 柔らかいアニメ調3D。長髪・マントなど複雑な揺れ物は避ける。</p><div class="row" style="margin-top:15px"><span class="pill">C++20</span><span class="pill">DirectX 12</span><span class="pill">Blender / Tripo</span><span class="pill orange">HestiaEngine 検討</span></div></div><div class="tile"><h3>未決定 → プロトタイプで検証</h3><div class="list-row"><span>各攻撃の当たり判定・モーション</span><span class="pill orange">調整</span></div><div class="list-row"><span>前隙 / 無敵時間 / コンボ猶予</span><span class="pill orange">調整</span></div><div class="list-row"><span>同時出現数 / 増援ペース</span><span class="pill orange">調整</span></div><div class="list-row"><span>強化費用・抽選率・特殊スキル</span><span class="pill orange">設計</span></div><div class="list-row"><span>1ランの部屋数・プレイ時間</span><span class="pill orange">仮置き</span></div></div></div>
 </section>
-<div class="foot">LEIR — GAME DESIGN WIKI · オフライン単一HTML · デザイン資料の正本はMarkdown</div>
+
 
       </div><!-- /overview .wrap -->
       </div><!-- /overview -->
@@ -130,7 +134,7 @@
             <div class="row"><span class="pill green">動きの大枠：採用</span><span class="pill orange">秒数・細部：仮</span></div>
           </header>
           <div class="note">方向は<strong>リア本人の右／左</strong>。正面から見ると左右が反転する。反時計回りは<strong>上から見た回転方向</strong>。斬撃の見た目と実際の攻撃判定は別々に調整できる。</div>
-          <nav class="wiki-inpage" aria-label="モーションの目次"><a href="#motion-weak1">弱1</a><a href="#motion-weak2">弱2</a><a href="#motion-strong3">強3</a><a href="#motion-production">制作・調整</a><a href="#shooting">撮影用の短縮版</a></nav>
+
           <div class="motion-overview">
             <div class="tile"><span class="motion-chip orange">弱1</span><h3>右上 → 左下</h3><p class="small muted">浅い20〜30°の斜め斬り<br>右足を半歩前へ / 0.40秒</p></div>
             <div class="tile"><span class="motion-chip blue">弱2</span><h3>左下 → 右上</h3><p class="small muted">約45°の斬り上げ<br>踏み込みなし / 0.40秒</p></div>
@@ -164,7 +168,7 @@
             <div class="grid two"><div class="tile"><h3>実写撮影</h3><p class="small muted">最初は3段を通しで演じ、必要区間を段ごとに切り出す。撮影時に0.4秒・0.65秒を厳密に再現する必要はない。</p></div><div class="tile"><h3>Blenderで仕上げる</h3><p class="small muted">姿勢・接地・速度カーブ・開始/終端・剣の軌道を調整。ゲーム内で各段をブレンドする。</p></div><div class="tile"><h3>移動・判定の管理</h3><p class="small muted">Root Motionでゲーム内移動量を制御しない。移動や攻撃判定はゲーム側で扱う。</p></div><div class="tile"><h3>抽出経路は検証中</h3><p class="small muted">実写→Viggleと、実写→Muse→Viggleの対応機能・品質は未比較。利用可能な入力方法を検証する。</p></div></div>
             <div class="note">制作上の優先順位は<strong>斬撃方向・足運び・終端姿勢</strong>。手首の角度や厳密な速度曲線を撮影段階で演じ切る必要はない。</div>
           </section>
-          <div class="wiki-page-bottom">設計原本：<code>Design/AttackMotion_WeakWeakStrong.md</code>（詳細の優先ソース）</div>
+          
         </div>
       </article>
       <article class="wiki-page" id="shooting" data-wiki-page="shooting">
@@ -190,7 +194,7 @@
             </div>
             <p class="muted small">斬撃の速度カーブ、剣の細かな軌道、クリップの接続は撮影後にBlenderで調整する。</p>
           </section>
-          <div class="wiki-page-bottom"><a href="#motion">詳しい仕様を見る</a> ｜ 設計原本：<code>Design/AttackMotion_ShootingChecklist.md</code></div>
+          
         </div>
       </article>
     </main>
