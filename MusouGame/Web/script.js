@@ -85,8 +85,12 @@
       if (link.dataset.pageLink === pageId) link.setAttribute("aria-current", "page");
       else if (target && target.id === link.getAttribute("href").slice(1)) link.setAttribute("aria-current", "location");
     }
-    document.title = pageId === "motion" ? "攻撃モーション詳細 — LEIR" :
-      pageId === "shooting" ? "撮影チェック — LEIR" : "LEIR — Game Design Wiki";
+    document.title = ({
+      "motion": "弱→弱→強",
+      "motion-wss": "弱→強→強",
+      "motion-single": "単発強",
+      "shooting": "撮影チェック"
+    }[pageId] || "ゲーム全体") + " — LEIR";
 
     // Run after changing display state so deep links scroll to visible content.
     requestAnimationFrame(() => {
