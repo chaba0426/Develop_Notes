@@ -108,3 +108,27 @@
  .wiki-mobile-brand span{font-size:10px}
 }
 @media(prefers-reduced-motion:reduce){.wiki-sidebar{transition:none}}
+
+
+/* Collapsible wiki table of contents */
+.wiki-nav{padding:12px 10px}
+.wiki-nav-section{margin:2px 0 4px;border:0}
+.wiki-nav-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;cursor:pointer;color:#e1eeff;font-size:13px;font-weight:800;padding:11px 10px 11px 13px;border-radius:8px;user-select:none}
+.wiki-nav-heading::-webkit-details-marker{display:none}
+.wiki-nav-heading::after{content:"";display:block;flex:none;width:7px;height:7px;border-right:2px solid #93b9d6;border-bottom:2px solid #93b9d6;transform:rotate(-45deg);transition:transform .15s ease;margin-right:5px}
+.wiki-nav-section[open]>.wiki-nav-heading::after{transform:rotate(45deg)}
+.wiki-nav-heading:hover,.wiki-nav-heading:focus-visible,.wiki-nav-section[open]>.wiki-nav-heading{background:#24364d;color:#fff}
+.wiki-nav-heading:focus-visible{outline:2px solid #8ccefa;outline-offset:2px}
+.wiki-nav-items{padding:4px 0 9px 12px}
+.wiki-nav-items .wiki-nav-sub{padding:8px 9px 8px 16px;font-size:12px}
+.wiki-nav-single{display:block;padding:11px 13px;color:#e1eeff;font-size:13px;font-weight:800;border-left:3px solid transparent;border-radius:8px}
+.wiki-mobile-brand{font-size:17px}
+.wiki-menu-toggle{min-width:42px;min-height:39px;justify-content:center}
+.wiki-menu-toggle span:first-child{font-size:22px}
+.wiki-brand{padding:20px 21px}
+.wiki-nav-section .wiki-nav-heading{scroll-margin-top:70px}
+.wiki-sidebar{justify-content:flex-start}
+.wiki-page-header{padding-top:33px}
+.wiki-page-header .row{margin-top:12px}
+@media(max-width:840px){.wiki-menu-toggle{padding:5px 11px}.wiki-mobile-bar{min-height:52px}}
+@media(prefers-reduced-motion:reduce){.wiki-nav-heading::after{transition:none}}
