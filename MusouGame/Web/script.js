@@ -42,6 +42,14 @@
   if (!pages.length || !sidebar || !menuButton || !backdrop) return;
 
   const navLinks = Array.from(sidebar.querySelectorAll('a[href^="#"]'));
+  const navSections = Array.from(sidebar.querySelectorAll('.wiki-nav-section'));
+  // A heading only expands/collapses its section; it never changes the page.
+  navSections.forEach(section => {
+    section.addEventListener("toggle", () => {
+      if (!section.open) return;
+      navSections.forEach(other => { if (other !== section) other.open = false; });
+    });
+  });
   const closeMenu = (restoreFocus = false) => {
     const wasOpen = document.body.classList.contains("wiki-menu-open");
     document.body.classList.remove("wiki-menu-open");
@@ -74,6 +82,9 @@
     const pageId = selected ? selected.dataset.wikiPage : "overview";
 
     for (const page of pages) page.hidden = page.dataset.wikiPage !== pageId;
+    // Expand the group of the destination, but do not navigate when its heading is clicked.
+    const currentSection = navSections.find(section => section.dataset.navSection === pageId);
+    if (currentSection) currentSection.open = true;
     for (const link of navLinks) {
       link.removeAttribute("aria-current");
       if (link.dataset.pageLink === pageId) link.setAttribute("aria-current", "page");
