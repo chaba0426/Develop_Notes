@@ -48,12 +48,13 @@
 
 ### WIKI型ナビゲーション
 
-- **PC:** 左にカテゴリ別サイドメニューを常設。**スマホ:** ハンバーガーメニューからページを選択。
+- **PC:** 左にサイドメニューを常設。**スマホ:** アイコンのみのハンバーガーメニュー。
+- 「ゲーム全体・企画書」「モーション詳細」の横長バーのみが開閉操作。**バーはページ移動しない**。中の「概要」「弱1」などは通常のリンクで、複数グループを同時に開ける。撮影チェックもモーション詳細内のリンク。
 - ページ構成: **ゲーム全体・企画書**（従来の8セクションを維持）、**攻撃モーション詳細**、**撮影チェックシート**。
 - 単一HTML内の各ページは `Web/index.html` の `data-wiki-page` で区切り、`Web/script.js` がハッシュリンクで切り替える。例: `#overview` / `#motion` / `#shooting`。従来の `#core` や `#combo` もそのまま利用可能。
 - **ページ追加時:** 正本の `Design/*.md` を更新 → `Web/index.html` にページとサイドメニュー項目を追加 → 必要なら `Web/style.css` を調整 → 単一HTMLを再生成して編集元もコミットする。
 - **モーション詳細の正本:** [Design/AttackMotion_WeakWeakStrong.md](Design/AttackMotion_WeakWeakStrong.md)。撮影用の正本は [Design/AttackMotion_ShootingChecklist.md](Design/AttackMotion_ShootingChecklist.md)。HTMLには閲覧しやすい要約・図表として同期する。
-- **既存のコンボ切り替え**は引き続きCSSのみで動き、ページ切り替えとスマホのメニュー開閉はJavaScriptで動く。
+- **既存のコンボ切り替え**は引き続きCSSのみで動き、ページ切り替えとスマホのメニュー開閉はJavaScriptで動く。重複するページ内目次やメニューの説明文を増やさない。仕様情報はそのまま保持する。
 
 ### 単一HTMLへビルド
 
