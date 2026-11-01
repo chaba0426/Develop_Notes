@@ -14,7 +14,10 @@
 | --- | --- |
 | ゲーム概要、キャラクター、スコープ、制作順 | [Design/Overview.md](Design/Overview.md) |
 | 通常攻撃、コンボ、ステップ、キャンセル、攻撃の隙 | [Design/Combat.md](Design/Combat.md) |
-| 弱1→弱2→強3の攻撃モーション詳細（姿勢・軌道・制作方針） | [Design/AttackMotion_WeakWeakStrong.md](Design/AttackMotion_WeakWeakStrong.md) |
+| 基本構え、待機→攻撃ブレンド、モーション共通ルール | [Design/AttackMotion_Common.md](Design/AttackMotion_Common.md) |
+| 弱→弱→強（斜め斬り・斬り上げ・低空360°回転斬り） | [Design/AttackMotion_WeakWeakStrong.md](Design/AttackMotion_WeakWeakStrong.md) |
+| 弱→強→強（低い突き・両手での縦斬り） | [Design/AttackMotion_WeakStrongStrong.md](Design/AttackMotion_WeakStrongStrong.md) |
+| 単発強（右→左の水平薙ぎ払い） | [Design/AttackMotion_StandaloneStrong.md](Design/AttackMotion_StandaloneStrong.md) |
 | 攻撃モーションの撮影用チェックシート | [Design/AttackMotion_ShootingChecklist.md](Design/AttackMotion_ShootingChecklist.md) |
 | 雑魚・ボス・中ボス、敵AI、拡張案 | [Design/Enemies.md](Design/Enemies.md) |
 | 部屋、クリア条件、通貨、ショップ、成長 | [Design/Roguelite.md](Design/Roguelite.md) |
@@ -50,10 +53,10 @@
 
 - **PC:** 左にサイドメニューを常設。**スマホ:** アイコンのみのハンバーガーメニュー。
 - 「ゲーム全体・企画書」「モーション詳細」の横長バーのみが開閉操作。**バーはページ移動しない**。中の「概要」「弱1」などは通常のリンクで、複数グループを同時に開ける。撮影チェックもモーション詳細内のリンク。
-- ページ構成: **ゲーム全体・企画書**（従来の8セクションを維持）、**攻撃モーション詳細**、**撮影チェックシート**。
-- 単一HTML内の各ページは `Web/index.html` の `data-wiki-page` で区切り、`Web/script.js` がハッシュリンクで切り替える。例: `#overview` / `#motion` / `#shooting`。従来の `#core` や `#combo` もそのまま利用可能。
+- ページ構成: **ゲーム全体・企画書**（従来の8セクションを維持）、**弱→弱→強（基本構えを含む）**、**弱→強→強**、**単発強**、**撮影チェックシート**。
+- 単一HTML内の各ページは `Web/index.html` の `data-wiki-page` で区切り、`Web/script.js` がハッシュリンクで切り替える。例: `#overview` / `#motion` / `#motion-wss` / `#motion-single` / `#shooting`。従来の `#core` や `#combo` もそのまま利用可能。
 - **ページ追加時:** 正本の `Design/*.md` を更新 → `Web/index.html` にページとサイドメニュー項目を追加 → 必要なら `Web/style.css` を調整 → 単一HTMLを再生成して編集元もコミットする。
-- **モーション詳細の正本:** [Design/AttackMotion_WeakWeakStrong.md](Design/AttackMotion_WeakWeakStrong.md)。撮影用の正本は [Design/AttackMotion_ShootingChecklist.md](Design/AttackMotion_ShootingChecklist.md)。HTMLには閲覧しやすい要約・図表として同期する。
+- **モーションの正本:** [共通仕様](Design/AttackMotion_Common.md)、[弱→弱→強](Design/AttackMotion_WeakWeakStrong.md)、[弱→強→強](Design/AttackMotion_WeakStrongStrong.md)、[単発強](Design/AttackMotion_StandaloneStrong.md)。撮影用の正本は [チェックシート](Design/AttackMotion_ShootingChecklist.md)。HTMLには閲覧しやすい内容として同期する。
 - **既存のコンボ切り替え**は引き続きCSSのみで動き、ページ切り替えとスマホのメニュー開閉はJavaScriptで動く。重複するページ内目次やメニューの説明文を増やさない。仕様情報はそのまま保持する。
 
 ### 単一HTMLへビルド
