@@ -46,6 +46,15 @@
 3. **変更された仕様に関係する箇所だけ更新する。** 無関係な文章・見た目を不用意に変更しない。
 4. **MarkdownとHTMLの矛盾はMarkdownを優先する。** 仕様の変更は先に `Design/*.md` を更新し、その後HTML側を同期する。
 
+### WIKI型ナビゲーション
+
+- **PC:** 左にカテゴリ別サイドメニューを常設。**スマホ:** ハンバーガーメニューからページを選択。
+- ページ構成: **ゲーム全体・企画書**（従来の8セクションを維持）、**攻撃モーション詳細**、**撮影チェックシート**。
+- 単一HTML内の各ページは `Web/index.html` の `data-wiki-page` で区切り、`Web/script.js` がハッシュリンクで切り替える。例: `#overview` / `#motion` / `#shooting`。従来の `#core` や `#combo` もそのまま利用可能。
+- **ページ追加時:** 正本の `Design/*.md` を更新 → `Web/index.html` にページとサイドメニュー項目を追加 → 必要なら `Web/style.css` を調整 → 単一HTMLを再生成して編集元もコミットする。
+- **モーション詳細の正本:** [Design/AttackMotion_WeakWeakStrong.md](Design/AttackMotion_WeakWeakStrong.md)。撮影用の正本は [Design/AttackMotion_ShootingChecklist.md](Design/AttackMotion_ShootingChecklist.md)。HTMLには閲覧しやすい要約・図表として同期する。
+- **既存のコンボ切り替え**は引き続きCSSのみで動き、ページ切り替えとスマホのメニュー開閉はJavaScriptで動く。
+
 ### 単一HTMLへビルド
 
 Node.js 18以上・追加パッケージ不要。リポジトリのルートから実行：
