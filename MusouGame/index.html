@@ -199,14 +199,13 @@
           <a class="wiki-nav-sub" href="#world">キャラクター</a>
         </div>
       </details>
-      <details class="wiki-nav-section" data-nav-pages="motion shooting">
+      <details class="wiki-nav-section" data-nav-pages="motion motion-wss motion-single shooting">
         <summary class="wiki-nav-heading">モーション詳細</summary>
         <div class="wiki-nav-items">
-          <a class="wiki-nav-sub" href="#motion" data-page-link="motion">概要</a>
-          <a class="wiki-nav-sub" href="#motion-weak1">弱1：斜め斬り</a>
-          <a class="wiki-nav-sub" href="#motion-weak2">弱2：斬り上げ</a>
-          <a class="wiki-nav-sub" href="#motion-strong3">強3：回転斬り</a>
-          <a class="wiki-nav-sub" href="#motion-production">制作・調整</a>
+          <a class="wiki-nav-sub" href="#motion-stance">基本構え</a>
+          <a class="wiki-nav-sub" href="#motion" data-page-link="motion">弱 → 弱 → 強</a>
+          <a class="wiki-nav-sub" href="#motion-wss" data-page-link="motion-wss">弱 → 強 → 強</a>
+          <a class="wiki-nav-sub" href="#motion-single" data-page-link="motion-single">単発強</a>
           <a class="wiki-nav-sub" href="#shooting" data-page-link="shooting">撮影チェック</a>
         </div>
       </details>
@@ -296,12 +295,21 @@
         <div class="wrap">
           <header class="wiki-page-header">
             <div class="eyebrow">ANIMATION DESIGN / 弱 → 弱 → 強</div>
-            <h1>攻撃モーション詳細仕様</h1>
+            <h1>弱 → 弱 → 強</h1>
             <p class="muted">リアの片手剣コンボ。弱攻撃の鋭さと、強3の低い回転斬りの重さを両立する。</p>
             <div class="row"><span class="pill green">動きの大枠：採用</span><span class="pill orange">秒数・細部：仮</span></div>
           </header>
           <div class="note">方向は<strong>リア本人の右／左</strong>。正面から見ると左右が反転する。反時計回りは<strong>上から見た回転方向</strong>。斬撃の見た目と実際の攻撃判定は別々に調整できる。</div>
 
+          <section class="section motion-section" id="motion-stance">
+            <div class="heading"><div><span class="kicker">BASE STANCE</span><h2>共通の基本構え</h2></div></div>
+            <div class="motion-facts">
+              <div><small>足</small><strong>左足を少し前</strong></div>
+              <div><small>上体</small><strong>ほぼ正面・自然な半身</strong></div>
+              <div><small>剣</small><strong>右腰に下げ、剣先は斜め下</strong></div>
+            </div>
+            <p class="small muted">弱1は剣が右上にある姿勢からモーションを始め、待機との差は短いブレンドで一気に補う。多少の姿勢の飛びは許容し、攻撃のレスポンスを優先する。単発強では逆に右肩への振りかぶりを見せる。</p>
+          </section>
           <div class="motion-overview">
             <div class="tile"><span class="motion-chip orange">弱1</span><h3>右上 → 左下</h3><p class="small muted">浅い20〜30°の斜め斬り<br>右足を半歩前へ / 0.40秒</p></div>
             <div class="tile"><span class="motion-chip blue">弱2</span><h3>左下 → 右上</h3><p class="small muted">約45°の斬り上げ<br>踏み込みなし / 0.40秒</p></div>
@@ -309,9 +317,9 @@
           </div>
           <section class="section motion-section" id="motion-weak1">
             <div class="heading"><div><span class="kicker">MOVE 01 / LIGHT</span><h2>弱1 — コンパクトな斜め斬り</h2></div><span class="motion-chip orange">0.40秒</span></div>
-            <p class="motion-lead">右胸〜右脇付近の構えから、<strong>右足で半歩踏み込みながら</strong>右上→左下へ鋭く振り抜く。剣を大きく引き直さない。</p>
+            <p class="motion-lead">待機中の剣は右腰だが、弱1のモーションクリップは<strong>剣が右上にある姿勢</strong>から開始する。右足を半歩踏み込みながら右上→左下へ鋭く斬る。待機との姿勢差は短いブレンドで許容する。</p>
             <div class="motion-facts"><div><small>軌道</small><strong>右上 → 左下 / 20〜30°</strong></div><div><small>足</small><strong>右足を半歩前へ</strong></div><div><small>終端姿勢</small><strong>左腰・剣先は左下</strong></div></div>
-            <ol class="motion-steps"><li>中段構え。右肘を軽く曲げ、剣は右胸〜右脇付近。</li><li>右足の踏み込みと同時に腰・肩・右腕を連動。上半身の大回転は不要。</li><li>急加速して浅く斬り、着地と斬撃終盤をおおむね合わせる。</li><li>減速しながら左腰付近まで振り抜き、弱2の斬り返しへ接続。</li></ol>
+            <ol class="motion-steps"><li>待機は剣を右腰に下げるが、弱1の開始姿勢では剣を右上に置く。長い準備動作は省略する。</li><li>右足の踏み込みと同時に腰・肩・右腕を連動。上半身の大回転は不要。</li><li>急加速して浅く斬り、着地と斬撃終盤をおおむね合わせる。</li><li>上体はほぼ正面を保ち、最後に軽く左へひねる。剣は左腰付近まで振り抜き、次段へつなぐ。</li></ol>
             <div class="motion-time"><div class="motion-time-track"><span style="flex:6" class="motion-phase prep">0.00–0.06<br>踏み込み</span><span style="flex:12" class="motion-phase hit">0.06–0.18<br>急加速・斬撃</span><span style="flex:7" class="motion-phase follow">0.18–0.25<br>着地・減速</span><span style="flex:15" class="motion-phase settle">0.25–0.40<br>次段へ接続</span></div><p class="muted tiny">時間配分は撮影・編集のための仮案。</p></div>
             <div class="note orange">避ける：斬る前に逆側へ剣を動かす、大きく振りかぶる、等速で振る。</div>
           </section>
@@ -319,7 +327,7 @@
             <div class="heading"><div><span class="kicker">MOVE 02 / LIGHT</span><h2>弱2 — 斜め斬り上げ</h2></div><span class="motion-chip blue">0.40秒</span></div>
             <p class="motion-lead">弱1の終端姿勢（剣が左腰・左下）から直接、<strong>左下→右上</strong>へ切り返す。軽快さを保ちながら、上方向の動きを明確にする。</p>
             <div class="motion-facts"><div><small>軌道</small><strong>左下 → 右上 / 約45°</strong></div><div><small>足</small><strong>追加踏み込みなし</strong></div><div><small>終端姿勢</small><strong>右肩〜頭の横</strong></div></div>
-            <ol class="motion-steps"><li>弱1で左下に振り抜いた剣を、その位置から斬り上げる。</li><li>腰・肩を切り返し、上体を軽く起こしながら斬る。</li><li>頭上へ大きく振り上げず、右肩〜頭の横に収める。</li><li>強3で右肩後方へ引いて溜められる位置で終了。</li></ol>
+            <ol class="motion-steps"><li>弱1で左下に振り抜いた剣を、その位置から斬り上げる。</li><li>上体を軽く右へひねりながら腰・肩を切り返す。自然に少し身体を起こすが高さの変化は固定しない。</li><li>頭上へ大きく振り上げず、右肩〜頭の横に収める。</li><li>強3で右肩後方へ引いて溜められる位置で終了。</li></ol>
             <div class="note">弱1の完全な逆再生にしない。斬り上げ角度・身体の切り返し・剣の高さで変化をつける。速度の細部はBlender側で調整。</div>
           </section>
           <section class="section motion-section" id="motion-strong3">
@@ -338,30 +346,125 @@
           
         </div>
       </article>
+      <article class="wiki-page" id="motion-wss" data-wiki-page="motion-wss">
+        <div class="wrap">
+          <header class="wiki-page-header">
+            <div class="eyebrow">ATTACK MOTION / 対単体</div>
+            <h1>弱 → 強 → 強</h1>
+            <p class="muted">鋭い突きから、両手で地面へ叩きつける高威力の縦斬りへ。</p>
+            <div class="row"><span class="pill green">大まかな動き：採用</span><span class="pill orange">時間・細部：仮</span></div>
+          </header>
+          <div class="motion-overview">
+            <div class="tile"><span class="motion-chip orange">弱1</span><h3>右上 → 左下</h3><p class="small muted">共通の浅い斜め斬り。右足を半歩前へ。終端は剣が左腰。</p></div>
+            <div class="tile"><span class="motion-chip blue">強2</span><h3>低い突き</h3><p class="small muted">腹部付近へ直線的に。追加の踏み込みなし。</p></div>
+            <div class="tile"><span class="motion-chip purple">強3-2</span><h3>両手の縦斬り</h3><p class="small muted">高い構えで一瞬溜めて、地面へ叩きつける。</p></div>
+          </div>
+          <section class="section motion-section" id="motion-wss-thrust">
+            <div class="heading"><div><span class="kicker">MOVE 02 / HEAVY</span><h2>強2 — 腹部付近への低い突き</h2></div></div>
+            <p class="motion-lead">弱1の左腰・左下の終端から、剣を中央へ戻して<strong>前方の腹部付近へまっすぐ突く</strong>。弱2の斬り上げと見た目を区別する。</p>
+            <div class="motion-facts">
+              <div><small>足</small><strong>踏み込みなし・右足前</strong></div>
+              <div><small>上体</small><strong>軽く前傾</strong></div>
+              <div><small>次段への接続</small><strong>剣を引き、頭上へ</strong></div>
+            </div>
+            <ol class="motion-steps">
+              <li>弱1の終端から、剣を身体の中央寄りへ引き寄せる。</li>
+              <li>右足を前にしたまま低めに突く。上体は軽く前傾させ、深く倒しすぎない。</li>
+              <li>突いた剣を引き戻し、そのまま頭上へ振りかぶる動きにつなぐ。</li>
+            </ol>
+          </section>
+          <section class="section motion-section" id="motion-wss-finish">
+            <div class="heading"><div><span class="kicker">MOVE 03 / HEAVY FINISH</span><h2>強3-2 — 地面へ叩きつける縦斬り</h2></div><span class="motion-chip purple">両手持ち</span></div>
+            <p class="motion-lead">強2の剣を引き戻しながら頭上へ振り上げる途中で<strong>左手を添える</strong>。高い姿勢で一瞬静止し、左足を大きく踏み込んで全身で斬り下ろす。</p>
+            <div class="motion-facts">
+              <div><small>振りかぶり</small><strong>高い姿勢・頭上で一瞬停止</strong></div>
+              <div><small>踏み込み</small><strong>左足を大きく前へ</strong></div>
+              <div><small>終端</small><strong>低い前傾・剣が地面に接触</strong></div>
+            </div>
+            <ol class="motion-steps">
+              <li>剣を頭上へ振り上げる途中で左手を添え、頭上に到達した時点で両手持ちにする。</li>
+              <li>深くしゃがまず、高く伸びた姿勢で<strong>一瞬静止</strong>。長めの前隙を表現する。</li>
+              <li>左足を大きく踏み込み、腰・肩・両腕・上体を一体にして、地面へ力強く斬り下ろす。</li>
+              <li>左膝を深く曲げた低い姿勢で、剣を<strong>地面へ叩きつける</strong>。接触後は一瞬止めてから引き上げる。</li>
+            </ol>
+            <div class="note orange">秒数、判定時間、地面への衝撃演出は未固定。撮影では安全な小道具を使い、実際に地面を強打しない。</div>
+          </section>
+        </div>
+      </article>
+      <article class="wiki-page" id="motion-single" data-wiki-page="motion-single">
+        <div class="wrap">
+          <header class="wiki-page-header">
+            <div class="eyebrow">ATTACK MOTION / 単発</div>
+            <h1>単発強 — 水平薙ぎ払い</h1>
+            <p class="muted">右肩で軽く溜め、一気に踏み込んで胸の高さを右から左へ広く斬る。</p>
+            <div class="row"><span class="pill green">斬撃・終端：採用</span><span class="pill orange">左足踏み込み：仮</span></div>
+          </header>
+          <div class="motion-facts">
+            <div><small>準備</small><strong>右肩で軽く溜める</strong></div>
+            <div><small>軌道</small><strong>胸の高さ・右 → 左へ水平</strong></div>
+            <div><small>終端</small><strong>左側へ大きく振り抜いて静止</strong></div>
+          </div>
+          <section class="section motion-section" id="motion-single-motion">
+            <div class="heading"><div><span class="kicker">SINGLE HEAVY</span><h2>踏み込み水平薙ぎ払い</h2></div></div>
+            <ol class="motion-steps">
+              <li>待機時は剣を右腰で下げる。<strong>右肩付近まで引き上げ、軽く溜める</strong>。弱1と違い準備動作を見せる。</li>
+              <li>溜めてから一気に<strong>左足を前へ踏み込む（仮）</strong>。踏み込みの着地と斬撃を連動させる。</li>
+              <li>腰と肩を回し、胸付近の高さを<strong>右 → 左へ大きく水平に斬る</strong>。身体を360°回転させない。</li>
+              <li>剣を身体の左側まで振り抜き、上体も左へひねる。終端を一瞬保持し、構えに戻る。</li>
+            </ol>
+          </section>
+          <section class="section motion-section" id="motion-single-test">
+            <div class="heading"><div><span class="kicker">SHOOTING TEST</span><h2>踏み込み足は撮影で比較</h2></div></div>
+            <div class="grid two">
+              <div class="tile"><span class="pill orange">仮採用</span><h3 style="margin-top:9px">左足踏み込み</h3><p class="small muted">基本構えで左足が少し前にある状態から、さらに踏み込んで薙ぐ。</p></div>
+              <div class="tile"><h3>比較案：右足踏み込み</h3><p class="small muted">身体のひねり、接地、斬撃の勢い、自然さで比較する。</p></div>
+            </div>
+            <p class="small muted" style="margin-top:14px">「右肩で溜めてから、一気に踏み込む」タイミングは採用済み。細かな足の処理は撮影・Blenderで調整する。</p>
+          </section>
+        </div>
+      </article>
       <article class="wiki-page" id="shooting" data-wiki-page="shooting">
         <div class="wrap">
           <header class="wiki-page-header">
-            <div class="eyebrow">FIELD GUIDE / 撮影用</div>
-            <h1>攻撃モーション 撮影チェック</h1>
-            <p class="muted">撮影中にスマホで見るための短縮版。細かい秒数や手首の角度より、<strong>自然な動き</strong>を優先。</p>
-            <div class="row"><span class="pill green">3段を通して撮影</span><span class="pill orange">秒数合わせは不要</span></div>
+            <div class="eyebrow">SHOOTING CHECK</div>
+            <h1>撮影チェック</h1>
+            <p class="muted">剣の方向と足運びを優先。秒数や細かい関節の動きは撮影後に調整する。</p>
           </header>
-          <div class="shooting-cards">
-            <section class="shooting-card"><div class="shooting-card-top"><span class="motion-chip orange">弱1</span><span>約0.4秒</span></div><h2>右上 → 左下</h2><p><strong>右足を半歩前へ</strong>出しながら、浅い斜め斬り（20〜30°）。コンパクトに速く振る。</p><div class="shooting-end">終わり：剣は左腰、剣先は左下。</div></section>
-            <section class="shooting-card"><div class="shooting-card-top"><span class="motion-chip blue">弱2</span><span>約0.4秒</span></div><h2>左下 → 右上</h2><p><strong>踏み込みなし</strong>で約45°の斬り上げ。そのまま切り返す。</p><div class="shooting-end">終わり：剣は右肩〜頭の横。</div></section>
-            <section class="shooting-card"><div class="shooting-card-top"><span class="motion-chip purple">強3</span><span>約0.65秒・仮</span></div><h2>低い360°回転</h2><p><strong>左足を踏み込み</strong>、低く跳んで反時計回り。空中約270°、着地しながら約90°斬る。</p><div class="shooting-end">終わり：左膝を曲げた低いサイドランジ。剣は左下。</div></section>
-          </div>
-          <section class="section shooting-checklist"><div class="heading"><div><span class="kicker">BEFORE RECORDING</span><h2>撮影前に確認</h2></div></div>
-            <div class="check-items">
-              <label><input type="checkbox"><span><strong>右足 → そのまま → 左足</strong>の足運びになっている</span></label>
-              <label><input type="checkbox"><span>弱1：右上→左下 ／ 弱2：左下→右上</span></label>
-              <label><input type="checkbox"><span>強3は高く跳ばず、着地しながら左下へ振り抜く</span></label>
-              <label><input type="checkbox"><span>全身と足先が映り、十分な距離を確保できている</span></label>
-              <label><input type="checkbox"><span>安全な小道具・滑りにくい床・周囲のスペースを確認</span></label>
+          <div class="note">基本構え：<strong>左足を少し前、上体はほぼ正面、剣は右腰で下げる</strong>。弱1の開始姿勢は剣が右上にある状態からでよい。</div>
+          <section class="section">
+            <div class="heading"><div><h2>弱 → 弱 → 強</h2></div></div>
+            <div class="shooting-cards">
+              <div class="shooting-card"><div class="shooting-card-top"><span class="motion-chip orange">弱1</span><span>約0.4秒・仮</span></div><h3>右上 → 左下</h3><p>右足を半歩前へ。浅い斜め斬り（20〜30°）。上体はほぼ正面で軽く左へ。</p><div class="shooting-end">終わり：左腰、剣先は左下。</div></div>
+              <div class="shooting-card"><div class="shooting-card-top"><span class="motion-chip blue">弱2</span><span>約0.4秒・仮</span></div><h3>左下 → 右上</h3><p>追加踏み込みなしで約45°斬り上げ。上体を軽く右へ。</p><div class="shooting-end">終わり：右肩〜頭の横。</div></div>
+              <div class="shooting-card"><div class="shooting-card-top"><span class="motion-chip purple">強3-1</span><span>約0.65秒・仮</span></div><h3>低い360°回転</h3><p>左足を踏み込み、低く跳んで反時計回り。空中約270°、着地で残り約90°。</p><div class="shooting-end">終わり：左膝を曲げたサイドランジ、剣は左下。</div></div>
             </div>
-            <p class="muted small">斬撃の速度カーブ、剣の細かな軌道、クリップの接続は撮影後にBlenderで調整する。</p>
           </section>
-          
+          <section class="section">
+            <div class="heading"><div><h2>弱 → 強 → 強</h2></div></div>
+            <div class="shooting-cards">
+              <div class="shooting-card"><div class="shooting-card-top"><span class="motion-chip orange">弱1</span><span>共通</span></div><h3>右上 → 左下</h3><p>上記と同じ共通の弱1。</p></div>
+              <div class="shooting-card"><div class="shooting-card-top"><span class="motion-chip blue">強2</span></div><h3>低い突き</h3><p>追加踏み込みなし。腹部付近へ低めに突き、上体は軽く前傾。</p><div class="shooting-end">終わり：引き戻して頭上へ振りかぶる。</div></div>
+              <div class="shooting-card"><div class="shooting-card-top"><span class="motion-chip purple">強3-2</span></div><h3>両手の縦斬り</h3><p>振り上げの途中で左手を添え、頭上で一瞬静止。左足を大きく踏み込み、地面へ叩きつける。</p><div class="shooting-end">終わり：低く前傾。剣を地面で短く止めて引き上げる。</div></div>
+            </div>
+          </section>
+          <section class="section">
+            <div class="heading"><div><h2>単発強</h2></div></div>
+            <div class="shooting-card">
+              <div class="shooting-card-top"><span class="motion-chip purple">水平薙ぎ払い</span><span>左足踏み込みは仮</span></div>
+              <h3>胸の高さを右 → 左</h3>
+              <p>右肩で軽く溜めてから一気に踏み込み、胸の高さを水平に斬る。剣を左側まで振り抜いて上体も左へ。</p>
+              <div class="shooting-end">終わり：一瞬静止して復帰。右足踏み込みも撮影して比較。</div>
+            </div>
+          </section>
+          <section class="section shooting-checklist">
+            <div class="heading"><div><h2>撮影前</h2></div></div>
+            <div class="check-items">
+              <label><input type="checkbox"><span>全身と足先が映る</span></label>
+              <label><input type="checkbox"><span>安全な小道具・床・周囲のスペースを確認する</span></label>
+              <label><input type="checkbox"><span>3つのコンボを通しで撮影する</span></label>
+              <label><input type="checkbox"><span>自然な動きを優先。秒数は後で調整する</span></label>
+            </div>
+          </section>
         </div>
       </article>
     </main>
@@ -456,8 +559,12 @@
       if (link.dataset.pageLink === pageId) link.setAttribute("aria-current", "page");
       else if (target && target.id === link.getAttribute("href").slice(1)) link.setAttribute("aria-current", "location");
     }
-    document.title = pageId === "motion" ? "攻撃モーション詳細 — LEIR" :
-      pageId === "shooting" ? "撮影チェック — LEIR" : "LEIR — Game Design Wiki";
+    document.title = ({
+      "motion": "弱→弱→強",
+      "motion-wss": "弱→強→強",
+      "motion-single": "単発強",
+      "shooting": "撮影チェック"
+    }[pageId] || "ゲーム全体") + " — LEIR";
 
     // Run after changing display state so deep links scroll to visible content.
     requestAnimationFrame(() => {
