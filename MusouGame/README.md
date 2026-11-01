@@ -14,6 +14,8 @@
 | --- | --- |
 | ゲーム概要、キャラクター、スコープ、制作順 | [Design/Overview.md](Design/Overview.md) |
 | 通常攻撃、コンボ、ステップ、キャンセル、攻撃の隙 | [Design/Combat.md](Design/Combat.md) |
+| 弱1→弱2→強3の攻撃モーション詳細（姿勢・軌道・制作方針） | [Design/AttackMotion_WeakWeakStrong.md](Design/AttackMotion_WeakWeakStrong.md) |
+| 攻撃モーションの撮影用チェックシート | [Design/AttackMotion_ShootingChecklist.md](Design/AttackMotion_ShootingChecklist.md) |
 | 雑魚・ボス・中ボス、敵AI、拡張案 | [Design/Enemies.md](Design/Enemies.md) |
 | 部屋、クリア条件、通貨、ショップ、成長 | [Design/Roguelite.md](Design/Roguelite.md) |
 
@@ -28,7 +30,7 @@
 
 1部屋・雑魚敵1種・リアの弱/強攻撃とステップで、「集めて斬り払う」を繰り返したくなるか。ショップ・ボス・ローグライト要素は初回プロトタイプには含めない。
 
-最終更新: 2026-10-22。実装値（フレーム数、倍率、価格など）は特記がなければ未確定。
+最終更新: 2026-11-01。実装値（フレーム数、倍率、価格など）は特記がなければ未確定。
 
 ## HTML企画書の編集・ビルド
 
