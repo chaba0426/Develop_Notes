@@ -140,6 +140,38 @@
 .wiki-page-header .row{margin-top:12px}
 @media(max-width:840px){.wiki-menu-toggle{padding:5px 11px}.wiki-mobile-bar{min-height:52px}}
 @media(prefers-reduced-motion:reduce){.wiki-nav-heading::after{transition:none}}
+
+
+/* WIKIWIKI-style collapsible category bars; ordinary text links within each. */
+.wiki-nav{padding:13px 9px 22px}
+.wiki-nav-section{margin:0 0 11px}
+.wiki-nav-heading{
+  width:100%;justify-content:space-between;min-height:44px;
+  border:1px solid #435875;background:#25374b;color:#eff6ff;
+  padding:10px 14px;border-radius:5px;font-size:14px;letter-spacing:.01em;
+}
+.wiki-nav-heading:hover,.wiki-nav-heading:focus-visible,.wiki-nav-section[open]>.wiki-nav-heading{
+  background:#30465c;color:#fff;border-color:#6989a5;
+}
+.wiki-nav-heading::after{width:8px;height:8px;border-color:#b6d0e7}
+.wiki-nav-section[open]>.wiki-nav-heading{border-bottom-color:#435875}
+.wiki-nav-items{padding:8px 0 12px 11px}
+.wiki-nav-items a,.wiki-nav-items .wiki-nav-sub{
+  position:relative;display:block;margin:0;border:0;border-radius:0;
+  background:transparent;padding:5px 4px 5px 20px;
+  font-size:13px;font-weight:400;line-height:1.55;
+  color:#bdd2e8;text-decoration:none;
+}
+.wiki-nav-items a::before{content:"•";position:absolute;left:5px;color:#7898b7;font-size:12px}
+.wiki-nav-items a:hover,.wiki-nav-items a:focus-visible{
+  border:0;border-radius:0;background:transparent;color:#f0f9ff;text-decoration:underline;
+  text-underline-offset:3px;outline:none;
+}
+.wiki-nav-items a[aria-current="page"],.wiki-nav-items a[aria-current="location"]{
+  color:#a9ddff;background:transparent;border:0;text-decoration:underline;
+  text-underline-offset:3px;font-weight:650;
+}
+@media(max-width:840px){.wiki-nav{padding:15px 12px 28px}.wiki-nav-heading{min-height:48px}.wiki-nav-items a,.wiki-nav-items .wiki-nav-sub{font-size:14px;padding-block:7px}}
 </style>
 </head>
 <body>
@@ -153,7 +185,7 @@
   <aside class="wiki-sidebar" id="wiki-sidebar" aria-label="資料のサイドメニュー">
     <a class="wiki-brand" href="#overview"><span class="wiki-brand-name">LEIR</span></a>
     <nav class="wiki-nav" aria-label="設計資料">
-      <details class="wiki-nav-section" data-nav-section="overview" name="wiki-nav">
+      <details class="wiki-nav-section" data-nav-pages="overview">
         <summary class="wiki-nav-heading">ゲーム全体・企画書</summary>
         <div class="wiki-nav-items">
           <a class="wiki-nav-sub" href="#overview" data-page-link="overview">概要</a>
@@ -167,7 +199,7 @@
           <a class="wiki-nav-sub" href="#world">キャラクター</a>
         </div>
       </details>
-      <details class="wiki-nav-section" data-nav-section="motion" name="wiki-nav">
+      <details class="wiki-nav-section" data-nav-pages="motion shooting">
         <summary class="wiki-nav-heading">モーション詳細</summary>
         <div class="wiki-nav-items">
           <a class="wiki-nav-sub" href="#motion" data-page-link="motion">概要</a>
@@ -175,9 +207,9 @@
           <a class="wiki-nav-sub" href="#motion-weak2">弱2：斬り上げ</a>
           <a class="wiki-nav-sub" href="#motion-strong3">強3：回転斬り</a>
           <a class="wiki-nav-sub" href="#motion-production">制作・調整</a>
+          <a class="wiki-nav-sub" href="#shooting" data-page-link="shooting">撮影チェック</a>
         </div>
       </details>
-      <a class="wiki-nav-single" href="#shooting" data-page-link="shooting">撮影チェック</a>
     </nav>
   </aside>
   <div class="wiki-content">
@@ -382,13 +414,8 @@
 
   const navLinks = Array.from(sidebar.querySelectorAll('a[href^="#"]'));
   const navSections = Array.from(sidebar.querySelectorAll('.wiki-nav-section'));
-  // A heading only expands/collapses its section; it never changes the page.
-  navSections.forEach(section => {
-    section.addEventListener("toggle", () => {
-      if (!section.open) return;
-      navSections.forEach(other => { if (other !== section) other.open = false; });
-    });
-  });
+  // <summary> headings are independent expand/collapse buttons only.
+  // Child links remain regular anchors, and multiple groups may stay open at once.
   const closeMenu = (restoreFocus = false) => {
     const wasOpen = document.body.classList.contains("wiki-menu-open");
     document.body.classList.remove("wiki-menu-open");
@@ -422,7 +449,7 @@
 
     for (const page of pages) page.hidden = page.dataset.wikiPage !== pageId;
     // Expand the group of the destination, but do not navigate when its heading is clicked.
-    const currentSection = navSections.find(section => section.dataset.navSection === pageId);
+    const currentSection = navSections.find(section => (section.dataset.navPages || "").split(" ").includes(pageId));
     if (currentSection) currentSection.open = true;
     for (const link of navLinks) {
       link.removeAttribute("aria-current");
