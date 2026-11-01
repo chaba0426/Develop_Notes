@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0b101b">
-<title>LEIR — Game Design Blueprint</title>
+<meta name="theme-color" content="#F7F8FA">
+<title>LEIR — 開発Wiki</title>
 <link rel="stylesheet" href="./style.css" data-bundle="css">
 </head>
 <body>
@@ -18,29 +18,39 @@
   <aside class="wiki-sidebar" id="wiki-sidebar" aria-label="資料のサイドメニュー">
     <a class="wiki-brand" href="#overview"><span class="wiki-brand-name">LEIR</span></a>
     <nav class="wiki-nav" aria-label="設計資料">
-      <details class="wiki-nav-section" data-nav-pages="overview">
-        <summary class="wiki-nav-heading">ゲーム全体・企画書</summary>
-        <div class="wiki-nav-items">
-          <a class="wiki-nav-sub" href="#overview" data-page-link="overview">概要</a>
-          <a class="wiki-nav-sub" href="#core">コア体験</a>
-          <a class="wiki-nav-sub" href="#combo">コンボ・ステップ</a>
-          <a class="wiki-nav-sub" href="#timing">攻撃の隙</a>
-          <a class="wiki-nav-sub" href="#boss">ボス戦</a>
-          <a class="wiki-nav-sub" href="#loop">ゲームループ</a>
-          <a class="wiki-nav-sub" href="#shop">ショップ</a>
-          <a class="wiki-nav-sub" href="#enemy">敵・制作順</a>
-          <a class="wiki-nav-sub" href="#world">キャラクター</a>
-        </div>
+      <details class="wiki-nav-section" id="nav-overview" data-nav-pages="overview">
+        <summary class="wiki-category-heading">ゲーム全体</summary>
+        <ul class="wiki-nav-list">
+          <li><a href="#overview" data-page-link="overview">概要</a></li>
+          <li><a href="#core">コア体験</a></li>
+          <li><a href="#combo">コンボ・ステップ</a>
+            <ul><li><a href="#combo-001">攻撃の成立</a></li><li><a href="#combo-002">ステップ挿入規則</a></li></ul>
+          </li>
+          <li><a href="#timing">攻撃の隙</a></li>
+          <li><a href="#boss">ボス戦</a></li>
+          <li><a href="#loop">ゲームループ</a></li>
+          <li><a href="#shop">ショップ</a></li>
+          <li><a href="#enemy">敵・制作順</a></li>
+          <li><a href="#world">キャラクター</a></li>
+        </ul>
       </details>
-      <details class="wiki-nav-section" data-nav-pages="motion motion-wss motion-single shooting">
-        <summary class="wiki-nav-heading">モーション詳細</summary>
-        <div class="wiki-nav-items">
-          <a class="wiki-nav-sub" href="#motion-stance">基本構え</a>
-          <a class="wiki-nav-sub" href="#motion" data-page-link="motion">弱 → 弱 → 強</a>
-          <a class="wiki-nav-sub" href="#motion-wss" data-page-link="motion-wss">弱 → 強 → 強</a>
-          <a class="wiki-nav-sub" href="#motion-single" data-page-link="motion-single">単発強</a>
-          <a class="wiki-nav-sub" href="#shooting" data-page-link="shooting">撮影チェック</a>
-        </div>
+      <details class="wiki-nav-section" id="nav-motion" data-nav-pages="motion-overview motion motion-wss motion-single shooting" open>
+        <summary class="wiki-category-heading">モーション詳細</summary>
+        <ul class="wiki-nav-list">
+          <li><a href="#motion-overview" data-page-link="motion-overview">概要</a></li>
+          <li><a href="#motion-production">制作・編集方針</a></li>
+          <li><a href="#motion-stance">基本構え</a></li>
+          <li><a href="#motion" data-page-link="motion">弱 → 弱 → 強</a>
+            <ul><li><a href="#motion-weak1">弱1</a></li><li><a href="#motion-weak2">弱2</a></li><li><a href="#motion-strong3">強3</a></li></ul>
+          </li>
+          <li><a href="#motion-wss" data-page-link="motion-wss">弱 → 強 → 強</a>
+            <ul><li><a href="#motion-wss-thrust">強2・低い突き</a></li><li><a href="#motion-wss-finish">強3・縦斬り</a></li></ul>
+          </li>
+          <li><a href="#motion-single" data-page-link="motion-single">単発強</a>
+            <ul><li><a href="#motion-single-motion">水平薙ぎ払い</a></li><li><a href="#motion-single-test">踏み込み足の比較</a></li></ul>
+          </li>
+          <li><a href="#shooting" data-page-link="shooting">撮影チェック</a></li>
+        </ul>
       </details>
     </nav>
   </aside>
@@ -48,17 +58,17 @@
     <main id="main-content">
       <div class="wiki-page" id="overview" data-wiki-page="overview">
 <header class="header"><div class="wrap">
-  
+
   <h1>LEIR <span style="color:#7daed6;font-weight:400">/</span><br>無双アクション</h1>
   <p class="lede">敵を<strong>集める</strong> → <strong>斬り払う</strong>。<br>爽快な剣戟を核にした、部屋攻略型3Dローグライト。</p>
   <div class="row"><span class="pill green">戦闘の方向性：決定</span><span class="pill orange">部屋数・数値：仮</span><span class="pill purple">追加ギミック：後日</span></div>
 </div></header>
 <div class="wrap">
-<section class="section" id="core"><div class="heading"><div><span class="kicker">01 / CORE EXPERIENCE</span><h2>3つの柱</h2></div><span class="pill green">方向性確定</span></div>
-  <div class="grid"><div class="tile"><div class="num">01</div><h3>弱攻撃で集める</h3><p class="muted small">素早い広範囲攻撃。敵を散らさず、リアの<strong>前方の一点</strong>へ寄せる。</p></div><div class="tile"><div class="num orange">02</div><h3>強攻撃でなぎ倒す</h3><p class="muted small">範囲殲滅と単体火力を使い分け。<strong>大量撃破</strong>の感触が最優先。</p></div><div class="tile"><div class="num green">03</div><h3>戦闘後に育てる</h3><p class="muted small">撃破で通貨を自動獲得。部屋の間に購入してビルドを伸ばす。</p></div></div>
-  <div class="note" style="margin-top:12px">基本雑魚は<span style="color:#fff">無双寄り</span>：多数が接近・包囲、同時攻撃は控えめ。理不尽な集中攻撃より、気持ちよいリアクションを優先。</div>
+<section class="section" id="core"><div class="heading"><div><h2>3つの柱</h2></div><span class="pill green">方向性確定</span></div>
+  <ul class="document-list"><li><h3>弱攻撃で集める</h3><p class="muted small">素早い広範囲攻撃。敵を散らさず、リアの<strong>前方の一点</strong>へ寄せる。</p></li><li><h3>強攻撃でなぎ倒す</h3><p class="muted small">範囲殲滅と単体火力を使い分け。<strong>大量撃破</strong>の感触が最優先。</p></li><li><h3>戦闘後に育てる</h3><p class="muted small">撃破で通貨を自動獲得。部屋の間に購入してビルドを伸ばす。</p></li></ul>
+  <div class="note" style="margin-top:12px">基本雑魚は<span style="color:var(--text)">無双寄り</span>：多数が接近・包囲、同時攻撃は控えめ。理不尽な集中攻撃より、気持ちよいリアクションを優先。</div>
 </section>
-<section class="section" id="combo"><div class="heading"><div><span class="kicker">02 / MOVESET</span><h2>基本コンボは3本</h2></div><span class="pill green">確定</span></div>
+<section class="section" id="combo"><div class="heading"><div><h2>基本コンボは3本</h2></div><span class="pill green">確定</span></div>
   <div class="widget" role="group" aria-label="コンボ切り替え">
    <input type="radio" id="c0" name="combo" checked><input type="radio" id="c1" name="combo"><input type="radio" id="c2" name="combo">
    <div class="tabs"><label for="c0">単発：強</label><label for="c1">弱 → 弱 → 強</label><label for="c2">弱 → 強 → 強</label></div>
@@ -66,11 +76,11 @@
    <div class="combo" id="p1"><div class="combo-meta"><div class="row"><span class="key">弱</span><span class="chevron">›</span><span class="key">弱</span><span class="chevron">›</span><span class="key heavy">強</span></div><span class="impact">集敵 / 範囲殲滅</span></div><p>雑魚を前方にまとめ、広範囲・高威力の一撃で一掃。</p></div>
    <div class="combo" id="p2"><div class="combo-meta"><div class="row"><span class="key">弱</span><span class="chevron">›</span><span class="key heavy">強</span><span class="chevron">›</span><span class="key heavy">強</span></div><span class="impact">対ボス / 狭範囲・高火力</span></div><p>「弱→強」で止めれば短い反撃機会にも対応。最後の強攻撃は<strong>前隙が長い</strong>。</p></div></div>
   </div>
-  <div class="grid two" style="margin-top:13px"><div class="tile"><h3>攻撃の成立</h3><p class="small">攻撃判定が<strong>発生した時点</strong>でコンボ進行。空振りでも成立。判定前のステップキャンセルは<strong>不発</strong>。</p></div><div class="tile"><h3>ステップ</h3><p class="small">方向入力の短距離ステップ。攻撃中いつでもキャンセル可能。無敵時間・距離は調整対象。</p></div></div>
-  <div class="rule-grid" style="margin-top:12px"><div class="rule good"><h3 style="color:var(--green)">✓ 攻撃の間にステップ1回：継続</h3><div class="row"><span class="key">弱</span><span class="chevron">›</span><span class="key dodge">STEP</span><span class="chevron">›</span><span class="key heavy">強</span><span class="chevron">›</span><span class="key dodge">STEP</span><span class="chevron">›</span><span class="key heavy">強</span></div></div><div class="rule bad"><h3 style="color:var(--red)">× 連続2ステップ：コンボ解除</h3><div class="row"><span class="key">弱</span><span class="chevron">›</span><span class="key dodge">STEP</span><span class="chevron">›</span><span class="key dodge">STEP</span><span class="chevron" style="color:var(--red)">×</span></div></div></div>
-  <p class="muted tiny" style="margin:12px 0 0">※ 攻撃実行ごとに「間へ挟めるステップ1回」を回復。キャンセルされた未成立攻撃は回復しない。コンボの時間切れも別途あり（時間未定）。</p>
+  <div class="combo-specs"><div class="tile" id="combo-001"><h3>攻撃の成立</h3><p>攻撃判定が<strong>発生した時点</strong>でコンボ進行。空振りでも成立。判定前のステップキャンセルは<strong>不発</strong>。</p></div><div class="tile"><h3>ステップ</h3><p>方向入力の短距離ステップ。攻撃中いつでもキャンセル可能。無敵時間・距離は調整対象。</p></div></div>
+  <div class="rule-grid" id="combo-002" aria-label="COMBO-002 ステップ挿入規則"><div class="rule good"><h3 style="color:var(--blue)">✓ 攻撃の間にステップ1回：継続</h3><div class="row"><span class="key">弱</span><span class="chevron">›</span><span class="key dodge">STEP</span><span class="chevron">›</span><span class="key heavy">強</span><span class="chevron">›</span><span class="key dodge">STEP</span><span class="chevron">›</span><span class="key heavy">強</span></div></div><div class="rule bad"><h3 style="color:var(--red)">× 連続2ステップ：コンボ解除</h3><div class="row"><span class="key">弱</span><span class="chevron">›</span><span class="key dodge">STEP</span><span class="chevron">›</span><span class="key dodge">STEP</span><span class="chevron" style="color:var(--red)">×</span></div></div></div>
+  <p class="combo-caveat">※ 攻撃実行ごとに「間へ挟めるステップ1回」を回復。キャンセルされた未成立攻撃は回復しない。コンボの時間切れも別途あり（時間未定）。</p>
 </section>
-<section class="section" id="timing"><div class="heading"><div><span class="kicker">03 / ATTACK TIMING</span><h2>「隙」は前に作る</h2><p class="muted small">ボス用の3段目は、重い<strong>後隙</strong>よりも長い<strong>前隙</strong>でリスクを作る。</p></div><span class="pill green">設計方針</span></div>
+<section class="section" id="timing"><div class="heading"><div><h2>「隙」は前に作る</h2><p class="muted small">ボス用の3段目は、重い<strong>後隙</strong>よりも長い<strong>前隙</strong>でリスクを作る。</p></div><span class="pill green">設計方針</span></div>
   <div class="tile"><div class="legend" style="margin-bottom:9px"><span><i class="dot gray"></i>前隙 / 溜め</span><span><i class="dot orange"></i>攻撃判定が出る</span><span><i class="dot green"></i>後隙 / 復帰</span></div>
     <div class="timelines"><div class="timeline"><span class="timeline-label">通常の一撃</span><div class="track"><span class="phase start p1">前隙</span><span class="phase hit p2">斬撃</span><span class="phase end p3">復帰</span></div></div><div class="timeline"><span class="timeline-label">3段目の強</span><div class="track late"><span class="phase start p1">長い前隙</span><span class="phase hit p2">大技</span><span class="phase end p3">復帰</span></div></div></div>
     <p class="muted tiny" style="margin:12px 0 0">バーの幅は説明用。実フレーム数や相対的な長さは未確定。</p></div>
@@ -88,20 +98,20 @@
     <p class="diagram-caption">ステップは常に出せる。ただし判定前の大技は捨てることになる。</p>
   </div><div class="tile"><h3>この設計で生まれる判断</h3><p class="small">ボスの攻撃再開までに<strong>3段目が間に合うか？</strong></p><div class="row" style="margin:10px 0"><span class="pill green">短い隙</span><span class="chevron">→</span><strong>弱 → 強で止める</strong></div><div class="row"><span class="pill orange">長い隙</span><span class="chevron">→</span><strong>弱 → 強 → 強を狙う</strong></div><div class="note orange" style="margin-top:15px">欲張ったらステップで中断できるが、<strong>大技のダメージは得られない</strong>。</div></div></div>
 </section>
-<section class="section" id="boss"><div class="heading"><div><span class="kicker">04 / BOSS COMBAT</span><h2>ボスの「隙」を読ませる</h2><p class="muted small">まずは1対1・HP制。2〜3種類の攻撃で反撃時間に差をつける。</p></div><span class="pill green">初期仕様</span></div>
-  <div class="grid two"><div class="tile"><h3>短い攻撃 → 短い隙</h3><div class="boss-track"><span class="bt-prepare">予兆</span><span class="bt-attack">攻撃</span><span class="bt-gap" style="grid-column:span 2">小さな隙</span><span class="bt-next" style="grid-column:span 4">次の行動</span></div><p class="muted small" style="margin:10px 0 0">安全に弱強で切り上げる。</p></div><div class="tile"><h3>大技 → 長い隙</h3><div class="boss-track"><span class="bt-prepare" style="grid-column:span 3">長い予兆</span><span class="bt-attack">大技</span><span class="bt-gap" style="grid-column:span 5">大きな反撃チャンス</span><span class="bt-next" style="grid-column:span 2">再開</span></div><p class="muted small" style="margin:10px 0 0">弱強強を出し切るチャンス。</p></div></div>
+<section class="section" id="boss"><div class="heading"><div><h2>ボスの「隙」を読ませる</h2><p class="muted small">まずは1対1・HP制。2〜3種類の攻撃で反撃時間に差をつける。</p></div><span class="pill green">初期仕様</span></div>
+  <ul class="document-list"><li><h3>短い攻撃 → 短い隙</h3><div class="boss-track"><span class="bt-prepare">予兆</span><span class="bt-attack">攻撃</span><span class="bt-gap" style="grid-column:span 2">小さな隙</span><span class="bt-next" style="grid-column:span 4">次の行動</span></div><p class="muted small" style="margin:10px 0 0">安全に弱強で切り上げる。</p></li><li><h3>大技 → 長い隙</h3><div class="boss-track"><span class="bt-prepare" style="grid-column:span 3">長い予兆</span><span class="bt-attack">大技</span><span class="bt-gap" style="grid-column:span 5">大きな反撃チャンス</span><span class="bt-next" style="grid-column:span 2">再開</span></div><p class="muted small" style="margin:10px 0 0">弱強強を出し切るチャンス。</p></li></ul>
   <div class="note" style="margin-top:12px">通常攻撃ではボスを大きく怯ませない。体勢ゲージやスタンは<strong>後から</strong>。雑魚召喚と「雑魚を吹き飛ばしてボスにぶつける」ギミックも拡張候補。</div>
   <p class="muted tiny" style="margin:9px 0 0">※ 予兆・隙の図はコンセプト図。確定フレーム数ではない。</p>
 </section>
-<section class="section" id="loop"><div class="heading"><div><span class="kicker">05 / RUN STRUCTURE</span><h2>戦闘 → ショップ → 次の部屋</h2></div><span class="pill orange">5＋1部屋は仮</span></div>
+<section class="section" id="loop"><div class="heading"><div><h2>戦闘 → ショップ → 次の部屋</h2></div><span class="pill orange">5＋1部屋は仮</span></div>
   <div class="flowbar"><div class="flowbox">戦闘<small>雑魚・継続増援</small></div><div class="flowarrow">➜</div><div class="flowbox">部屋クリア<small>条件達成で終了</small></div><div class="flowarrow">➜</div><div class="flowbox" style="border-color:#856d50">ショップ<small>購入・リロール</small></div></div>
   <div class="loop-tail">↶ 次の部屋へ繰り返す <span class="pill orange">最後はボス</span></div>
-  <div class="grid"><div class="tile"><h3>討伐戦</h3><div class="num">N体</div><p class="small muted" style="margin:8px 0 0">規定数を倒したらクリア</p></div><div class="tile"><h3>生存戦</h3><div class="num orange">N秒</div><p class="small muted" style="margin:8px 0 0">生存でクリア。倒すほど通貨増</p></div><div class="tile"><h3>出現方式</h3><div class="num green">継続</div><p class="small muted" style="margin:8px 0 0">敵全滅を待たずに補充、同時数には上限</p></div></div>
+  <ul class="document-list"><li><h3>討伐戦</h3><div class="num">N体</div><p class="small muted" style="margin:8px 0 0">規定数を倒したらクリア</p></li><li><h3>生存戦</h3><div class="num orange">N秒</div><p class="small muted" style="margin:8px 0 0">生存でクリア。倒すほど通貨増</p></li><li><h3>出現方式</h3><div class="num green">継続</div><p class="small muted" style="margin:8px 0 0">敵全滅を待たずに補充、同時数には上限</p></li></ul>
   <p class="muted small" style="margin:12px 0 0">少数の平坦なアリーナをランダムに再利用。通常5部屋＋ボス1部屋を仮置き。HP 0で敗北。時間内討伐型は当面なし。</p>
 </section>
-<section class="section" id="shop"><div class="heading"><div><span class="kicker">06 / SHOP UX CONCEPT</span><h2>ショップ画面のイメージ</h2><p class="muted small">部屋クリア後に表示。3枠に基本・特殊強化が混在。</p></div><span class="pill green">挙動確定 / 見た目は仮</span></div>
+<section class="section" id="shop"><div class="heading"><div><h2>ショップ画面のイメージ</h2><p class="muted small">部屋クリア後に表示。3枠に基本・特殊強化が混在。</p></div><span class="pill green">挙動確定 / 見た目は仮</span></div>
   <div class="shop" aria-label="ショップUIモックアップ。表示数値と品目は例示">
-   <div class="shop-top"><div><div class="eyebrow">ROOM CLEAR / UPGRADE</div><div class="shop-title">旅の支度</div></div><div class="currency">◆ 1,250 <span style="font-size:11px;opacity:.7">G</span></div></div>
+   <div class="shop-top"><div><div class="shop-title">旅の支度</div></div><div class="currency">◆ 1,250 <span style="font-size:11px;opacity:.7">G</span></div></div>
    <div class="offers">
     <div class="offer"><div class="offer-kind"><span class="pill green" style="padding:2px 7px">基本</span><span class="muted">Ⅰ</span></div><div class="offer-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6L42 25 32 58 22 25Z" fill="#76c9fb" opacity=".95"/><path d="M32 6V58M22 25H42" fill="none" stroke="#e4f8ff" stroke-width="2"/><path d="M16 39H48" stroke="#b9d6e9" stroke-width="4" stroke-linecap="round"/></svg></div><div class="offer-name">攻撃力アップ</div><div class="offer-desc">通常攻撃と強攻撃の威力を上昇</div><div class="buy">◆ 300 で購入</div></div>
     <div class="offer special"><div class="offer-kind"><span class="pill purple" style="padding:2px 7px">特殊</span><span style="color:var(--purple)">NEW</span></div><div class="offer-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M11 46Q34 6 55 29Q36 17 21 49" stroke="#cab6ff" stroke-width="8" stroke-linecap="round" fill="none" opacity=".86"/><path d="M15 19L20 8L24 19L34 23L23 26L20 37L16 26L6 23Z" fill="#ffdf9f"/></svg></div><div class="offer-name">旋風の追撃</div><div class="offer-desc">強攻撃時に追撃が発生する（例）</div><div class="buy">◆ 700 で購入</div></div>
@@ -112,88 +122,99 @@
   <div class="grid" style="margin-top:12px"><div class="tile" style="border-color:#5c7d93"><h3>① どれか1つ購入</h3><div class="row"><span class="pill green">1枠購入</span><span class="chevron">→</span><span class="pill">3枠すべて再抽選</span></div><p class="muted small" style="margin:8px 0 0">購入が続けられる限り繰り返せる。</p></div><div class="tile"><h3>② 手動リロール</h3><div class="row"><span class="pill orange">通貨消費</span><span class="chevron">→</span><span class="pill">3枠すべて再抽選</span></div><p class="muted small" style="margin:8px 0 0">価格は同ショップ内で上昇、次の部屋でリセット。</p></div><div class="tile"><h3>③ 特殊スキルを育成</h3><div class="row"><span class="pill purple">特殊を取得</span><span class="chevron">→</span><span class="pill purple">Lv UPも抽選候補</span></div><p class="muted small" style="margin:8px 0 0">別枠を増やさず3枠の中に登場。</p></div></div>
   <p class="muted tiny" style="margin:10px 0 0">※ 通貨1,250G・品名・アイコン・価格は画面デザイン用のダミー。クリックできる購入UIではなく配置イメージ。</p>
 </section>
-<section class="section" id="enemy"><div class="heading"><div><span class="kicker">07 / ENEMIES & PRODUCTION</span><h2>小さく作って、確かめながら追加</h2></div><span class="pill green">実装順確定</span></div>
-  <div class="step-cards"><div class="stepcard" data-no="PHASE 01"><h3>雑魚敵 1種類</h3><span class="small">集敵・怯み・吹き飛び・大量撃破</span></div><div class="stepcard" data-no="PHASE 02"><h3>単独ボス</h3><span class="small">HP制・攻撃予兆・大小の隙</span></div><div class="stepcard" data-no="PHASE 03"><h3>雑魚敵 2種類目</h3><span class="small">群れの中に行動差をつける</span></div><div class="stepcard" data-no="PHASE 04"><h3>中ボス級の敵</h3><span class="small">ウェーブ / 部屋に1〜2体</span></div></div>
+<section class="section" id="enemy"><div class="heading"><div><h2>小さく作って、確かめながら追加</h2></div><span class="pill green">実装順確定</span></div>
+  <ol class="production-order"><li><h3>雑魚敵 1種類</h3><span class="small">集敵・怯み・吹き飛び・大量撃破</span></li><li><h3>単独ボス</h3><span class="small">HP制・攻撃予兆・大小の隙</span></li><li><h3>雑魚敵 2種類目</h3><span class="small">群れの中に行動差をつける</span></li><li><h3>中ボス級の敵</h3><span class="small">ウェーブ / 部屋に1〜2体</span></li></ol>
   <div class="compare" style="margin-top:12px"><div class="vs"><span class="pill green">初回プロトタイプ</span><strong>1部屋だけ</strong><div class="legend">雑魚1種 ＋ リアの弱/強 ＋ ステップ</div><div class="bar"><i style="width:40%"></i></div><p class="small muted">「集めて斬る」を何度も繰り返したくなるか検証。ショップやボスはまだ不要。</p></div><div class="vs"><span class="pill purple">後から広げる</span><strong>ローグライト化</strong><div class="legend">部屋目標 ＋ ショップ ＋ スキル成長</div><div class="bar"><i style="width:75%;background:#a898eb"></i></div><p class="small muted">基本戦闘 → ボス戦を確かめた後、周回の面白さを積み上げる。</p></div></div>
   <div class="note orange" style="margin-top:12px">拡張候補：雑魚を吹き飛ばしてボスへ衝突させる ／ 体勢崩し ／ ボスの雑魚召喚。いずれも<strong>基礎戦闘完成後</strong>に判断。</div>
 </section>
-<section class="section" id="world"><div class="heading"><div><span class="kicker">08 / CHARACTER & OPEN QUESTIONS</span><h2>キャラクターと保留事項</h2></div></div>
-  <div class="char"><div class="tile"><h3>リア / Leir</h3><p class="small">金髪の外ハネショートボブ、青い瞳。ネイビーの短いジャケット、白シャツ、ダークグレーの短パン、茶色の編み上げブーツ。片手剣を使う身軽な若い冒険者。</p><p class="small muted" style="margin-bottom:0">女性寄りの中性的な造形 / 王道ファンタジー / 柔らかいアニメ調3D。長髪・マントなど複雑な揺れ物は避ける。</p><div class="row" style="margin-top:15px"><span class="pill">C++20</span><span class="pill">DirectX 12</span><span class="pill">Blender / Tripo</span><span class="pill orange">HestiaEngine 検討</span></div></div><div class="tile"><h3>未決定 → プロトタイプで検証</h3><div class="list-row"><span>各攻撃の当たり判定・モーション</span><span class="pill orange">調整</span></div><div class="list-row"><span>前隙 / 無敵時間 / コンボ猶予</span><span class="pill orange">調整</span></div><div class="list-row"><span>同時出現数 / 増援ペース</span><span class="pill orange">調整</span></div><div class="list-row"><span>強化費用・抽選率・特殊スキル</span><span class="pill orange">設計</span></div><div class="list-row"><span>1ランの部屋数・プレイ時間</span><span class="pill orange">仮置き</span></div></div></div>
+<section class="section" id="world"><div class="heading"><div><h2>キャラクターと保留事項</h2></div></div>
+  <div class="char"><div class="character-profile"><h3>リア / Leir</h3><ul class="character-traits"><li>金髪の外ハネショートボブ、青い瞳。</li><li>ネイビーの短いジャケット、白シャツ、ダークグレーの短パン、茶色の編み上げブーツ。</li><li>片手剣を使う身軽な若い冒険者。</li></ul><ul class="character-traits"><li>女性寄りの中性的な造形 / 王道ファンタジー / 柔らかいアニメ調3D。</li><li>長髪・マントなど複雑な揺れ物は避ける。</li></ul><div class="row" style="margin-top:15px"><span class="pill">C++20</span><span class="pill">DirectX 12</span><span class="pill">Blender / Tripo</span><span class="pill orange">HestiaEngine 検討</span></div></div><div class="spec-panel"><h3>未決定 → プロトタイプで検証</h3><ul class="spec-list"><li><span>各攻撃の当たり判定・モーション</span><span class="pill orange">調整</span></li><li><span>前隙 / 無敵時間 / コンボ猶予</span><span class="pill orange">調整</span></li><li><span>同時出現数 / 増援ペース</span><span class="pill orange">調整</span></li><li><span>強化費用・抽選率・特殊スキル</span><span class="pill orange">設計</span></li><li><span>1ランの部屋数・プレイ時間</span><span class="pill orange">仮置き</span></li></ul></div></div>
 </section>
 
 
       </div><!-- /overview .wrap -->
       </div><!-- /overview -->
+<article class="wiki-page" id="motion-overview" data-wiki-page="motion-overview">
+        <div class="wrap">
+          <header class="wiki-page-header">
+            <h1>モーション概要</h1>
+            <p>リアの攻撃モーションに共通する制作・編集方針と基本構え。各コンボの詳細は個別ページに記載する。</p>
+          </header>
+          <div class="note">方向は<strong>リア本人の右／左</strong>。正面から見ると左右が反転する。反時計回りは<strong>上から見た回転方向</strong>。斬撃の見た目と実際の攻撃判定は別々に調整できる。</div>
+          <section class="section motion-section" id="motion-production">
+            <div class="heading"><div><h2>制作・編集の方針</h2></div></div>
+            <ul class="document-list"><li><h3>実写撮影（3段コンボ）</h3><p class="small muted">最初は3段を通しで演じ、必要区間を段ごとに切り出す。撮影時に0.4秒・0.65秒を厳密に再現する必要はない。</p></li><li><h3>Blenderで仕上げる</h3><p class="small muted">姿勢・接地・速度カーブ・開始/終端・剣の軌道を調整。ゲーム内で各段をブレンドする。</p></li><li><h3>移動・判定の管理</h3><p class="small muted">Root Motionでゲーム内移動量を制御しない。移動や攻撃判定はゲーム側で扱う。</p></li><li><h3>抽出経路は検証中</h3><p class="small muted">実写→Viggleと、実写→Muse→Viggleの対応機能・品質は未比較。利用可能な入力方法を検証する。</p></li></ul>
+            <div class="note">制作上の優先順位は<strong>斬撃方向・足運び・終端姿勢</strong>。手首の角度や厳密な速度曲線を撮影段階で演じ切る必要はない。</div>
+          </section>
+          <section class="section motion-section" id="motion-stance">
+            <div class="heading"><div><h2>共通の基本構え</h2></div></div>
+            <dl class="motion-facts">
+              <div><dt>足</dt><dd>左足を少し前</dd></div>
+              <div><dt>上体</dt><dd>ほぼ正面・自然な半身</dd></div>
+              <div><dt>剣</dt><dd>右腰に下げ、剣先は斜め下</dd></div>
+            </dl>
+            <p class="small muted">弱1は剣が右上にある姿勢からモーションを始め、待機との差は短いブレンドで一気に補う。多少の姿勢の飛びは許容し、攻撃のレスポンスを優先する。単発強では逆に右肩への振りかぶりを見せる。</p>
+          </section>
+        </div>
+      </article>
       <article class="wiki-page" id="motion" data-wiki-page="motion">
         <div class="wrap">
           <header class="wiki-page-header">
-            <div class="eyebrow">ANIMATION DESIGN / 弱 → 弱 → 強</div>
+
             <h1>弱 → 弱 → 強</h1>
             <p class="muted">リアの片手剣コンボ。弱攻撃の鋭さと、強3の低い回転斬りの重さを両立する。</p>
             <div class="row"><span class="pill green">動きの大枠：採用</span><span class="pill orange">秒数・細部：仮</span></div>
           </header>
-          <div class="note">方向は<strong>リア本人の右／左</strong>。正面から見ると左右が反転する。反時計回りは<strong>上から見た回転方向</strong>。斬撃の見た目と実際の攻撃判定は別々に調整できる。</div>
 
-          <section class="section motion-section" id="motion-stance">
-            <div class="heading"><div><span class="kicker">BASE STANCE</span><h2>共通の基本構え</h2></div></div>
-            <div class="motion-facts">
-              <div><small>足</small><strong>左足を少し前</strong></div>
-              <div><small>上体</small><strong>ほぼ正面・自然な半身</strong></div>
-              <div><small>剣</small><strong>右腰に下げ、剣先は斜め下</strong></div>
-            </div>
-            <p class="small muted">弱1は剣が右上にある姿勢からモーションを始め、待機との差は短いブレンドで一気に補う。多少の姿勢の飛びは許容し、攻撃のレスポンスを優先する。単発強では逆に右肩への振りかぶりを見せる。</p>
-          </section>
-          <div class="motion-overview">
-            <div class="tile"><span class="motion-chip orange">弱1</span><h3>右上 → 左下</h3><p class="small muted">浅い20〜30°の斜め斬り<br>右足を半歩前へ / 0.40秒</p></div>
-            <div class="tile"><span class="motion-chip blue">弱2</span><h3>左下 → 右上</h3><p class="small muted">約45°の斬り上げ<br>踏み込みなし / 0.40秒</p></div>
-            <div class="tile"><span class="motion-chip purple">強3</span><h3>360°回転斬り</h3><p class="small muted">低く跳躍して回転<br>左足踏み込み / 0.65秒（仮）</p></div>
-          </div>
+
+
+          <ol class="motion-overview">
+            <li><span class="motion-chip orange">弱1</span><h3>右上 → 左下</h3><p class="small muted">浅い20〜30°の斜め斬り<br>右足を半歩前へ / 0.40秒</p></li>
+            <li><span class="motion-chip blue">弱2</span><h3>左下 → 右上</h3><p class="small muted">約45°の斬り上げ<br>踏み込みなし / 0.40秒</p></li>
+            <li><span class="motion-chip purple">強3</span><h3>360°回転斬り</h3><p class="small muted">低く跳躍して回転<br>左足踏み込み / 0.65秒（仮）</p></li>
+          </ol>
           <section class="section motion-section" id="motion-weak1">
-            <div class="heading"><div><span class="kicker">MOVE 01 / LIGHT</span><h2>弱1 — コンパクトな斜め斬り</h2></div><span class="motion-chip orange">0.40秒</span></div>
+            <div class="heading"><div><h2>弱1 — コンパクトな斜め斬り</h2></div><span class="motion-chip orange">0.40秒</span></div>
             <p class="motion-lead">待機中の剣は右腰だが、弱1のモーションクリップは<strong>剣が右上にある姿勢</strong>から開始する。右足を半歩踏み込みながら右上→左下へ鋭く斬る。待機との姿勢差は短いブレンドで許容する。</p>
-            <div class="motion-facts"><div><small>軌道</small><strong>右上 → 左下 / 20〜30°</strong></div><div><small>足</small><strong>右足を半歩前へ</strong></div><div><small>終端姿勢</small><strong>左腰・剣先は左下</strong></div></div>
+            <dl class="motion-facts"><div><dt>軌道</dt><dd>右上 → 左下 / 20〜30°</dd></div><div><dt>足</dt><dd>右足を半歩前へ</dd></div><div><dt>終端姿勢</dt><dd>左腰・剣先は左下</dd></div></dl>
             <ol class="motion-steps"><li>待機は剣を右腰に下げるが、弱1の開始姿勢では剣を右上に置く。長い準備動作は省略する。</li><li>右足の踏み込みと同時に腰・肩・右腕を連動。上半身の大回転は不要。</li><li>急加速して浅く斬り、着地と斬撃終盤をおおむね合わせる。</li><li>上体はほぼ正面を保ち、最後に軽く左へひねる。剣は左腰付近まで振り抜き、次段へつなぐ。</li></ol>
             <div class="motion-time"><div class="motion-time-track"><span style="flex:6" class="motion-phase prep">0.00–0.06<br>踏み込み</span><span style="flex:12" class="motion-phase hit">0.06–0.18<br>急加速・斬撃</span><span style="flex:7" class="motion-phase follow">0.18–0.25<br>着地・減速</span><span style="flex:15" class="motion-phase settle">0.25–0.40<br>次段へ接続</span></div><p class="muted tiny">時間配分は撮影・編集のための仮案。</p></div>
             <div class="note orange">避ける：斬る前に逆側へ剣を動かす、大きく振りかぶる、等速で振る。</div>
           </section>
           <section class="section motion-section" id="motion-weak2">
-            <div class="heading"><div><span class="kicker">MOVE 02 / LIGHT</span><h2>弱2 — 斜め斬り上げ</h2></div><span class="motion-chip blue">0.40秒</span></div>
+            <div class="heading"><div><h2>弱2 — 斜め斬り上げ</h2></div><span class="motion-chip blue">0.40秒</span></div>
             <p class="motion-lead">弱1の終端姿勢（剣が左腰・左下）から直接、<strong>左下→右上</strong>へ切り返す。軽快さを保ちながら、上方向の動きを明確にする。</p>
-            <div class="motion-facts"><div><small>軌道</small><strong>左下 → 右上 / 約45°</strong></div><div><small>足</small><strong>追加踏み込みなし</strong></div><div><small>終端姿勢</small><strong>右肩〜頭の横</strong></div></div>
+            <dl class="motion-facts"><div><dt>軌道</dt><dd>左下 → 右上 / 約45°</dd></div><div><dt>足</dt><dd>追加踏み込みなし</dd></div><div><dt>終端姿勢</dt><dd>右肩〜頭の横</dd></div></dl>
             <ol class="motion-steps"><li>弱1で左下に振り抜いた剣を、その位置から斬り上げる。</li><li>上体を軽く右へひねりながら腰・肩を切り返す。自然に少し身体を起こすが高さの変化は固定しない。</li><li>頭上へ大きく振り上げず、右肩〜頭の横に収める。</li><li>強3で右肩後方へ引いて溜められる位置で終了。</li></ol>
             <div class="note">弱1の完全な逆再生にしない。斬り上げ角度・身体の切り返し・剣の高さで変化をつける。速度の細部はBlender側で調整。</div>
           </section>
           <section class="section motion-section" id="motion-strong3">
-            <div class="heading"><div><span class="kicker">MOVE 03 / HEAVY FINISH</span><h2>強3 — 低い跳躍360°回転斬り</h2></div><span class="motion-chip purple">0.65秒・仮</span></div>
+            <div class="heading"><div><h2>強3 — 低い跳躍360°回転斬り</h2></div><span class="motion-chip purple">0.65秒・仮</span></div>
             <p class="motion-lead">左足を踏み込み、軽く沈んで溜める。<strong>低い跳躍で約270°回転</strong>し、着地しながら<strong>残り約90°を斬り抜く</strong>。</p>
-            <div class="motion-facts"><div><small>回転方向</small><strong>上から見て反時計回り</strong></div><div><small>足運び</small><strong>左足踏み込み → 低く跳躍</strong></div><div><small>終端姿勢</small><strong>左膝を曲げたサイドランジ</strong></div></div>
+            <dl class="motion-facts"><div><dt>回転方向</dt><dd>上から見て反時計回り</dd></div><div><dt>足運び</dt><dd>左足踏み込み → 低く跳躍</dd></div><div><dt>終端姿勢</dt><dd>左膝を曲げたサイドランジ</dd></div></dl>
             <ol class="motion-steps"><li>弱2の終端から剣を右肩後方へ軽く引き、左足を踏み込んで沈む。</li><li>地面を蹴って低く跳ぶ。大ジャンプではなく、両足が少し浮く程度。</li><li>反時計回りに回転しながら剣を身体の外側へ広げる。<strong>空中から斬り始める</strong>。</li><li>空中で約270°回り、着地と同時に重心を左へ移しつつ残り90°を斬る。</li><li>左膝を曲げ、右脚を横へ伸ばす低いサイドランジで、剣を左下まで振り抜く。最後は正面を向く。</li></ol>
             <div class="motion-time"><div class="motion-time-track"><span style="flex:25" class="motion-phase prep">0.00–0.25<br>溜め・左足</span><span style="flex:7" class="motion-phase hit">0.25–0.32<br>蹴り</span><span style="flex:20" class="motion-phase follow">0.32–0.52<br>空中270°</span><span style="flex:13" class="motion-phase settle">0.52–0.65<br>着地90°</span></div><p class="muted tiny">強3の尺は仮。自然さに応じて0.70〜0.80秒程度も再検討可能。後隙0.35秒はゲームロジック側で管理。</p></div>
             <div class="note orange">足裏を固定して無理に捻らない。右膝も伸ばしきらない。腕・剣先の細かな軌道は撮影後に調整する。</div>
           </section>
-          <section class="section motion-section" id="motion-production">
-            <div class="heading"><div><span class="kicker">PRODUCTION NOTES</span><h2>制作・編集の方針</h2></div></div>
-            <div class="grid two"><div class="tile"><h3>実写撮影</h3><p class="small muted">最初は3段を通しで演じ、必要区間を段ごとに切り出す。撮影時に0.4秒・0.65秒を厳密に再現する必要はない。</p></div><div class="tile"><h3>Blenderで仕上げる</h3><p class="small muted">姿勢・接地・速度カーブ・開始/終端・剣の軌道を調整。ゲーム内で各段をブレンドする。</p></div><div class="tile"><h3>移動・判定の管理</h3><p class="small muted">Root Motionでゲーム内移動量を制御しない。移動や攻撃判定はゲーム側で扱う。</p></div><div class="tile"><h3>抽出経路は検証中</h3><p class="small muted">実写→Viggleと、実写→Muse→Viggleの対応機能・品質は未比較。利用可能な入力方法を検証する。</p></div></div>
-            <div class="note">制作上の優先順位は<strong>斬撃方向・足運び・終端姿勢</strong>。手首の角度や厳密な速度曲線を撮影段階で演じ切る必要はない。</div>
-          </section>
-          
+
+
         </div>
       </article>
       <article class="wiki-page" id="motion-wss" data-wiki-page="motion-wss">
         <div class="wrap">
           <header class="wiki-page-header">
-            <div class="eyebrow">ATTACK MOTION / 対単体</div>
+            <p class="small muted">対単体</p>
             <h1>弱 → 強 → 強</h1>
             <p class="muted">鋭い突きから、両手で地面へ叩きつける高威力の縦斬りへ。</p>
             <div class="row"><span class="pill green">大まかな動き：採用</span><span class="pill orange">時間・細部：仮</span></div>
           </header>
-          <div class="motion-overview">
-            <div class="tile"><span class="motion-chip orange">弱1</span><h3>右上 → 左下</h3><p class="small muted">共通の浅い斜め斬り。右足を半歩前へ。終端は剣が左腰。</p></div>
-            <div class="tile"><span class="motion-chip blue">強2</span><h3>低い突き</h3><p class="small muted">腹部付近へ直線的に。追加の踏み込みなし。</p></div>
-            <div class="tile"><span class="motion-chip purple">強3-2</span><h3>両手の縦斬り</h3><p class="small muted">高い構えで一瞬溜めて、地面へ叩きつける。</p></div>
-          </div>
+          <ol class="motion-overview">
+            <li><span class="motion-chip orange">弱1</span><h3>右上 → 左下</h3><p class="small muted">共通の浅い斜め斬り。右足を半歩前へ。終端は剣が左腰。</p></li>
+            <li><span class="motion-chip blue">強2</span><h3>低い突き</h3><p class="small muted">腹部付近へ直線的に。追加の踏み込みなし。</p></li>
+            <li><span class="motion-chip purple">強3-2</span><h3>両手の縦斬り</h3><p class="small muted">高い構えで一瞬溜めて、地面へ叩きつける。</p></li>
+          </ol>
           <section class="section motion-section" id="motion-wss-thrust">
-            <div class="heading"><div><span class="kicker">MOVE 02 / HEAVY</span><h2>強2 — 腹部付近への低い突き</h2></div></div>
+            <div class="heading"><div><h2>強2 — 腹部付近への低い突き</h2></div></div>
             <p class="motion-lead">弱1の左腰・左下の終端から、剣を中央へ戻して<strong>前方の腹部付近へまっすぐ突く</strong>。弱2の斬り上げと見た目を区別する。</p>
             <div class="motion-facts">
               <div><small>足</small><strong>踏み込みなし・右足前</strong></div>
@@ -207,7 +228,7 @@
             </ol>
           </section>
           <section class="section motion-section" id="motion-wss-finish">
-            <div class="heading"><div><span class="kicker">MOVE 03 / HEAVY FINISH</span><h2>強3-2 — 地面へ叩きつける縦斬り</h2></div><span class="motion-chip purple">両手持ち</span></div>
+            <div class="heading"><div><h2>強3-2 — 地面へ叩きつける縦斬り</h2></div><span class="motion-chip purple">両手持ち</span></div>
             <p class="motion-lead">強2の剣を引き戻しながら頭上へ振り上げる途中で<strong>左手を添える</strong>。高い姿勢で一瞬静止し、左足を大きく踏み込んで全身で斬り下ろす。</p>
             <div class="motion-facts">
               <div><small>振りかぶり</small><strong>高い姿勢・頭上で一瞬停止</strong></div>
@@ -227,7 +248,7 @@
       <article class="wiki-page" id="motion-single" data-wiki-page="motion-single">
         <div class="wrap">
           <header class="wiki-page-header">
-            <div class="eyebrow">ATTACK MOTION / 単発</div>
+
             <h1>単発強 — 水平薙ぎ払い</h1>
             <p class="muted">右肩で軽く溜め、一気に踏み込んで胸の高さを右から左へ広く斬る。</p>
             <div class="row"><span class="pill green">斬撃・終端：採用</span><span class="pill orange">左足踏み込み：仮</span></div>
@@ -238,7 +259,7 @@
             <div><small>終端</small><strong>左側へ大きく振り抜いて静止</strong></div>
           </div>
           <section class="section motion-section" id="motion-single-motion">
-            <div class="heading"><div><span class="kicker">SINGLE HEAVY</span><h2>踏み込み水平薙ぎ払い</h2></div></div>
+            <div class="heading"><div><h2>踏み込み水平薙ぎ払い</h2></div></div>
             <ol class="motion-steps">
               <li>待機時は剣を右腰で下げる。<strong>右肩付近まで引き上げ、軽く溜める</strong>。弱1と違い準備動作を見せる。</li>
               <li>溜めてから一気に<strong>左足を前へ踏み込む（仮）</strong>。踏み込みの着地と斬撃を連動させる。</li>
@@ -247,11 +268,11 @@
             </ol>
           </section>
           <section class="section motion-section" id="motion-single-test">
-            <div class="heading"><div><span class="kicker">SHOOTING TEST</span><h2>踏み込み足は撮影で比較</h2></div></div>
-            <div class="grid two">
-              <div class="tile"><span class="pill orange">仮採用</span><h3 style="margin-top:9px">左足踏み込み</h3><p class="small muted">基本構えで左足が少し前にある状態から、さらに踏み込んで薙ぐ。</p></div>
-              <div class="tile"><h3>比較案：右足踏み込み</h3><p class="small muted">身体のひねり、接地、斬撃の勢い、自然さで比較する。</p></div>
-            </div>
+            <div class="heading"><div><h2>踏み込み足は撮影で比較</h2></div></div>
+            <ul class="document-list">
+              <li><span class="pill orange">仮採用</span><h3 style="margin-top:9px">左足踏み込み</h3><p class="small muted">基本構えで左足が少し前にある状態から、さらに踏み込んで薙ぐ。</p></li>
+              <li><h3>比較案：右足踏み込み</h3><p class="small muted">身体のひねり、接地、斬撃の勢い、自然さで比較する。</p></li>
+            </ul>
             <p class="small muted" style="margin-top:14px">「右肩で溜めてから、一気に踏み込む」タイミングは採用済み。細かな足の処理は撮影・Blenderで調整する。</p>
           </section>
         </div>
@@ -259,31 +280,31 @@
       <article class="wiki-page" id="shooting" data-wiki-page="shooting">
         <div class="wrap">
           <header class="wiki-page-header">
-            <div class="eyebrow">SHOOTING CHECK</div>
+
             <h1>撮影チェック</h1>
             <p class="muted">剣の方向と足運びを優先。秒数や細かい関節の動きは撮影後に調整する。</p>
           </header>
           <div class="note">基本構え：<strong>左足を少し前、上体はほぼ正面、剣は右腰で下げる</strong>。弱1の開始姿勢は剣が右上にある状態からでよい。</div>
           <section class="section">
             <div class="heading"><div><h2>弱 → 弱 → 強</h2></div></div>
-            <div class="shooting-cards">
-              <div class="shooting-card"><div class="shooting-card-top"><span class="motion-chip orange">弱1</span><span>約0.4秒・仮</span></div><h3>右上 → 左下</h3><p>右足を半歩前へ。浅い斜め斬り（20〜30°）。上体はほぼ正面で軽く左へ。</p><div class="shooting-end">終わり：左腰、剣先は左下。</div></div>
-              <div class="shooting-card"><div class="shooting-card-top"><span class="motion-chip blue">弱2</span><span>約0.4秒・仮</span></div><h3>左下 → 右上</h3><p>追加踏み込みなしで約45°斬り上げ。上体を軽く右へ。</p><div class="shooting-end">終わり：右肩〜頭の横。</div></div>
-              <div class="shooting-card"><div class="shooting-card-top"><span class="motion-chip purple">強3-1</span><span>約0.65秒・仮</span></div><h3>低い360°回転</h3><p>左足を踏み込み、低く跳んで反時計回り。空中約270°、着地で残り約90°。</p><div class="shooting-end">終わり：左膝を曲げたサイドランジ、剣は左下。</div></div>
-            </div>
+            <ol class="shooting-list">
+              <li class="shooting-item"><div class="shooting-item-top"><span class="motion-chip orange">弱1</span><span>約0.4秒・仮</span></div><h3>右上 → 左下</h3><p>右足を半歩前へ。浅い斜め斬り（20〜30°）。上体はほぼ正面で軽く左へ。</p><div class="shooting-end">終わり：左腰、剣先は左下。</div></li>
+              <li class="shooting-item"><div class="shooting-item-top"><span class="motion-chip blue">弱2</span><span>約0.4秒・仮</span></div><h3>左下 → 右上</h3><p>追加踏み込みなしで約45°斬り上げ。上体を軽く右へ。</p><div class="shooting-end">終わり：右肩〜頭の横。</div></li>
+              <li class="shooting-item"><div class="shooting-item-top"><span class="motion-chip purple">強3-1</span><span>約0.65秒・仮</span></div><h3>低い360°回転</h3><p>左足を踏み込み、低く跳んで反時計回り。空中約270°、着地で残り約90°。</p><div class="shooting-end">終わり：左膝を曲げたサイドランジ、剣は左下。</div></li>
+            </ol>
           </section>
           <section class="section">
             <div class="heading"><div><h2>弱 → 強 → 強</h2></div></div>
-            <div class="shooting-cards">
-              <div class="shooting-card"><div class="shooting-card-top"><span class="motion-chip orange">弱1</span><span>共通</span></div><h3>右上 → 左下</h3><p>上記と同じ共通の弱1。</p></div>
-              <div class="shooting-card"><div class="shooting-card-top"><span class="motion-chip blue">強2</span></div><h3>低い突き</h3><p>追加踏み込みなし。腹部付近へ低めに突き、上体は軽く前傾。</p><div class="shooting-end">終わり：引き戻して頭上へ振りかぶる。</div></div>
-              <div class="shooting-card"><div class="shooting-card-top"><span class="motion-chip purple">強3-2</span></div><h3>両手の縦斬り</h3><p>振り上げの途中で左手を添え、頭上で一瞬静止。左足を大きく踏み込み、地面へ叩きつける。</p><div class="shooting-end">終わり：低く前傾。剣を地面で短く止めて引き上げる。</div></div>
-            </div>
+            <ol class="shooting-list">
+              <li class="shooting-item"><div class="shooting-item-top"><span class="motion-chip orange">弱1</span><span>共通</span></div><h3>右上 → 左下</h3><p>上記と同じ共通の弱1。</p></li>
+              <li class="shooting-item"><div class="shooting-item-top"><span class="motion-chip blue">強2</span></div><h3>低い突き</h3><p>追加踏み込みなし。腹部付近へ低めに突き、上体は軽く前傾。</p><div class="shooting-end">終わり：引き戻して頭上へ振りかぶる。</div></li>
+              <li class="shooting-item"><div class="shooting-item-top"><span class="motion-chip purple">強3-2</span></div><h3>両手の縦斬り</h3><p>振り上げの途中で左手を添え、頭上で一瞬静止。左足を大きく踏み込み、地面へ叩きつける。</p><div class="shooting-end">終わり：低く前傾。剣を地面で短く止めて引き上げる。</div></li>
+            </ol>
           </section>
           <section class="section">
             <div class="heading"><div><h2>単発強</h2></div></div>
-            <div class="shooting-card">
-              <div class="shooting-card-top"><span class="motion-chip purple">水平薙ぎ払い</span><span>左足踏み込みは仮</span></div>
+            <div class="shooting-item">
+              <div class="shooting-item-top"><span class="motion-chip purple">水平薙ぎ払い</span><span>左足踏み込みは仮</span></div>
               <h3>胸の高さを右 → 左</h3>
               <p>右肩で軽く溜めてから一気に踏み込み、胸の高さを水平に斬る。剣を左側まで振り抜いて上体も左へ。</p>
               <div class="shooting-end">終わり：一瞬静止して復帰。右足踏み込みも撮影して比較。</div>

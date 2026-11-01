@@ -42,9 +42,6 @@
   if (!pages.length || !sidebar || !menuButton || !backdrop) return;
 
   const navLinks = Array.from(sidebar.querySelectorAll('a[href^="#"]'));
-  const navSections = Array.from(sidebar.querySelectorAll('.wiki-nav-section'));
-  // <summary> headings are independent expand/collapse buttons only.
-  // Child links remain regular anchors, and multiple groups may stay open at once.
   const closeMenu = (restoreFocus = false) => {
     const wasOpen = document.body.classList.contains("wiki-menu-open");
     document.body.classList.remove("wiki-menu-open");
@@ -77,20 +74,19 @@
     const pageId = selected ? selected.dataset.wikiPage : "overview";
 
     for (const page of pages) page.hidden = page.dataset.wikiPage !== pageId;
-    // Expand the group of the destination, but do not navigate when its heading is clicked.
-    const currentSection = navSections.find(section => (section.dataset.navPages || "").split(" ").includes(pageId));
-    if (currentSection) currentSection.open = true;
     for (const link of navLinks) {
       link.removeAttribute("aria-current");
-      if (link.dataset.pageLink === pageId) link.setAttribute("aria-current", "page");
-      else if (target && target.id === link.getAttribute("href").slice(1)) link.setAttribute("aria-current", "location");
+      if (link.getAttribute("href") === "#" + (target ? target.id : pageId)) {
+        link.setAttribute("aria-current", link.dataset.pageLink === pageId ? "page" : "location");
+      }
     }
     document.title = ({
+      "motion-overview": "モーション概要",
       "motion": "弱→弱→強",
       "motion-wss": "弱→強→強",
       "motion-single": "単発強",
       "shooting": "撮影チェック"
-    }[pageId] || "ゲーム全体") + " — LEIR";
+    }[pageId] || "ゲーム全体") + " — LEIR 開発Wiki";
 
     // Run after changing display state so deep links scroll to visible content.
     requestAnimationFrame(() => {

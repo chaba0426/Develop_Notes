@@ -1,166 +1,276 @@
-:root{color-scheme:dark;--bg:#0b101b;--surface:#141d2d;--surface2:#1b2940;--line:#32435b;--muted:#9aaec9;--text:#edf4ff;--blue:#68baff;--orange:#ffbd75;--green:#8ce1b9;--purple:#c7b6ff;--red:#ff9a9a;font-family:Inter,"Noto Sans JP","Yu Gothic",Meiryo,system-ui,sans-serif}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 75% -10%,#192c46 0,transparent 42%),var(--bg);color:var(--text);font-size:15px;line-height:1.65}button,input{font:inherit}a{color:inherit;text-decoration:none}strong{color:#fff}h1,h2,h3,p{margin-top:0}h2{font-size:clamp(20px,2.6vw,28px);letter-spacing:-.02em;margin-bottom:6px}h3{font-size:16px;line-height:1.4;margin-bottom:7px}p{margin-bottom:10px}.muted{color:var(--muted)}.tiny{font-size:12px}.small{font-size:13px}.wrap{width:min(1120px,calc(100% - 34px));margin:auto}.header{padding:64px 0 35px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}.header:after{content:"LEIR";position:absolute;right:-.05em;top:-.6em;font-size:clamp(160px,29vw,350px);font-weight:900;color:#fff;opacity:.025;pointer-events:none;letter-spacing:-.1em}.eyebrow{font-size:11px;letter-spacing:.2em;color:var(--blue);font-weight:800}.header h1{font-size:clamp(38px,6.7vw,72px);line-height:1.11;letter-spacing:-.065em;margin:15px 0}.header .lede{font-size:clamp(15px,2vw,19px);max-width:690px}.pill{display:inline-block;border:1px solid #456a81;color:#b4e4ff;background:#213e53;border-radius:100px;padding:4px 11px;font-size:11px;font-weight:700;vertical-align:middle}.pill.orange{color:#ffe3bd;background:#493422;border-color:#79583d}.pill.purple{color:#e3d7ff;background:#372e53;border-color:#5f507a}.pill.green{color:#baf7d6;background:#1e423c;border-color:#3a796d}.topnav{display:flex;gap:8px;overflow:auto;padding:16px 0 13px;scrollbar-width:thin}.topnav a{border:1px solid var(--line);background:#152136;border-radius:9px;font-size:12px;white-space:nowrap;padding:7px 12px}.topnav a:hover{border-color:var(--blue)}main{padding:3px 0 75px}.section{margin-top:21px;background:linear-gradient(160deg,#172236,#131d2d);border:1px solid #2e405a;border-radius:18px;padding:clamp(17px,3vw,29px);box-shadow:0 11px 35px #0002}.heading{display:flex;justify-content:space-between;align-items:start;gap:12px;margin-bottom:18px}.kicker{font-size:11px;letter-spacing:.13em;color:var(--blue);font-weight:800;display:block;margin-bottom:6px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.tile{background:#1c2a40;border:1px solid #2d435e;border-radius:12px;padding:17px}.tile p:last-child{margin-bottom:0}.num{font-weight:800;font-size:33px;line-height:1;color:var(--blue);letter-spacing:-.04em}.num.orange{color:var(--orange)}.num.green{color:var(--green)}.row{display:flex;align-items:center;flex-wrap:wrap;gap:9px}.key{display:inline-grid;place-items:center;min-width:44px;height:43px;background:#26639d;border:1px solid #5391c6;border-radius:9px;font-weight:800;padding:0 9px}.key.heavy{background:#89542d;border-color:#d79d66}.key.dodge{background:#3e5065;border-color:#71849d}.chevron{color:#80aaca;font-size:21px;font-weight:800}.note{background:#121c2b;border-left:3px solid var(--blue);border-radius:0 9px 9px 0;padding:10px 14px;font-size:13px;color:#c8d9ec}.note.orange{border-color:var(--orange)}.note.purple{border-color:var(--purple)}.legend{display:flex;flex-wrap:wrap;gap:9px 14px;color:var(--muted);font-size:12px}.dot{display:inline-block;height:9px;width:9px;border-radius:3px;margin-right:5px;background:var(--blue)}.dot.orange{background:var(--orange)}.dot.green{background:var(--green)}.dot.gray{background:#61738e}.dot.red{background:var(--red)}.widget input[type=radio]{position:absolute;width:1px;height:1px;opacity:0}.tabs{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:13px}.tabs label{display:block;cursor:pointer;border:1px solid #3d5876;background:#1d3550;color:#d1e5ff;border-radius:9px;padding:9px 15px;user-select:none;font-weight:700}.tabs label:hover{background:#304e71}#c0:checked~.tabs label[for=c0],#c1:checked~.tabs label[for=c1],#c2:checked~.tabs label[for=c2]{background:#916035;border-color:#d89d61;color:#fff}#c0:focus-visible~.tabs label[for=c0],#c1:focus-visible~.tabs label[for=c1],#c2:focus-visible~.tabs label[for=c2]{outline:2px solid white;outline-offset:2px}.combo{display:none;background:#17263a;border:1px solid #344b64;border-radius:12px;padding:18px}#c0:checked~.combo-wrap #p0,#c1:checked~.combo-wrap #p1,#c2:checked~.combo-wrap #p2{display:block}.combo-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}.combo-meta p{margin:8px 0 0}.impact{display:inline-block;border:1px solid #65543c;color:#ffdcac;background:#3b3025;border-radius:7px;padding:4px 8px;font-size:11px}.timelines{display:grid;gap:11px}.timeline{display:grid;grid-template-columns:120px 1fr;align-items:center;gap:12px}.timeline-label{font-size:13px;color:#e6f0ff;font-weight:700}.track{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;min-height:34px;overflow:hidden;border-radius:6px}.phase{display:grid;place-items:center;font-size:11px;font-weight:800;white-space:nowrap;min-width:0}.phase.start{background:#4b6884;color:#fff}.phase.hit{background:#d98a52;color:#1b1010}.phase.end{background:#425a56;color:#d9f4e3}.phase.wait{background:#26384f;color:#a4b4c8}.track .p1{grid-column:span 3}.track .p2{grid-column:span 2}.track .p3{grid-column:span 7}.track.late .p1{grid-column:span 6}.track.late .p2{grid-column:span 2}.track.late .p3{grid-column:span 4}.track.boss .p1{grid-column:span 4}.track.boss .p2{grid-column:span 2}.track.boss .p3{grid-column:span 6}.stage{position:relative;padding-top:29px}.stage>span{position:absolute;top:2px;font-size:11px;color:#b8cbe0}.stage .s1{left:0}.stage .s2{left:42%}.stage .s3{right:0}.arrowdown{display:block;text-align:center;color:var(--orange);font-size:20px;line-height:1.4}.rule-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.rule{padding:15px;border-radius:11px;background:#1a2a3d;border:1px solid #344961}.rule.good{border-color:#426b6b}.rule.bad{border-color:#695050}.rule h3{margin:0 0 8px;font-size:13px}.rule .row{gap:5px}.rule .key{min-width:34px;height:34px;font-size:12px;padding:0 6px}.rule .chevron{font-size:14px}.arena{display:grid;grid-template-columns:1.2fr 1fr;gap:12px}.diagram{background:#0e192a;border:1px solid #2e4560;border-radius:12px;padding:14px}.diagram svg{display:block;width:100%;height:auto}.diagram-caption{font-size:12px;color:var(--muted);margin:8px 0 0;text-align:center}.shop{background:radial-gradient(ellipse at 50% 0,#28435c,transparent 75%),#101a29;border:1px solid #43607c;border-radius:16px;padding:clamp(13px,2.5vw,23px)}.shop-top{display:flex;align-items:start;justify-content:space-between;gap:10px;margin-bottom:18px}.shop-title{font-weight:900;font-size:23px;letter-spacing:.07em}.currency{border:1px solid #806741;background:#3b3124;color:#ffe6a4;padding:9px 13px;border-radius:10px;font-weight:800;font-variant-numeric:tabular-nums}.offers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}.offer{min-width:0;background:#172337;border:1px solid #38506c;border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px}.offer.special{border-color:#856baf;background:linear-gradient(150deg,#2f2b4a,#19253d)}.offer-kind{display:flex;align-items:center;justify-content:space-between;gap:5px;font-size:11px;font-weight:800}.offer-icon{height:65px;display:grid;place-items:center}.offer-icon svg{width:61px;height:61px}.offer-name{font-weight:850;font-size:15px}.offer-desc{color:#b8c7dd;font-size:12px;min-height:37px;line-height:1.45}.buy{margin-top:auto;text-align:center;background:#244866;border:1px solid #4579a2;border-radius:9px;color:#e9f5ff;font-weight:800;font-size:12px;padding:9px 4px}.offer.special .buy{background:#5a477e;border-color:#8973b4}.shop-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:15px;padding-top:15px;border-top:1px solid #35506d}.reroll{border:1px solid #6289a9;background:#263c53;color:#e4f2ff;border-radius:9px;padding:8px 15px;font-weight:800;font-size:13px}.flowbar{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:10px}.flowbox{padding:16px 10px;border:1px solid #3a5774;border-radius:11px;background:#20324a;text-align:center;font-weight:800}.flowbox small{display:block;color:#b4cce4;font-weight:400;margin-top:3px}.flowarrow{font-size:21px;color:var(--blue)}.loop-tail{display:flex;align-items:center;justify-content:center;gap:12px;color:#b5cbe3;font-size:12px;margin:7px 0 17px}.step-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.stepcard{position:relative;padding:16px;border-radius:12px;background:#1c2b41;border:1px solid #314962}.stepcard:before{content:attr(data-no);font-size:11px;font-weight:900;color:var(--blue);display:block;margin-bottom:7px}.stepcard .small{display:block;color:var(--muted)}.compare{display:grid;grid-template-columns:1fr 1fr;gap:12px}.vs{background:#1b2a3f;border:1px solid #334d68;border-radius:12px;padding:17px}.vs>strong{display:block;font-size:18px;margin:4px 0 12px}.bar{height:10px;border-radius:50px;background:#2e445f;margin:8px 0 14px;overflow:hidden}.bar>i{display:block;background:#81bbef;height:100%;border-radius:50px}.boss-track{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;height:42px}.boss-track>span{font-size:10px;font-weight:800;display:grid;place-items:center;text-align:center;border-radius:4px}.bt-prepare{grid-column:span 4;background:#496a87}.bt-attack{grid-column:span 2;background:#a45b55}.bt-gap{grid-column:span 3;background:#477d66}.bt-next{grid-column:span 3;background:#41536a}.timeline-explanation{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.micro{border:1px solid #47607a;padding:5px 8px;border-radius:7px;font-size:11px}.char{display:grid;grid-template-columns:1.15fr 1fr;gap:13px}.char-portrait{background:#12253b;border:1px dashed #3f6180;border-radius:12px;min-height:180px;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px}.char-portrait svg{width:min(100%,210px);height:auto}.list-row{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid #33435c;padding:10px 0;font-size:13px}.list-row:last-child{border:0}.roadmap{display:grid;gap:8px}.road{display:grid;grid-template-columns:34px 1fr minmax(105px,.65fr);align-items:center;gap:12px;padding:11px 14px;border:1px solid #334a65;background:#1b2a3e;border-radius:9px}.road-number{display:grid;place-items:center;width:30px;height:30px;border-radius:8px;color:#e5f4ff;background:#315d81;font-weight:850;font-size:12px}.road .small{text-align:right;color:var(--muted)}.foot{color:#91a6bf;font-size:12px;text-align:center;padding:25px 0}.section ul{margin:0;padding-left:20px;color:#c7d5e6}.section li{padding:2px 0}@media(max-width:760px){.grid{grid-template-columns:1fr}.grid.two{grid-template-columns:1fr}.arena,.char,.compare{grid-template-columns:1fr}.step-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.timeline{grid-template-columns:92px 1fr}.flowbar{grid-template-columns:1fr;gap:4px}.flowarrow{text-align:center;transform:rotate(90deg)}.offers{gap:7px}.offer{padding:9px}.offer-name{font-size:12px}.offer-desc{font-size:11px}.offer-icon{height:47px}.offer-icon svg{width:46px;height:46px}.buy{font-size:10px}.shop-title{font-size:19px}}@media(max-width:430px){.wrap{width:calc(100% - 20px)}.header{padding-top:45px}.section{padding:14px}.heading{display:block}.heading>.pill{margin-top:7px}.shop{padding:9px}.shop-top{gap:5px}.currency{font-size:12px;padding:7px}.offers{gap:5px}.offer{padding:7px;border-radius:8px;gap:6px}.offer-kind{font-size:9px}.offer-name{font-size:11px}.offer-desc{font-size:10px;min-height:47px}.step-cards{gap:7px}.road{grid-template-columns:30px 1fr}.road .small{grid-column:2;text-align:left}.timeline-label{font-size:11px}.timeline{grid-template-columns:72px 1fr;gap:7px}.phase{font-size:9px}.rule-grid{grid-template-columns:1fr}.shop-bottom{align-items:start}.shop-bottom .small{font-size:10px}}
+:root {
+  color-scheme: light;
+  --bg: #fff;
+  --surface: #f7f8fa;
+  --sidebar-bg: #fafafa;
+  --line: #cecece;
+  --card-bg: #f5f5f5;
+  --text: #000;
+  --muted: #000;
+  --blue: #087ca7;
+  --orange: #92521c;
+  --purple: #7352a0;
+  --green: #087ca7;
+  --red: #ad4545;
+  font-family: Inter, "Noto Sans JP", "Yu Gothic", Meiryo, system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.8; }
+button, input { font: inherit; }
+a { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
+a:hover { color: #065f82; }
+a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible, .tabs label:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { font-size: 28px; line-height: 1.4; margin-bottom: 16px; }
+h2 { font-size: 21px; line-height: 1.5; margin-bottom: 16px; font-weight: 700; }
+h3 { font-size: 16px; line-height: 1.5; margin-bottom: 12px; font-weight: 700; }
+p { margin-bottom: 16px; }
+strong { color: inherit; }
+.muted { color: var(--muted); }
+.small, .tiny { font-size: 13px; }
+.row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+img, svg { max-width: 100%; }
+img { height: auto; }
+[hidden] { display: none !important; }
 
-/* Keyboard focus for progressively enhanced combo labels. */
-.tabs label:focus-visible{outline:2px solid white;outline-offset:2px}
+/* WIKI形式のナビ。開閉はブラウザの標準動作に任せる。 */
+.skip-link { position: fixed; left: 12px; top: -80px; z-index: 100; background: #fff; padding: 10px 16px; border: 1px solid var(--line); }
+.skip-link:focus { top: 12px; }
+.wiki-layout { display: grid; grid-template-columns: 264px minmax(0, 1fr); max-width: 1320px; margin: auto; min-height: 100vh; }
+.wiki-sidebar { position: sticky; top: 0; align-self: start; height: 100vh; height: 100dvh; overflow-y: auto; background: var(--sidebar-bg); border-right: 1px solid #ddd; z-index: 32; scrollbar-width: thin; }
+.wiki-brand { display: block; padding: 24px; border-bottom: 1px solid #ddd; color: #000; text-decoration: none; }
+.wiki-brand-name { font-size: 24px; font-weight: 800; line-height: 1.3; }
+.wiki-nav { padding: 16px 12px; }
+.wiki-nav-section { margin-bottom: 12px; }
+.wiki-category-heading { position: relative; padding: 4px 24px; margin: 0 0 6px; border: 1px solid #aaa; background: #ddd; color: #000; font-size: 13px; font-weight: 700; line-height: 1.5; text-align: center; cursor: pointer; list-style: none; }
+.wiki-category-heading::-webkit-details-marker { display: none; }
+.wiki-category-heading::before { content: "▸"; position: absolute; left: 8px; color: #000; }
+.wiki-nav-section[open] > .wiki-category-heading::before { content: "▾"; }
+.wiki-category-heading:hover { background: #d3d3d3; }
+.wiki-category-heading:focus-visible { outline-color: #666; }
+.wiki-nav-list { list-style: disc; margin: 0 0 18px; padding-left: 24px; font-size: 13px; line-height: 1.6; }
+.wiki-nav-list ul { list-style: circle; padding-left: 18px; margin: 0; }
+.wiki-nav-list li { padding: 2px 0; overflow-wrap: anywhere; }
+.wiki-nav-list a[aria-current] { color: #065f82; font-weight: 700; text-decoration-thickness: 2px; }
+.wiki-content { min-width: 0; }
+.wrap { width: calc(100% - 80px); max-width: 60rem; margin: auto; }
+main { padding-bottom: 64px; }
+.wiki-page { padding-bottom: 32px; }
+.wiki-page p, .motion-steps { max-width: 48rem; }
+.header, .wiki-page-header { padding: 40px 0 24px; border-bottom: 1px solid var(--line); margin-bottom: 32px; }
+.header h1, .wiki-page-header h1 { margin: 0 0 16px; }
+.header .lede, .wiki-page-header p { font-size: 14px; }
+.wiki-page-header .row { margin-top: 16px; }
+.wiki-mobile-bar, .wiki-backdrop { display: none; }
+.wiki-page-bottom { padding: 24px 0; color: var(--muted); font-size: 13px; }
+.section { margin-top: 40px; padding-bottom: 32px; border-bottom: 2px solid var(--line); scroll-margin-top: 24px; }
+.heading { display: flex; align-items: center; justify-content: flex-start; gap: 12px; margin-bottom: 24px; padding-left: 12px; border-left: 4px solid #646464; }
+.heading h2 { margin-bottom: 0; }
+.heading p { margin: 8px 0 0; }
 
+/* IBM寄りの仕様整理。情報の区切りは罫線と見出しを中心にする。 */
+.rule-grid, .compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.document-list, .production-order { max-width: 48rem; margin: 16px 0 24px; padding-left: 24px; }
+.document-list > li, .production-order > li { padding: 8px 0 8px 4px; }
+.document-list h3, .production-order h3 { margin-bottom: 6px; }
+.document-list p.small, .production-order .small { font-size: 14px; }
+.document-list p:last-child, .production-order p:last-child { margin-bottom: 0; }
+.production-order > li::marker { font-weight: 700; }
+.tile { min-width: 0; padding: 16px 0; border-top: 2px solid var(--line); }
+.tile p:last-child { margin-bottom: 0; }
+.tile p.small, .vs p.small { font-size: 14px; }
+.section ul { padding-left: 22px; }
+.section li { padding: 3px 0; }
+.pill, .impact, .micro { display: inline-block; padding: 3px 8px; border: 1px solid var(--line); border-radius: 3px; background: #fff; font-size: 12px; line-height: 1.6; vertical-align: middle; }
+.pill { color: var(--muted); }
+.pill.green { color: var(--blue); border-color: #c4dae4; }
+.pill.orange, .impact { color: var(--orange); }
+.pill.purple { color: var(--purple); }
+.note { margin-top: 16px; padding: 12px 16px; border-left: 2px solid #a0a0a0; background: var(--surface); font-size: 13px; }
+.note.orange { border-color: #ae865c; }
+.note.purple { border-color: #a18db8; }
+.rule { padding: 20px; border: 1px solid #c5c5c5; border-radius: 8px; background: var(--card-bg); }
+.rule.good { border-top: 3px solid var(--blue); }
+.rule.bad { border-top: 3px solid var(--red); }
+.rule h3 { font-size: 14px; margin-bottom: 16px; }
+.rule .row { gap: 5px; }
+.rule .key { min-width: 34px; height: 34px; font-size: 12px; padding: 0 6px; }
+.rule .chevron { font-size: 13px; }
+.vs { padding: 16px 0; border-top: 1px solid var(--line); }
+.vs > strong { display: block; font-size: 16px; margin: 4px 0 16px; }
+.list-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+.list-row:last-child { border-bottom: 0; }
+.list-row .pill { flex-shrink: 0; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 24px 0; }
+th, td { padding: 12px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+th { background: var(--surface); font-weight: 600; }
+figure { margin: 24px 0; }
+figcaption { margin-top: 12px; font-size: 13px; color: var(--muted); }
 
-/* Design wiki layout: persistent desktop sidebar, mobile drawer, and page views. */
-.skip-link{position:fixed;left:12px;top:-80px;z-index:1300;background:#d7eeff;color:#132036;padding:10px 16px;border-radius:8px;font-weight:800}
-.skip-link:focus{top:12px}
-.wiki-layout{display:grid;grid-template-columns:238px minmax(0,1fr);max-width:1600px;margin:0 auto;min-height:100vh}
-.wiki-content{min-width:0}
-.wiki-content .wrap{width:min(1050px,calc(100% - 46px))}
-.wiki-sidebar{position:sticky;top:0;align-self:start;height:100vh;height:100dvh;overflow-y:auto;scrollbar-width:thin;background:#101929;border-right:1px solid #2e405a;display:flex;flex-direction:column;z-index:32}
-.wiki-brand{display:flex;flex-direction:column;gap:2px;padding:26px 22px 22px;border-bottom:1px solid #2b3c53}
-.wiki-brand-name{font-size:28px;line-height:1.1;font-weight:900;letter-spacing:-.045em;color:#fff}
-.wiki-brand-sub{font-size:10px;font-weight:800;letter-spacing:.16em;color:#93bbdb}
-.wiki-nav{padding:18px 11px 30px}
-.wiki-nav-group{padding:0 0 19px;margin-bottom:16px;border-bottom:1px solid #283950}
-.wiki-nav-label{font-size:11px;letter-spacing:.11em;font-weight:800;color:#879cb7;padding:4px 12px 10px}
-.wiki-nav a{display:block;border-radius:8px;margin:2px 0;transition:background .15s,color .15s,border-color .15s}
-.wiki-nav-main{padding:10px 12px;color:#e1eeff;font-weight:800;font-size:13px;border-left:3px solid transparent}
-.wiki-nav-sub{padding:6px 12px 6px 24px;color:#a4b8d0;font-size:12px;border-left:3px solid transparent}
-.wiki-nav a:hover,.wiki-nav a:focus-visible{background:#233650;color:#fff;outline:none}
-.wiki-nav a[aria-current="page"]{background:#243e58;color:#fff;border-left-color:#80bde8}
-.wiki-nav a[aria-current="location"]{color:#bfe5ff;background:#1a2d44;border-left-color:#527da8}
-.wiki-sidebar-bottom{padding:16px 19px 23px;color:#8ca3c0;font-size:11px;line-height:1.8;margin-top:auto;border-top:1px solid #283950;overflow-wrap:anywhere}
-.wiki-sidebar-bottom code,.wiki-page-bottom code{color:#b5d5ec;font-size:11px}
-.wiki-mobile-bar,.wiki-backdrop{display:none}
-.wiki-page[hidden]{display:none!important}
-.wiki-page{padding-bottom:32px}
-.wiki-page-header{padding:51px 0 26px;border-bottom:1px solid #31425a;margin-bottom:22px}
-.wiki-page-header h1{font-size:clamp(29px,4.5vw,49px);letter-spacing:-.04em;line-height:1.17;margin:12px 0 14px;color:#f0f7ff}
-.wiki-page-header p{font-size:clamp(14px,1.75vw,17px);max-width:760px}
-.wiki-page-header .row{margin-top:16px}
-.wiki-page .section,.wiki-page .wiki-inpage{scroll-margin-top:74px}
-.wiki-page[id],.wiki-page .motion-section{scroll-margin-top:74px}
-.wiki-inpage{display:flex;flex-wrap:wrap;gap:7px;padding:16px 0;margin-bottom:8px}
-.wiki-inpage a{border:1px solid #3c5570;background:#18293e;border-radius:8px;color:#d3e8fb;padding:7px 13px;font-size:12px;font-weight:700}
-.wiki-inpage a:hover{border-color:#80bde8}
-.motion-overview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:8px}
-.motion-overview .tile{min-width:0}
-.motion-overview h3{font-size:16px;margin:9px 0}
-.motion-overview p{margin:0}
-.motion-chip{display:inline-flex;align-items:center;justify-content:center;padding:3px 11px;white-space:nowrap;border-radius:7px;font-size:12px;font-weight:900;border:1px solid #6b788a;color:#fff;background:#253951}
-.motion-chip.orange{background:#59402d;border-color:#b08057;color:#ffe6bf}
-.motion-chip.blue{background:#214665;border-color:#4c8bb9;color:#d4edff}
-.motion-chip.purple{background:#49345d;border-color:#8c70ad;color:#ead7ff}
-.motion-section{scroll-margin-top:20px}
-.motion-lead{font-size:15px;color:#ceddef;line-height:1.9}
-.motion-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:19px 0}
-.motion-facts>div{background:#101c2e;border:1px solid #344d65;border-radius:10px;padding:12px 14px}
-.motion-facts small{display:block;color:#93aeca;font-size:11px;margin-bottom:4px}
-.motion-facts strong{font-size:13px}
-.motion-steps{margin:14px 0 18px;padding-left:24px;color:#d4e4f4}
-.motion-steps li{margin-bottom:9px;line-height:1.75}
-.motion-time{padding:13px;background:#111b2a;border:1px solid #334860;border-radius:10px;margin-bottom:16px}
-.motion-time-track{display:flex;gap:3px;min-height:55px}
-.motion-phase{display:grid;place-items:center;text-align:center;line-height:1.3;font-size:11px;font-weight:800;border-radius:4px;min-width:0;padding:5px 3px}
-.motion-phase.prep{background:#46617b;color:#fff}
-.motion-phase.hit{background:#be8054;color:#201408}
-.motion-phase.follow{background:#385d70;color:#ecf5ff}
-.motion-phase.settle{background:#3f6456;color:#e3fff1}
-.motion-time p{margin:9px 0 0}
-.wiki-page-bottom{padding:20px 3px 32px;font-size:12px;color:#93a7bf}
-.wiki-page-bottom a{color:#a4d5ff;text-decoration:underline;text-underline-offset:3px}
-.shooting-cards{display:grid;gap:13px}
-.shooting-card{padding:21px 23px;border:1px solid #3a526b;background:linear-gradient(155deg,#1b2b40,#111d2d);border-radius:15px}
-.shooting-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#adc1d8;font-size:12px}
-.shooting-card h2{font-size:clamp(21px,3vw,29px);margin:14px 0 8px}
-.shooting-card p{line-height:1.8}
-.shooting-end{padding:10px 14px;background:#0e1b2c;border-left:3px solid #75afe0;color:#d5e8f9;font-size:13px;border-radius:0 8px 8px 0}
-.check-items{display:grid;gap:11px;margin:13px 0 21px}
-.check-items label{display:flex;align-items:flex-start;gap:12px;background:#142339;border:1px solid #334a65;padding:12px 14px;border-radius:10px;cursor:pointer;font-size:14px}
-.check-items label:has(input:checked){border-color:#53836e;background:#173027}
-.check-items label input{width:19px;height:19px;flex:0 0 19px;accent-color:#7ec8a0;margin-top:2px}
-.check-items label span{line-height:1.6}
-.check-items label input:checked+span{color:#a4ddbc}
-@media(max-width:1100px){.wiki-layout{grid-template-columns:213px minmax(0,1fr)}.wiki-content .wrap{width:calc(100% - 34px)}}
-@media(max-width:840px){
- .wiki-layout{display:block}
- .wiki-mobile-bar{display:flex;position:sticky;top:0;z-index:45;align-items:center;gap:14px;min-height:55px;padding:8px 16px;background:#101a2b;border-bottom:1px solid #304359;box-shadow:0 4px 14px #0003}
- .wiki-menu-toggle{display:inline-flex;align-items:center;gap:7px;border:1px solid #46617b;border-radius:9px;background:#1d344b;color:#e5f1ff;font-size:13px;font-weight:800;padding:6px 11px;cursor:pointer}
- .wiki-menu-toggle span:first-child{font-size:21px;line-height:1}
- .wiki-mobile-brand{font-weight:900;letter-spacing:.02em}
- .wiki-mobile-brand span{font-size:11px;color:#92b5d1;font-weight:650}
- .wiki-sidebar{position:fixed;inset:0 auto 0 0;z-index:60;width:min(300px,86vw);height:100vh;height:100dvh;transform:translateX(-105%);transition:transform .2s ease;box-shadow:12px 0 40px #0004}
- .wiki-backdrop{position:fixed;inset:0;background:#050a12ad;z-index:55}
- body.wiki-menu-open{overflow:hidden}
- body.wiki-menu-open .wiki-sidebar{transform:translateX(0)}
- body.wiki-menu-open .wiki-backdrop{display:block}
- .wiki-content .wrap{width:calc(100% - 34px)}
- .wiki-page .section,.wiki-page .wiki-inpage,.wiki-page[id]{scroll-margin-top:72px}
- .wiki-page-header{padding-top:34px}
-}
-@media(max-width:620px){
- .motion-overview,.motion-facts{grid-template-columns:1fr}
- .motion-overview{gap:8px}
- .motion-facts{gap:7px}
- .wiki-page-header h1{font-size:31px}
- .motion-time-track{flex-direction:column}
- .motion-phase{min-height:37px}
-}
-@media(max-width:430px){
- .wiki-content .wrap{width:calc(100% - 20px)}
- .wiki-page-header{padding-top:28px}
- .shooting-card{padding:17px}
- .wiki-mobile-brand span{font-size:10px}
-}
-@media(prefers-reduced-motion:reduce){.wiki-sidebar{transition:none}}
+/* 説明は見出しとリストを基本にし、操作や図解だけを囲む。 */
+.char { display: block; }
+.character-profile h3 { font-size: 20px; }
+.character-traits, .spec-list { max-width: 48rem; margin: 16px 0; padding-left: 24px; }
+.character-traits li, .spec-list li { margin-bottom: 8px; }
+.spec-list .pill { margin-left: 8px; }
+.spec-panel { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--line); }
+.motion-overview { display: block; margin: 24px 0; padding-left: 28px; }
+.motion-overview > li { padding: 12px 0 12px 4px; }
+.motion-overview > li::marker, .shooting-list > li::marker { font-weight: 700; color: var(--text); }
+.motion-overview h3 { display: inline; margin: 0 0 0 10px; font-size: 16px; }
+.motion-overview p { margin: 8px 0 0; font-size: 14px; color: var(--text); }
+.motion-section { padding: 0 0 32px; margin-top: 40px; }
+.motion-section .heading { margin-bottom: 20px; }
+.motion-lead { font-size: 14px; line-height: 1.8; }
+.motion-chip { display: inline-block; padding: 4px 10px; border: 1px solid var(--line); border-radius: 6px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+.motion-chip.blue { color: #24658d; border-color: #c3d6e2; }
+.motion-chip.orange { color: var(--orange); border-color: #deceb9; }
+.motion-chip.purple { color: var(--purple); border-color: #d8cde4; }
+.motion-facts { margin: 20px 0 24px; padding: 0; }
+.motion-facts > div { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 20px; padding: 7px 0; }
+.motion-facts dt { color: var(--text); font-size: 14px; font-weight: 600; }
+.motion-facts dd { margin: 0; font-size: 14px; }
+.motion-steps { padding-left: 24px; margin: 24px 0; }
+.motion-steps li { margin-bottom: 8px; }
+.motion-time { padding: 16px; background: #fff; border: 1px solid var(--line); border-radius: 6px; margin-bottom: 16px; }
+.motion-time-track { display: flex; gap: 3px; min-height: 64px; }
+.motion-phase { display: grid; place-items: center; min-width: 0; padding: 8px 4px; font-size: 12px; font-weight: 600; text-align: center; line-height: 1.5; border-radius: 3px; overflow-wrap: anywhere; }
+.motion-phase.prep { background: #dce3ea; color: #34485c; }
+.motion-phase.hit { background: #f3e4d4; color: #6d4322; }
+.motion-phase.follow { background: #e1edf4; color: #34566b; }
+.motion-phase.settle { background: #e4e4e4; color: #000; }
+.motion-time p { margin: 12px 0 0; }
+.shooting-list { margin: 0; padding-left: 28px; }
+.shooting-item { padding: 16px 0; }
+.shooting-list > .shooting-item { padding: 16px 0 16px 4px; }
+.shooting-item + .shooting-item { margin-top: 8px; }
+.shooting-item-top { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 8px; color: var(--muted); font-size: 13px; }
+.shooting-item h3 { margin: 8px 0; }
+.shooting-item p { margin-bottom: 8px; }
+.shooting-end { margin-top: 8px; padding: 0; border: 0; background: transparent; font-size: 14px; }
+.check-items { display: grid; gap: 0; margin: 16px 0 24px; }
+.check-items label { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px; cursor: pointer; }
+.check-items input { width: 19px; height: 19px; flex: 0 0 19px; margin-top: 4px; accent-color: var(--blue); }
+.check-items input:checked + span { color: var(--muted); text-decoration: line-through; }
 
+/* コンボと図解は、既存の入力・フェーズの意味を保持する。 */
+.key { display: inline-grid; place-items: center; min-width: 44px; height: 43px; padding: 0 10px; background: #e4eff8; border: 1px solid #abc7dc; border-radius: 6px; color: #235478; font-weight: 700; }
+.key.heavy { background: #f5e8d9; border-color: #d8ba99; color: #794719; }
+.key.dodge { background: #ececec; border-color: #c5c5c5; color: #000; }
+.chevron { color: #000; font-size: 18px; }
+.widget input[type=radio] { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.widget { padding: 20px; background: #f3f3f3; border: 1px solid #c5c5c5; border-radius: 10px; }
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 0; }
+.tabs label { padding: 8px 16px; min-height: 44px; border: 1px solid #bbb; border-radius: 6px; background: #fff; color: #000; cursor: pointer; font-size: 14px; }
+.tabs label:hover { background: var(--surface); }
+#c0:checked ~ .tabs label[for=c0], #c1:checked ~ .tabs label[for=c1], #c2:checked ~ .tabs label[for=c2] { color: #235478; background: #fff; border-color: #5884a2; box-shadow: inset 0 -3px #5884a2; font-weight: 700; }
+#c0:focus-visible ~ .tabs label[for=c0], #c1:focus-visible ~ .tabs label[for=c1], #c2:focus-visible ~ .tabs label[for=c2] { outline: 2px solid var(--blue); outline-offset: 3px; }
+.combo { display: none; padding: 20px 0 0; }
+#c0:checked ~ .combo-wrap #p0, #c1:checked ~ .combo-wrap #p1, #c2:checked ~ .combo-wrap #p2 { display: block; }
+.combo-meta { display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 16px; }
+.combo-meta .impact { padding: 0; border: 0; background: transparent; font-size: 14px; font-weight: 600; }
+.combo > p { margin: 12px 0 0; font-size: 14px; }
+.combo-specs { margin: 24px 0; border-block: 1px solid #c5c5c5; }
+.combo-specs .tile { display: grid; grid-template-columns: 136px minmax(0, 1fr); align-items: baseline; gap: 24px; padding: 20px 0; border-top: 0; }
+.combo-specs .tile + .tile { border-top: 1px solid var(--line); }
+.combo-specs h3 { margin: 0; font-size: 15px; }
+.combo-specs p { margin: 0; font-size: 14px; line-height: 1.85; }
+.combo-caveat { padding: 16px 20px; margin: 20px 0 0; border-left: 3px solid #999; background: var(--card-bg); color: #000; font-size: 14px; line-height: 1.85; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 16px; color: var(--muted); font-size: 13px; }
+.dot { display: inline-block; width: 9px; height: 9px; margin-right: 6px; background: #6795bb; border-radius: 2px; }
+.dot.orange { background: #c59a70; }.dot.green, .dot.gray { background: #8b939c; }.dot.red { background: #b77474; }
+.timelines { display: grid; gap: 16px; }
+.timeline { display: grid; grid-template-columns: 120px minmax(0, 1fr); align-items: center; gap: 12px; }
+.timeline-label { font-size: 13px; font-weight: 600; }
+.track, .boss-track { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 3px; min-height: 42px; }
+.phase, .boss-track > span { display: grid; place-items: center; padding: 6px 2px; font-size: 12px; font-weight: 600; line-height: 1.4; text-align: center; min-width: 0; overflow-wrap: anywhere; }
+.phase.start, .bt-prepare { background: #dce3ea; color: #34485c; }
+.phase.hit, .bt-attack { background: #f3e0d4; color: #75462e; }
+.phase.end, .bt-gap { background: #e3e9ef; color: #3d5369; }
+.phase.wait, .bt-next { background: #ededed; color: #000; }
+.track .p1 { grid-column: span 3; }.track .p2 { grid-column: span 2; }.track .p3 { grid-column: span 7; }
+.track.late .p1 { grid-column: span 6; }.track.late .p3 { grid-column: span 4; }
+.track.boss .p1 { grid-column: span 4; }.track.boss .p3 { grid-column: span 6; }
+.bt-prepare { grid-column: span 4; }.bt-attack { grid-column: span 2; }.bt-gap, .bt-next { grid-column: span 3; }
+.stage { position: relative; padding-top: 32px; }
+.stage > span { position: absolute; top: 0; font-size: 12px; color: var(--muted); }
+.stage .s1 { left: 0; }.stage .s2 { left: 42%; }.stage .s3 { right: 0; }
+.arrowdown { display: block; text-align: center; color: var(--orange); font-size: 18px; }
+.arena { display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; }
+.diagram { padding: 16px; background: #0e192a; border-radius: 8px; color: #edf4ff; --muted: #b4c2d6; }
+.diagram svg { display: block; width: 100%; height: auto; }
+.diagram-caption { margin: 12px 0 0; font-size: 13px; text-align: center; color: var(--muted); }
+.timeline-explanation { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.bar { height: 8px; background: #ededed; border-radius: 4px; overflow: hidden; margin: 8px 0 16px; }
+.bar > i { display: block; height: 100%; background: #87a9c8; }
+.flowbar { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: 12px; }
+.flowbox { padding: 16px 12px; background: var(--surface); text-align: center; font-weight: 600; }
+.flowbox small { display: block; font-weight: 400; color: var(--muted); }
+.flowarrow { font-size: 19px; color: #000; }
+.loop-tail { display: flex; justify-content: center; gap: 12px; margin: 8px 0 24px; color: var(--muted); font-size: 13px; }
 
-/* Collapsible wiki table of contents */
-.wiki-nav{padding:12px 10px}
-.wiki-nav-section{margin:2px 0 4px;border:0}
-.wiki-nav-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;cursor:pointer;color:#e1eeff;font-size:13px;font-weight:800;padding:11px 10px 11px 13px;border-radius:8px;user-select:none}
-.wiki-nav-heading::-webkit-details-marker{display:none}
-.wiki-nav-heading::after{content:"";display:block;flex:none;width:7px;height:7px;border-right:2px solid #93b9d6;border-bottom:2px solid #93b9d6;transform:rotate(-45deg);transition:transform .15s ease;margin-right:5px}
-.wiki-nav-section[open]>.wiki-nav-heading::after{transform:rotate(45deg)}
-.wiki-nav-heading:hover,.wiki-nav-heading:focus-visible,.wiki-nav-section[open]>.wiki-nav-heading{background:#24364d;color:#fff}
-.wiki-nav-heading:focus-visible{outline:2px solid #8ccefa;outline-offset:2px}
-.wiki-nav-items{padding:4px 0 9px 12px}
-.wiki-nav-items .wiki-nav-sub{padding:8px 9px 8px 16px;font-size:12px}
-.wiki-nav-single{display:block;padding:11px 13px;color:#e1eeff;font-size:13px;font-weight:800;border-left:3px solid transparent;border-radius:8px}
-.wiki-mobile-brand{font-size:17px}
-.wiki-menu-toggle{min-width:42px;min-height:39px;justify-content:center}
-.wiki-menu-toggle span:first-child{font-size:22px}
-.wiki-brand{padding:20px 21px}
-.wiki-nav-section .wiki-nav-heading{scroll-margin-top:70px}
-.wiki-sidebar{justify-content:flex-start}
-.wiki-page-header{padding-top:33px}
-.wiki-page-header .row{margin-top:12px}
-@media(max-width:840px){.wiki-menu-toggle{padding:5px 11px}.wiki-mobile-bar{min-height:52px}}
-@media(prefers-reduced-motion:reduce){.wiki-nav-heading::after{transition:none}}
+/* ショップはゲーム画面のモックとして文書の配色から独立させる。 */
+.shop { color-scheme: dark; --blue: #68baff; --orange: #ffbd75; --green: #8cbddd; --purple: #c7b6ff; --red: #ff9a9a; --text: #edf4ff; --muted: #b8c7dd; background: #101a29; color: var(--text); border: 1px solid #43607c; border-radius: 12px; padding: 24px; }
+.shop-top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+.shop-title { font-size: 20px; font-weight: 700; }
+.currency { padding: 8px 12px; background: #3b3124; color: #ffe6a4; border: 1px solid #806741; border-radius: 6px; font-weight: 700; }
+.offers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.offer { min-width: 0; padding: 16px; display: flex; flex-direction: column; gap: 12px; background: #172337; border: 1px solid #38506c; border-radius: 8px; }
+.offer.special { background: #26243c; border-color: #856baf; }
+.offer-kind { display: flex; justify-content: space-between; align-items: center; gap: 6px; font-size: 12px; }
+.offer-icon { height: 64px; display: grid; place-items: center; }
+.offer-icon svg { width: 60px; height: 60px; }
+.offer-name { font-weight: 700; font-size: 14px; }
+.offer-desc { font-size: 13px; color: var(--muted); }
+.buy { margin-top: auto; padding: 10px 4px; background: #244866; border: 1px solid #4579a2; border-radius: 6px; text-align: center; font-size: 13px; font-weight: 600; }
+.offer.special .buy { background: #5a477e; border-color: #8973b4; }
+.shop .pill { color: #b4e4ff; background: #213e53; border-color: #456a81; }
+.shop .pill.purple { color: #e3d7ff; background: #372e53; border-color: #5f507a; }
+.shop-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-top: 20px; padding-top: 16px; border-top: 1px solid #35506d; }
+.reroll { padding: 8px 16px; border: 1px solid #6289a9; background: #263c53; color: #e4f2ff; border-radius: 6px; font-size: 13px; }
+.foot { color: var(--muted); font-size: 13px; text-align: center; padding: 24px 0; }
 
-
-/* WIKIWIKI-style collapsible category bars; ordinary text links within each. */
-.wiki-nav{padding:13px 9px 22px}
-.wiki-nav-section{margin:0 0 11px}
-.wiki-nav-heading{
-  width:100%;justify-content:space-between;min-height:44px;
-  border:1px solid #435875;background:#25374b;color:#eff6ff;
-  padding:10px 14px;border-radius:5px;font-size:14px;letter-spacing:.01em;
+@media (max-width: 1100px) {
+  .wrap { width: calc(100% - 48px); }
 }
-.wiki-nav-heading:hover,.wiki-nav-heading:focus-visible,.wiki-nav-section[open]>.wiki-nav-heading{
-  background:#30465c;color:#fff;border-color:#6989a5;
+@media (max-width: 1023px) {
+  .wiki-layout { display: block; }
+  .wiki-mobile-bar { display: flex; position: sticky; top: 0; z-index: 45; align-items: center; gap: 16px; min-height: 60px; padding: 8px 16px; background: #fafafa; border-bottom: 1px solid #ddd; }
+  .wiki-mobile-brand { color: #000; font-size: 16px; font-weight: 700; text-decoration: none; }
+  .wiki-menu-toggle { min-width: 44px; min-height: 44px; background: #fff; color: #000; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; font-size: 20px; }
+  .wiki-sidebar { position: fixed; inset: 0 auto 0 0; z-index: 60; width: min(320px, 88vw); transform: translateX(-105%); transition: transform .2s ease; box-shadow: 12px 0 40px #0002; }
+  .wiki-backdrop { position: fixed; inset: 0; background: #0006; z-index: 55; }
+  body.wiki-menu-open { overflow: hidden; }
+  body.wiki-menu-open .wiki-sidebar { transform: translateX(0); }
+  body.wiki-menu-open .wiki-backdrop { display: block; }
+  .wiki-category-heading { padding-block: 7px; }
+  .wiki-nav-list li { padding: 4px 0; }
+  .wrap { width: calc(100% - 32px); }
+  .wiki-page, .section, [id] { scroll-margin-top: 80px; }
+  h1 { font-size: 24px; }
 }
-.wiki-nav-heading::after{width:8px;height:8px;border-color:#b6d0e7}
-.wiki-nav-section[open]>.wiki-nav-heading{border-bottom-color:#435875}
-.wiki-nav-items{padding:8px 0 12px 11px}
-.wiki-nav-items a,.wiki-nav-items .wiki-nav-sub{
-  position:relative;display:block;margin:0;border:0;border-radius:0;
-  background:transparent;padding:5px 4px 5px 20px;
-  font-size:13px;font-weight:400;line-height:1.55;
-  color:#bdd2e8;text-decoration:none;
+@media (max-width: 760px) {
+  .arena, .compare { grid-template-columns: 1fr; }
+  .flowbar { grid-template-columns: 1fr; gap: 4px; }
+  .flowarrow { text-align: center; transform: rotate(90deg); }
 }
-.wiki-nav-items a::before{content:"•";position:absolute;left:5px;color:#7898b7;font-size:12px}
-.wiki-nav-items a:hover,.wiki-nav-items a:focus-visible{
-  border:0;border-radius:0;background:transparent;color:#f0f9ff;text-decoration:underline;
-  text-underline-offset:3px;outline:none;
+@media (max-width: 620px) {
+  .offers, .rule-grid { grid-template-columns: 1fr; }
+  .widget, .rule { padding: 16px; }
+  .combo-specs .tile { grid-template-columns: 1fr; gap: 8px; padding: 16px 0; }
+  .motion-facts > div { grid-template-columns: 80px minmax(0, 1fr); gap: 12px; }
+  .motion-time-track { flex-direction: column; }
+  .motion-phase { min-height: 44px; }
+  .timeline { grid-template-columns: 1fr; gap: 8px; }
+  .phase, .boss-track > span { font-size: 12px; }
+  .heading { flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+  .heading .motion-chip { white-space: normal; }
+  .stage > span { font-size: 12px; }
+  .shop { padding: 16px; }
+  .shop-top { flex-wrap: wrap; }
 }
-.wiki-nav-items a[aria-current="page"],.wiki-nav-items a[aria-current="location"]{
-  color:#a9ddff;background:transparent;border:0;text-decoration:underline;
-  text-underline-offset:3px;font-weight:650;
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .wiki-sidebar { transition: none; }
 }
-@media(max-width:840px){.wiki-nav{padding:15px 12px 28px}.wiki-nav-heading{min-height:48px}.wiki-nav-items a,.wiki-nav-items .wiki-nav-sub{font-size:14px;padding-block:7px}}

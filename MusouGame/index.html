@@ -3,175 +3,285 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0b101b">
-<title>LEIR — Game Design Blueprint</title>
+<meta name="theme-color" content="#F7F8FA">
+<title>LEIR — 開発Wiki</title>
 <style>
-:root{color-scheme:dark;--bg:#0b101b;--surface:#141d2d;--surface2:#1b2940;--line:#32435b;--muted:#9aaec9;--text:#edf4ff;--blue:#68baff;--orange:#ffbd75;--green:#8ce1b9;--purple:#c7b6ff;--red:#ff9a9a;font-family:Inter,"Noto Sans JP","Yu Gothic",Meiryo,system-ui,sans-serif}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 75% -10%,#192c46 0,transparent 42%),var(--bg);color:var(--text);font-size:15px;line-height:1.65}button,input{font:inherit}a{color:inherit;text-decoration:none}strong{color:#fff}h1,h2,h3,p{margin-top:0}h2{font-size:clamp(20px,2.6vw,28px);letter-spacing:-.02em;margin-bottom:6px}h3{font-size:16px;line-height:1.4;margin-bottom:7px}p{margin-bottom:10px}.muted{color:var(--muted)}.tiny{font-size:12px}.small{font-size:13px}.wrap{width:min(1120px,calc(100% - 34px));margin:auto}.header{padding:64px 0 35px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}.header:after{content:"LEIR";position:absolute;right:-.05em;top:-.6em;font-size:clamp(160px,29vw,350px);font-weight:900;color:#fff;opacity:.025;pointer-events:none;letter-spacing:-.1em}.eyebrow{font-size:11px;letter-spacing:.2em;color:var(--blue);font-weight:800}.header h1{font-size:clamp(38px,6.7vw,72px);line-height:1.11;letter-spacing:-.065em;margin:15px 0}.header .lede{font-size:clamp(15px,2vw,19px);max-width:690px}.pill{display:inline-block;border:1px solid #456a81;color:#b4e4ff;background:#213e53;border-radius:100px;padding:4px 11px;font-size:11px;font-weight:700;vertical-align:middle}.pill.orange{color:#ffe3bd;background:#493422;border-color:#79583d}.pill.purple{color:#e3d7ff;background:#372e53;border-color:#5f507a}.pill.green{color:#baf7d6;background:#1e423c;border-color:#3a796d}.topnav{display:flex;gap:8px;overflow:auto;padding:16px 0 13px;scrollbar-width:thin}.topnav a{border:1px solid var(--line);background:#152136;border-radius:9px;font-size:12px;white-space:nowrap;padding:7px 12px}.topnav a:hover{border-color:var(--blue)}main{padding:3px 0 75px}.section{margin-top:21px;background:linear-gradient(160deg,#172236,#131d2d);border:1px solid #2e405a;border-radius:18px;padding:clamp(17px,3vw,29px);box-shadow:0 11px 35px #0002}.heading{display:flex;justify-content:space-between;align-items:start;gap:12px;margin-bottom:18px}.kicker{font-size:11px;letter-spacing:.13em;color:var(--blue);font-weight:800;display:block;margin-bottom:6px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.tile{background:#1c2a40;border:1px solid #2d435e;border-radius:12px;padding:17px}.tile p:last-child{margin-bottom:0}.num{font-weight:800;font-size:33px;line-height:1;color:var(--blue);letter-spacing:-.04em}.num.orange{color:var(--orange)}.num.green{color:var(--green)}.row{display:flex;align-items:center;flex-wrap:wrap;gap:9px}.key{display:inline-grid;place-items:center;min-width:44px;height:43px;background:#26639d;border:1px solid #5391c6;border-radius:9px;font-weight:800;padding:0 9px}.key.heavy{background:#89542d;border-color:#d79d66}.key.dodge{background:#3e5065;border-color:#71849d}.chevron{color:#80aaca;font-size:21px;font-weight:800}.note{background:#121c2b;border-left:3px solid var(--blue);border-radius:0 9px 9px 0;padding:10px 14px;font-size:13px;color:#c8d9ec}.note.orange{border-color:var(--orange)}.note.purple{border-color:var(--purple)}.legend{display:flex;flex-wrap:wrap;gap:9px 14px;color:var(--muted);font-size:12px}.dot{display:inline-block;height:9px;width:9px;border-radius:3px;margin-right:5px;background:var(--blue)}.dot.orange{background:var(--orange)}.dot.green{background:var(--green)}.dot.gray{background:#61738e}.dot.red{background:var(--red)}.widget input[type=radio]{position:absolute;width:1px;height:1px;opacity:0}.tabs{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:13px}.tabs label{display:block;cursor:pointer;border:1px solid #3d5876;background:#1d3550;color:#d1e5ff;border-radius:9px;padding:9px 15px;user-select:none;font-weight:700}.tabs label:hover{background:#304e71}#c0:checked~.tabs label[for=c0],#c1:checked~.tabs label[for=c1],#c2:checked~.tabs label[for=c2]{background:#916035;border-color:#d89d61;color:#fff}#c0:focus-visible~.tabs label[for=c0],#c1:focus-visible~.tabs label[for=c1],#c2:focus-visible~.tabs label[for=c2]{outline:2px solid white;outline-offset:2px}.combo{display:none;background:#17263a;border:1px solid #344b64;border-radius:12px;padding:18px}#c0:checked~.combo-wrap #p0,#c1:checked~.combo-wrap #p1,#c2:checked~.combo-wrap #p2{display:block}.combo-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}.combo-meta p{margin:8px 0 0}.impact{display:inline-block;border:1px solid #65543c;color:#ffdcac;background:#3b3025;border-radius:7px;padding:4px 8px;font-size:11px}.timelines{display:grid;gap:11px}.timeline{display:grid;grid-template-columns:120px 1fr;align-items:center;gap:12px}.timeline-label{font-size:13px;color:#e6f0ff;font-weight:700}.track{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;min-height:34px;overflow:hidden;border-radius:6px}.phase{display:grid;place-items:center;font-size:11px;font-weight:800;white-space:nowrap;min-width:0}.phase.start{background:#4b6884;color:#fff}.phase.hit{background:#d98a52;color:#1b1010}.phase.end{background:#425a56;color:#d9f4e3}.phase.wait{background:#26384f;color:#a4b4c8}.track .p1{grid-column:span 3}.track .p2{grid-column:span 2}.track .p3{grid-column:span 7}.track.late .p1{grid-column:span 6}.track.late .p2{grid-column:span 2}.track.late .p3{grid-column:span 4}.track.boss .p1{grid-column:span 4}.track.boss .p2{grid-column:span 2}.track.boss .p3{grid-column:span 6}.stage{position:relative;padding-top:29px}.stage>span{position:absolute;top:2px;font-size:11px;color:#b8cbe0}.stage .s1{left:0}.stage .s2{left:42%}.stage .s3{right:0}.arrowdown{display:block;text-align:center;color:var(--orange);font-size:20px;line-height:1.4}.rule-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.rule{padding:15px;border-radius:11px;background:#1a2a3d;border:1px solid #344961}.rule.good{border-color:#426b6b}.rule.bad{border-color:#695050}.rule h3{margin:0 0 8px;font-size:13px}.rule .row{gap:5px}.rule .key{min-width:34px;height:34px;font-size:12px;padding:0 6px}.rule .chevron{font-size:14px}.arena{display:grid;grid-template-columns:1.2fr 1fr;gap:12px}.diagram{background:#0e192a;border:1px solid #2e4560;border-radius:12px;padding:14px}.diagram svg{display:block;width:100%;height:auto}.diagram-caption{font-size:12px;color:var(--muted);margin:8px 0 0;text-align:center}.shop{background:radial-gradient(ellipse at 50% 0,#28435c,transparent 75%),#101a29;border:1px solid #43607c;border-radius:16px;padding:clamp(13px,2.5vw,23px)}.shop-top{display:flex;align-items:start;justify-content:space-between;gap:10px;margin-bottom:18px}.shop-title{font-weight:900;font-size:23px;letter-spacing:.07em}.currency{border:1px solid #806741;background:#3b3124;color:#ffe6a4;padding:9px 13px;border-radius:10px;font-weight:800;font-variant-numeric:tabular-nums}.offers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}.offer{min-width:0;background:#172337;border:1px solid #38506c;border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px}.offer.special{border-color:#856baf;background:linear-gradient(150deg,#2f2b4a,#19253d)}.offer-kind{display:flex;align-items:center;justify-content:space-between;gap:5px;font-size:11px;font-weight:800}.offer-icon{height:65px;display:grid;place-items:center}.offer-icon svg{width:61px;height:61px}.offer-name{font-weight:850;font-size:15px}.offer-desc{color:#b8c7dd;font-size:12px;min-height:37px;line-height:1.45}.buy{margin-top:auto;text-align:center;background:#244866;border:1px solid #4579a2;border-radius:9px;color:#e9f5ff;font-weight:800;font-size:12px;padding:9px 4px}.offer.special .buy{background:#5a477e;border-color:#8973b4}.shop-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:15px;padding-top:15px;border-top:1px solid #35506d}.reroll{border:1px solid #6289a9;background:#263c53;color:#e4f2ff;border-radius:9px;padding:8px 15px;font-weight:800;font-size:13px}.flowbar{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:10px}.flowbox{padding:16px 10px;border:1px solid #3a5774;border-radius:11px;background:#20324a;text-align:center;font-weight:800}.flowbox small{display:block;color:#b4cce4;font-weight:400;margin-top:3px}.flowarrow{font-size:21px;color:var(--blue)}.loop-tail{display:flex;align-items:center;justify-content:center;gap:12px;color:#b5cbe3;font-size:12px;margin:7px 0 17px}.step-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.stepcard{position:relative;padding:16px;border-radius:12px;background:#1c2b41;border:1px solid #314962}.stepcard:before{content:attr(data-no);font-size:11px;font-weight:900;color:var(--blue);display:block;margin-bottom:7px}.stepcard .small{display:block;color:var(--muted)}.compare{display:grid;grid-template-columns:1fr 1fr;gap:12px}.vs{background:#1b2a3f;border:1px solid #334d68;border-radius:12px;padding:17px}.vs>strong{display:block;font-size:18px;margin:4px 0 12px}.bar{height:10px;border-radius:50px;background:#2e445f;margin:8px 0 14px;overflow:hidden}.bar>i{display:block;background:#81bbef;height:100%;border-radius:50px}.boss-track{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;height:42px}.boss-track>span{font-size:10px;font-weight:800;display:grid;place-items:center;text-align:center;border-radius:4px}.bt-prepare{grid-column:span 4;background:#496a87}.bt-attack{grid-column:span 2;background:#a45b55}.bt-gap{grid-column:span 3;background:#477d66}.bt-next{grid-column:span 3;background:#41536a}.timeline-explanation{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.micro{border:1px solid #47607a;padding:5px 8px;border-radius:7px;font-size:11px}.char{display:grid;grid-template-columns:1.15fr 1fr;gap:13px}.char-portrait{background:#12253b;border:1px dashed #3f6180;border-radius:12px;min-height:180px;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px}.char-portrait svg{width:min(100%,210px);height:auto}.list-row{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid #33435c;padding:10px 0;font-size:13px}.list-row:last-child{border:0}.roadmap{display:grid;gap:8px}.road{display:grid;grid-template-columns:34px 1fr minmax(105px,.65fr);align-items:center;gap:12px;padding:11px 14px;border:1px solid #334a65;background:#1b2a3e;border-radius:9px}.road-number{display:grid;place-items:center;width:30px;height:30px;border-radius:8px;color:#e5f4ff;background:#315d81;font-weight:850;font-size:12px}.road .small{text-align:right;color:var(--muted)}.foot{color:#91a6bf;font-size:12px;text-align:center;padding:25px 0}.section ul{margin:0;padding-left:20px;color:#c7d5e6}.section li{padding:2px 0}@media(max-width:760px){.grid{grid-template-columns:1fr}.grid.two{grid-template-columns:1fr}.arena,.char,.compare{grid-template-columns:1fr}.step-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.timeline{grid-template-columns:92px 1fr}.flowbar{grid-template-columns:1fr;gap:4px}.flowarrow{text-align:center;transform:rotate(90deg)}.offers{gap:7px}.offer{padding:9px}.offer-name{font-size:12px}.offer-desc{font-size:11px}.offer-icon{height:47px}.offer-icon svg{width:46px;height:46px}.buy{font-size:10px}.shop-title{font-size:19px}}@media(max-width:430px){.wrap{width:calc(100% - 20px)}.header{padding-top:45px}.section{padding:14px}.heading{display:block}.heading>.pill{margin-top:7px}.shop{padding:9px}.shop-top{gap:5px}.currency{font-size:12px;padding:7px}.offers{gap:5px}.offer{padding:7px;border-radius:8px;gap:6px}.offer-kind{font-size:9px}.offer-name{font-size:11px}.offer-desc{font-size:10px;min-height:47px}.step-cards{gap:7px}.road{grid-template-columns:30px 1fr}.road .small{grid-column:2;text-align:left}.timeline-label{font-size:11px}.timeline{grid-template-columns:72px 1fr;gap:7px}.phase{font-size:9px}.rule-grid{grid-template-columns:1fr}.shop-bottom{align-items:start}.shop-bottom .small{font-size:10px}}
+:root {
+  color-scheme: light;
+  --bg: #fff;
+  --surface: #f7f8fa;
+  --sidebar-bg: #fafafa;
+  --line: #cecece;
+  --card-bg: #f5f5f5;
+  --text: #000;
+  --muted: #000;
+  --blue: #087ca7;
+  --orange: #92521c;
+  --purple: #7352a0;
+  --green: #087ca7;
+  --red: #ad4545;
+  font-family: Inter, "Noto Sans JP", "Yu Gothic", Meiryo, system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.8; }
+button, input { font: inherit; }
+a { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
+a:hover { color: #065f82; }
+a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible, .tabs label:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { font-size: 28px; line-height: 1.4; margin-bottom: 16px; }
+h2 { font-size: 21px; line-height: 1.5; margin-bottom: 16px; font-weight: 700; }
+h3 { font-size: 16px; line-height: 1.5; margin-bottom: 12px; font-weight: 700; }
+p { margin-bottom: 16px; }
+strong { color: inherit; }
+.muted { color: var(--muted); }
+.small, .tiny { font-size: 13px; }
+.row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+img, svg { max-width: 100%; }
+img { height: auto; }
+[hidden] { display: none !important; }
 
-/* Keyboard focus for progressively enhanced combo labels. */
-.tabs label:focus-visible{outline:2px solid white;outline-offset:2px}
+/* WIKI形式のナビ。開閉はブラウザの標準動作に任せる。 */
+.skip-link { position: fixed; left: 12px; top: -80px; z-index: 100; background: #fff; padding: 10px 16px; border: 1px solid var(--line); }
+.skip-link:focus { top: 12px; }
+.wiki-layout { display: grid; grid-template-columns: 264px minmax(0, 1fr); max-width: 1320px; margin: auto; min-height: 100vh; }
+.wiki-sidebar { position: sticky; top: 0; align-self: start; height: 100vh; height: 100dvh; overflow-y: auto; background: var(--sidebar-bg); border-right: 1px solid #ddd; z-index: 32; scrollbar-width: thin; }
+.wiki-brand { display: block; padding: 24px; border-bottom: 1px solid #ddd; color: #000; text-decoration: none; }
+.wiki-brand-name { font-size: 24px; font-weight: 800; line-height: 1.3; }
+.wiki-nav { padding: 16px 12px; }
+.wiki-nav-section { margin-bottom: 12px; }
+.wiki-category-heading { position: relative; padding: 4px 24px; margin: 0 0 6px; border: 1px solid #aaa; background: #ddd; color: #000; font-size: 13px; font-weight: 700; line-height: 1.5; text-align: center; cursor: pointer; list-style: none; }
+.wiki-category-heading::-webkit-details-marker { display: none; }
+.wiki-category-heading::before { content: "▸"; position: absolute; left: 8px; color: #000; }
+.wiki-nav-section[open] > .wiki-category-heading::before { content: "▾"; }
+.wiki-category-heading:hover { background: #d3d3d3; }
+.wiki-category-heading:focus-visible { outline-color: #666; }
+.wiki-nav-list { list-style: disc; margin: 0 0 18px; padding-left: 24px; font-size: 13px; line-height: 1.6; }
+.wiki-nav-list ul { list-style: circle; padding-left: 18px; margin: 0; }
+.wiki-nav-list li { padding: 2px 0; overflow-wrap: anywhere; }
+.wiki-nav-list a[aria-current] { color: #065f82; font-weight: 700; text-decoration-thickness: 2px; }
+.wiki-content { min-width: 0; }
+.wrap { width: calc(100% - 80px); max-width: 60rem; margin: auto; }
+main { padding-bottom: 64px; }
+.wiki-page { padding-bottom: 32px; }
+.wiki-page p, .motion-steps { max-width: 48rem; }
+.header, .wiki-page-header { padding: 40px 0 24px; border-bottom: 1px solid var(--line); margin-bottom: 32px; }
+.header h1, .wiki-page-header h1 { margin: 0 0 16px; }
+.header .lede, .wiki-page-header p { font-size: 14px; }
+.wiki-page-header .row { margin-top: 16px; }
+.wiki-mobile-bar, .wiki-backdrop { display: none; }
+.wiki-page-bottom { padding: 24px 0; color: var(--muted); font-size: 13px; }
+.section { margin-top: 40px; padding-bottom: 32px; border-bottom: 2px solid var(--line); scroll-margin-top: 24px; }
+.heading { display: flex; align-items: center; justify-content: flex-start; gap: 12px; margin-bottom: 24px; padding-left: 12px; border-left: 4px solid #646464; }
+.heading h2 { margin-bottom: 0; }
+.heading p { margin: 8px 0 0; }
 
+/* IBM寄りの仕様整理。情報の区切りは罫線と見出しを中心にする。 */
+.rule-grid, .compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.document-list, .production-order { max-width: 48rem; margin: 16px 0 24px; padding-left: 24px; }
+.document-list > li, .production-order > li { padding: 8px 0 8px 4px; }
+.document-list h3, .production-order h3 { margin-bottom: 6px; }
+.document-list p.small, .production-order .small { font-size: 14px; }
+.document-list p:last-child, .production-order p:last-child { margin-bottom: 0; }
+.production-order > li::marker { font-weight: 700; }
+.tile { min-width: 0; padding: 16px 0; border-top: 2px solid var(--line); }
+.tile p:last-child { margin-bottom: 0; }
+.tile p.small, .vs p.small { font-size: 14px; }
+.section ul { padding-left: 22px; }
+.section li { padding: 3px 0; }
+.pill, .impact, .micro { display: inline-block; padding: 3px 8px; border: 1px solid var(--line); border-radius: 3px; background: #fff; font-size: 12px; line-height: 1.6; vertical-align: middle; }
+.pill { color: var(--muted); }
+.pill.green { color: var(--blue); border-color: #c4dae4; }
+.pill.orange, .impact { color: var(--orange); }
+.pill.purple { color: var(--purple); }
+.note { margin-top: 16px; padding: 12px 16px; border-left: 2px solid #a0a0a0; background: var(--surface); font-size: 13px; }
+.note.orange { border-color: #ae865c; }
+.note.purple { border-color: #a18db8; }
+.rule { padding: 20px; border: 1px solid #c5c5c5; border-radius: 8px; background: var(--card-bg); }
+.rule.good { border-top: 3px solid var(--blue); }
+.rule.bad { border-top: 3px solid var(--red); }
+.rule h3 { font-size: 14px; margin-bottom: 16px; }
+.rule .row { gap: 5px; }
+.rule .key { min-width: 34px; height: 34px; font-size: 12px; padding: 0 6px; }
+.rule .chevron { font-size: 13px; }
+.vs { padding: 16px 0; border-top: 1px solid var(--line); }
+.vs > strong { display: block; font-size: 16px; margin: 4px 0 16px; }
+.list-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+.list-row:last-child { border-bottom: 0; }
+.list-row .pill { flex-shrink: 0; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 24px 0; }
+th, td { padding: 12px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+th { background: var(--surface); font-weight: 600; }
+figure { margin: 24px 0; }
+figcaption { margin-top: 12px; font-size: 13px; color: var(--muted); }
 
-/* Design wiki layout: persistent desktop sidebar, mobile drawer, and page views. */
-.skip-link{position:fixed;left:12px;top:-80px;z-index:1300;background:#d7eeff;color:#132036;padding:10px 16px;border-radius:8px;font-weight:800}
-.skip-link:focus{top:12px}
-.wiki-layout{display:grid;grid-template-columns:238px minmax(0,1fr);max-width:1600px;margin:0 auto;min-height:100vh}
-.wiki-content{min-width:0}
-.wiki-content .wrap{width:min(1050px,calc(100% - 46px))}
-.wiki-sidebar{position:sticky;top:0;align-self:start;height:100vh;height:100dvh;overflow-y:auto;scrollbar-width:thin;background:#101929;border-right:1px solid #2e405a;display:flex;flex-direction:column;z-index:32}
-.wiki-brand{display:flex;flex-direction:column;gap:2px;padding:26px 22px 22px;border-bottom:1px solid #2b3c53}
-.wiki-brand-name{font-size:28px;line-height:1.1;font-weight:900;letter-spacing:-.045em;color:#fff}
-.wiki-brand-sub{font-size:10px;font-weight:800;letter-spacing:.16em;color:#93bbdb}
-.wiki-nav{padding:18px 11px 30px}
-.wiki-nav-group{padding:0 0 19px;margin-bottom:16px;border-bottom:1px solid #283950}
-.wiki-nav-label{font-size:11px;letter-spacing:.11em;font-weight:800;color:#879cb7;padding:4px 12px 10px}
-.wiki-nav a{display:block;border-radius:8px;margin:2px 0;transition:background .15s,color .15s,border-color .15s}
-.wiki-nav-main{padding:10px 12px;color:#e1eeff;font-weight:800;font-size:13px;border-left:3px solid transparent}
-.wiki-nav-sub{padding:6px 12px 6px 24px;color:#a4b8d0;font-size:12px;border-left:3px solid transparent}
-.wiki-nav a:hover,.wiki-nav a:focus-visible{background:#233650;color:#fff;outline:none}
-.wiki-nav a[aria-current="page"]{background:#243e58;color:#fff;border-left-color:#80bde8}
-.wiki-nav a[aria-current="location"]{color:#bfe5ff;background:#1a2d44;border-left-color:#527da8}
-.wiki-sidebar-bottom{padding:16px 19px 23px;color:#8ca3c0;font-size:11px;line-height:1.8;margin-top:auto;border-top:1px solid #283950;overflow-wrap:anywhere}
-.wiki-sidebar-bottom code,.wiki-page-bottom code{color:#b5d5ec;font-size:11px}
-.wiki-mobile-bar,.wiki-backdrop{display:none}
-.wiki-page[hidden]{display:none!important}
-.wiki-page{padding-bottom:32px}
-.wiki-page-header{padding:51px 0 26px;border-bottom:1px solid #31425a;margin-bottom:22px}
-.wiki-page-header h1{font-size:clamp(29px,4.5vw,49px);letter-spacing:-.04em;line-height:1.17;margin:12px 0 14px;color:#f0f7ff}
-.wiki-page-header p{font-size:clamp(14px,1.75vw,17px);max-width:760px}
-.wiki-page-header .row{margin-top:16px}
-.wiki-page .section,.wiki-page .wiki-inpage{scroll-margin-top:74px}
-.wiki-page[id],.wiki-page .motion-section{scroll-margin-top:74px}
-.wiki-inpage{display:flex;flex-wrap:wrap;gap:7px;padding:16px 0;margin-bottom:8px}
-.wiki-inpage a{border:1px solid #3c5570;background:#18293e;border-radius:8px;color:#d3e8fb;padding:7px 13px;font-size:12px;font-weight:700}
-.wiki-inpage a:hover{border-color:#80bde8}
-.motion-overview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:8px}
-.motion-overview .tile{min-width:0}
-.motion-overview h3{font-size:16px;margin:9px 0}
-.motion-overview p{margin:0}
-.motion-chip{display:inline-flex;align-items:center;justify-content:center;padding:3px 11px;white-space:nowrap;border-radius:7px;font-size:12px;font-weight:900;border:1px solid #6b788a;color:#fff;background:#253951}
-.motion-chip.orange{background:#59402d;border-color:#b08057;color:#ffe6bf}
-.motion-chip.blue{background:#214665;border-color:#4c8bb9;color:#d4edff}
-.motion-chip.purple{background:#49345d;border-color:#8c70ad;color:#ead7ff}
-.motion-section{scroll-margin-top:20px}
-.motion-lead{font-size:15px;color:#ceddef;line-height:1.9}
-.motion-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:19px 0}
-.motion-facts>div{background:#101c2e;border:1px solid #344d65;border-radius:10px;padding:12px 14px}
-.motion-facts small{display:block;color:#93aeca;font-size:11px;margin-bottom:4px}
-.motion-facts strong{font-size:13px}
-.motion-steps{margin:14px 0 18px;padding-left:24px;color:#d4e4f4}
-.motion-steps li{margin-bottom:9px;line-height:1.75}
-.motion-time{padding:13px;background:#111b2a;border:1px solid #334860;border-radius:10px;margin-bottom:16px}
-.motion-time-track{display:flex;gap:3px;min-height:55px}
-.motion-phase{display:grid;place-items:center;text-align:center;line-height:1.3;font-size:11px;font-weight:800;border-radius:4px;min-width:0;padding:5px 3px}
-.motion-phase.prep{background:#46617b;color:#fff}
-.motion-phase.hit{background:#be8054;color:#201408}
-.motion-phase.follow{background:#385d70;color:#ecf5ff}
-.motion-phase.settle{background:#3f6456;color:#e3fff1}
-.motion-time p{margin:9px 0 0}
-.wiki-page-bottom{padding:20px 3px 32px;font-size:12px;color:#93a7bf}
-.wiki-page-bottom a{color:#a4d5ff;text-decoration:underline;text-underline-offset:3px}
-.shooting-cards{display:grid;gap:13px}
-.shooting-card{padding:21px 23px;border:1px solid #3a526b;background:linear-gradient(155deg,#1b2b40,#111d2d);border-radius:15px}
-.shooting-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#adc1d8;font-size:12px}
-.shooting-card h2{font-size:clamp(21px,3vw,29px);margin:14px 0 8px}
-.shooting-card p{line-height:1.8}
-.shooting-end{padding:10px 14px;background:#0e1b2c;border-left:3px solid #75afe0;color:#d5e8f9;font-size:13px;border-radius:0 8px 8px 0}
-.check-items{display:grid;gap:11px;margin:13px 0 21px}
-.check-items label{display:flex;align-items:flex-start;gap:12px;background:#142339;border:1px solid #334a65;padding:12px 14px;border-radius:10px;cursor:pointer;font-size:14px}
-.check-items label:has(input:checked){border-color:#53836e;background:#173027}
-.check-items label input{width:19px;height:19px;flex:0 0 19px;accent-color:#7ec8a0;margin-top:2px}
-.check-items label span{line-height:1.6}
-.check-items label input:checked+span{color:#a4ddbc}
-@media(max-width:1100px){.wiki-layout{grid-template-columns:213px minmax(0,1fr)}.wiki-content .wrap{width:calc(100% - 34px)}}
-@media(max-width:840px){
- .wiki-layout{display:block}
- .wiki-mobile-bar{display:flex;position:sticky;top:0;z-index:45;align-items:center;gap:14px;min-height:55px;padding:8px 16px;background:#101a2b;border-bottom:1px solid #304359;box-shadow:0 4px 14px #0003}
- .wiki-menu-toggle{display:inline-flex;align-items:center;gap:7px;border:1px solid #46617b;border-radius:9px;background:#1d344b;color:#e5f1ff;font-size:13px;font-weight:800;padding:6px 11px;cursor:pointer}
- .wiki-menu-toggle span:first-child{font-size:21px;line-height:1}
- .wiki-mobile-brand{font-weight:900;letter-spacing:.02em}
- .wiki-mobile-brand span{font-size:11px;color:#92b5d1;font-weight:650}
- .wiki-sidebar{position:fixed;inset:0 auto 0 0;z-index:60;width:min(300px,86vw);height:100vh;height:100dvh;transform:translateX(-105%);transition:transform .2s ease;box-shadow:12px 0 40px #0004}
- .wiki-backdrop{position:fixed;inset:0;background:#050a12ad;z-index:55}
- body.wiki-menu-open{overflow:hidden}
- body.wiki-menu-open .wiki-sidebar{transform:translateX(0)}
- body.wiki-menu-open .wiki-backdrop{display:block}
- .wiki-content .wrap{width:calc(100% - 34px)}
- .wiki-page .section,.wiki-page .wiki-inpage,.wiki-page[id]{scroll-margin-top:72px}
- .wiki-page-header{padding-top:34px}
-}
-@media(max-width:620px){
- .motion-overview,.motion-facts{grid-template-columns:1fr}
- .motion-overview{gap:8px}
- .motion-facts{gap:7px}
- .wiki-page-header h1{font-size:31px}
- .motion-time-track{flex-direction:column}
- .motion-phase{min-height:37px}
-}
-@media(max-width:430px){
- .wiki-content .wrap{width:calc(100% - 20px)}
- .wiki-page-header{padding-top:28px}
- .shooting-card{padding:17px}
- .wiki-mobile-brand span{font-size:10px}
-}
-@media(prefers-reduced-motion:reduce){.wiki-sidebar{transition:none}}
+/* 説明は見出しとリストを基本にし、操作や図解だけを囲む。 */
+.char { display: block; }
+.character-profile h3 { font-size: 20px; }
+.character-traits, .spec-list { max-width: 48rem; margin: 16px 0; padding-left: 24px; }
+.character-traits li, .spec-list li { margin-bottom: 8px; }
+.spec-list .pill { margin-left: 8px; }
+.spec-panel { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--line); }
+.motion-overview { display: block; margin: 24px 0; padding-left: 28px; }
+.motion-overview > li { padding: 12px 0 12px 4px; }
+.motion-overview > li::marker, .shooting-list > li::marker { font-weight: 700; color: var(--text); }
+.motion-overview h3 { display: inline; margin: 0 0 0 10px; font-size: 16px; }
+.motion-overview p { margin: 8px 0 0; font-size: 14px; color: var(--text); }
+.motion-section { padding: 0 0 32px; margin-top: 40px; }
+.motion-section .heading { margin-bottom: 20px; }
+.motion-lead { font-size: 14px; line-height: 1.8; }
+.motion-chip { display: inline-block; padding: 4px 10px; border: 1px solid var(--line); border-radius: 6px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+.motion-chip.blue { color: #24658d; border-color: #c3d6e2; }
+.motion-chip.orange { color: var(--orange); border-color: #deceb9; }
+.motion-chip.purple { color: var(--purple); border-color: #d8cde4; }
+.motion-facts { margin: 20px 0 24px; padding: 0; }
+.motion-facts > div { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 20px; padding: 7px 0; }
+.motion-facts dt { color: var(--text); font-size: 14px; font-weight: 600; }
+.motion-facts dd { margin: 0; font-size: 14px; }
+.motion-steps { padding-left: 24px; margin: 24px 0; }
+.motion-steps li { margin-bottom: 8px; }
+.motion-time { padding: 16px; background: #fff; border: 1px solid var(--line); border-radius: 6px; margin-bottom: 16px; }
+.motion-time-track { display: flex; gap: 3px; min-height: 64px; }
+.motion-phase { display: grid; place-items: center; min-width: 0; padding: 8px 4px; font-size: 12px; font-weight: 600; text-align: center; line-height: 1.5; border-radius: 3px; overflow-wrap: anywhere; }
+.motion-phase.prep { background: #dce3ea; color: #34485c; }
+.motion-phase.hit { background: #f3e4d4; color: #6d4322; }
+.motion-phase.follow { background: #e1edf4; color: #34566b; }
+.motion-phase.settle { background: #e4e4e4; color: #000; }
+.motion-time p { margin: 12px 0 0; }
+.shooting-list { margin: 0; padding-left: 28px; }
+.shooting-item { padding: 16px 0; }
+.shooting-list > .shooting-item { padding: 16px 0 16px 4px; }
+.shooting-item + .shooting-item { margin-top: 8px; }
+.shooting-item-top { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 8px; color: var(--muted); font-size: 13px; }
+.shooting-item h3 { margin: 8px 0; }
+.shooting-item p { margin-bottom: 8px; }
+.shooting-end { margin-top: 8px; padding: 0; border: 0; background: transparent; font-size: 14px; }
+.check-items { display: grid; gap: 0; margin: 16px 0 24px; }
+.check-items label { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px; cursor: pointer; }
+.check-items input { width: 19px; height: 19px; flex: 0 0 19px; margin-top: 4px; accent-color: var(--blue); }
+.check-items input:checked + span { color: var(--muted); text-decoration: line-through; }
 
+/* コンボと図解は、既存の入力・フェーズの意味を保持する。 */
+.key { display: inline-grid; place-items: center; min-width: 44px; height: 43px; padding: 0 10px; background: #e4eff8; border: 1px solid #abc7dc; border-radius: 6px; color: #235478; font-weight: 700; }
+.key.heavy { background: #f5e8d9; border-color: #d8ba99; color: #794719; }
+.key.dodge { background: #ececec; border-color: #c5c5c5; color: #000; }
+.chevron { color: #000; font-size: 18px; }
+.widget input[type=radio] { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.widget { padding: 20px; background: #f3f3f3; border: 1px solid #c5c5c5; border-radius: 10px; }
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 0; }
+.tabs label { padding: 8px 16px; min-height: 44px; border: 1px solid #bbb; border-radius: 6px; background: #fff; color: #000; cursor: pointer; font-size: 14px; }
+.tabs label:hover { background: var(--surface); }
+#c0:checked ~ .tabs label[for=c0], #c1:checked ~ .tabs label[for=c1], #c2:checked ~ .tabs label[for=c2] { color: #235478; background: #fff; border-color: #5884a2; box-shadow: inset 0 -3px #5884a2; font-weight: 700; }
+#c0:focus-visible ~ .tabs label[for=c0], #c1:focus-visible ~ .tabs label[for=c1], #c2:focus-visible ~ .tabs label[for=c2] { outline: 2px solid var(--blue); outline-offset: 3px; }
+.combo { display: none; padding: 20px 0 0; }
+#c0:checked ~ .combo-wrap #p0, #c1:checked ~ .combo-wrap #p1, #c2:checked ~ .combo-wrap #p2 { display: block; }
+.combo-meta { display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 16px; }
+.combo-meta .impact { padding: 0; border: 0; background: transparent; font-size: 14px; font-weight: 600; }
+.combo > p { margin: 12px 0 0; font-size: 14px; }
+.combo-specs { margin: 24px 0; border-block: 1px solid #c5c5c5; }
+.combo-specs .tile { display: grid; grid-template-columns: 136px minmax(0, 1fr); align-items: baseline; gap: 24px; padding: 20px 0; border-top: 0; }
+.combo-specs .tile + .tile { border-top: 1px solid var(--line); }
+.combo-specs h3 { margin: 0; font-size: 15px; }
+.combo-specs p { margin: 0; font-size: 14px; line-height: 1.85; }
+.combo-caveat { padding: 16px 20px; margin: 20px 0 0; border-left: 3px solid #999; background: var(--card-bg); color: #000; font-size: 14px; line-height: 1.85; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 16px; color: var(--muted); font-size: 13px; }
+.dot { display: inline-block; width: 9px; height: 9px; margin-right: 6px; background: #6795bb; border-radius: 2px; }
+.dot.orange { background: #c59a70; }.dot.green, .dot.gray { background: #8b939c; }.dot.red { background: #b77474; }
+.timelines { display: grid; gap: 16px; }
+.timeline { display: grid; grid-template-columns: 120px minmax(0, 1fr); align-items: center; gap: 12px; }
+.timeline-label { font-size: 13px; font-weight: 600; }
+.track, .boss-track { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 3px; min-height: 42px; }
+.phase, .boss-track > span { display: grid; place-items: center; padding: 6px 2px; font-size: 12px; font-weight: 600; line-height: 1.4; text-align: center; min-width: 0; overflow-wrap: anywhere; }
+.phase.start, .bt-prepare { background: #dce3ea; color: #34485c; }
+.phase.hit, .bt-attack { background: #f3e0d4; color: #75462e; }
+.phase.end, .bt-gap { background: #e3e9ef; color: #3d5369; }
+.phase.wait, .bt-next { background: #ededed; color: #000; }
+.track .p1 { grid-column: span 3; }.track .p2 { grid-column: span 2; }.track .p3 { grid-column: span 7; }
+.track.late .p1 { grid-column: span 6; }.track.late .p3 { grid-column: span 4; }
+.track.boss .p1 { grid-column: span 4; }.track.boss .p3 { grid-column: span 6; }
+.bt-prepare { grid-column: span 4; }.bt-attack { grid-column: span 2; }.bt-gap, .bt-next { grid-column: span 3; }
+.stage { position: relative; padding-top: 32px; }
+.stage > span { position: absolute; top: 0; font-size: 12px; color: var(--muted); }
+.stage .s1 { left: 0; }.stage .s2 { left: 42%; }.stage .s3 { right: 0; }
+.arrowdown { display: block; text-align: center; color: var(--orange); font-size: 18px; }
+.arena { display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; }
+.diagram { padding: 16px; background: #0e192a; border-radius: 8px; color: #edf4ff; --muted: #b4c2d6; }
+.diagram svg { display: block; width: 100%; height: auto; }
+.diagram-caption { margin: 12px 0 0; font-size: 13px; text-align: center; color: var(--muted); }
+.timeline-explanation { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.bar { height: 8px; background: #ededed; border-radius: 4px; overflow: hidden; margin: 8px 0 16px; }
+.bar > i { display: block; height: 100%; background: #87a9c8; }
+.flowbar { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: 12px; }
+.flowbox { padding: 16px 12px; background: var(--surface); text-align: center; font-weight: 600; }
+.flowbox small { display: block; font-weight: 400; color: var(--muted); }
+.flowarrow { font-size: 19px; color: #000; }
+.loop-tail { display: flex; justify-content: center; gap: 12px; margin: 8px 0 24px; color: var(--muted); font-size: 13px; }
 
-/* Collapsible wiki table of contents */
-.wiki-nav{padding:12px 10px}
-.wiki-nav-section{margin:2px 0 4px;border:0}
-.wiki-nav-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;cursor:pointer;color:#e1eeff;font-size:13px;font-weight:800;padding:11px 10px 11px 13px;border-radius:8px;user-select:none}
-.wiki-nav-heading::-webkit-details-marker{display:none}
-.wiki-nav-heading::after{content:"";display:block;flex:none;width:7px;height:7px;border-right:2px solid #93b9d6;border-bottom:2px solid #93b9d6;transform:rotate(-45deg);transition:transform .15s ease;margin-right:5px}
-.wiki-nav-section[open]>.wiki-nav-heading::after{transform:rotate(45deg)}
-.wiki-nav-heading:hover,.wiki-nav-heading:focus-visible,.wiki-nav-section[open]>.wiki-nav-heading{background:#24364d;color:#fff}
-.wiki-nav-heading:focus-visible{outline:2px solid #8ccefa;outline-offset:2px}
-.wiki-nav-items{padding:4px 0 9px 12px}
-.wiki-nav-items .wiki-nav-sub{padding:8px 9px 8px 16px;font-size:12px}
-.wiki-nav-single{display:block;padding:11px 13px;color:#e1eeff;font-size:13px;font-weight:800;border-left:3px solid transparent;border-radius:8px}
-.wiki-mobile-brand{font-size:17px}
-.wiki-menu-toggle{min-width:42px;min-height:39px;justify-content:center}
-.wiki-menu-toggle span:first-child{font-size:22px}
-.wiki-brand{padding:20px 21px}
-.wiki-nav-section .wiki-nav-heading{scroll-margin-top:70px}
-.wiki-sidebar{justify-content:flex-start}
-.wiki-page-header{padding-top:33px}
-.wiki-page-header .row{margin-top:12px}
-@media(max-width:840px){.wiki-menu-toggle{padding:5px 11px}.wiki-mobile-bar{min-height:52px}}
-@media(prefers-reduced-motion:reduce){.wiki-nav-heading::after{transition:none}}
+/* ショップはゲーム画面のモックとして文書の配色から独立させる。 */
+.shop { color-scheme: dark; --blue: #68baff; --orange: #ffbd75; --green: #8cbddd; --purple: #c7b6ff; --red: #ff9a9a; --text: #edf4ff; --muted: #b8c7dd; background: #101a29; color: var(--text); border: 1px solid #43607c; border-radius: 12px; padding: 24px; }
+.shop-top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+.shop-title { font-size: 20px; font-weight: 700; }
+.currency { padding: 8px 12px; background: #3b3124; color: #ffe6a4; border: 1px solid #806741; border-radius: 6px; font-weight: 700; }
+.offers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.offer { min-width: 0; padding: 16px; display: flex; flex-direction: column; gap: 12px; background: #172337; border: 1px solid #38506c; border-radius: 8px; }
+.offer.special { background: #26243c; border-color: #856baf; }
+.offer-kind { display: flex; justify-content: space-between; align-items: center; gap: 6px; font-size: 12px; }
+.offer-icon { height: 64px; display: grid; place-items: center; }
+.offer-icon svg { width: 60px; height: 60px; }
+.offer-name { font-weight: 700; font-size: 14px; }
+.offer-desc { font-size: 13px; color: var(--muted); }
+.buy { margin-top: auto; padding: 10px 4px; background: #244866; border: 1px solid #4579a2; border-radius: 6px; text-align: center; font-size: 13px; font-weight: 600; }
+.offer.special .buy { background: #5a477e; border-color: #8973b4; }
+.shop .pill { color: #b4e4ff; background: #213e53; border-color: #456a81; }
+.shop .pill.purple { color: #e3d7ff; background: #372e53; border-color: #5f507a; }
+.shop-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-top: 20px; padding-top: 16px; border-top: 1px solid #35506d; }
+.reroll { padding: 8px 16px; border: 1px solid #6289a9; background: #263c53; color: #e4f2ff; border-radius: 6px; font-size: 13px; }
+.foot { color: var(--muted); font-size: 13px; text-align: center; padding: 24px 0; }
 
-
-/* WIKIWIKI-style collapsible category bars; ordinary text links within each. */
-.wiki-nav{padding:13px 9px 22px}
-.wiki-nav-section{margin:0 0 11px}
-.wiki-nav-heading{
-  width:100%;justify-content:space-between;min-height:44px;
-  border:1px solid #435875;background:#25374b;color:#eff6ff;
-  padding:10px 14px;border-radius:5px;font-size:14px;letter-spacing:.01em;
+@media (max-width: 1100px) {
+  .wrap { width: calc(100% - 48px); }
 }
-.wiki-nav-heading:hover,.wiki-nav-heading:focus-visible,.wiki-nav-section[open]>.wiki-nav-heading{
-  background:#30465c;color:#fff;border-color:#6989a5;
+@media (max-width: 1023px) {
+  .wiki-layout { display: block; }
+  .wiki-mobile-bar { display: flex; position: sticky; top: 0; z-index: 45; align-items: center; gap: 16px; min-height: 60px; padding: 8px 16px; background: #fafafa; border-bottom: 1px solid #ddd; }
+  .wiki-mobile-brand { color: #000; font-size: 16px; font-weight: 700; text-decoration: none; }
+  .wiki-menu-toggle { min-width: 44px; min-height: 44px; background: #fff; color: #000; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; font-size: 20px; }
+  .wiki-sidebar { position: fixed; inset: 0 auto 0 0; z-index: 60; width: min(320px, 88vw); transform: translateX(-105%); transition: transform .2s ease; box-shadow: 12px 0 40px #0002; }
+  .wiki-backdrop { position: fixed; inset: 0; background: #0006; z-index: 55; }
+  body.wiki-menu-open { overflow: hidden; }
+  body.wiki-menu-open .wiki-sidebar { transform: translateX(0); }
+  body.wiki-menu-open .wiki-backdrop { display: block; }
+  .wiki-category-heading { padding-block: 7px; }
+  .wiki-nav-list li { padding: 4px 0; }
+  .wrap { width: calc(100% - 32px); }
+  .wiki-page, .section, [id] { scroll-margin-top: 80px; }
+  h1 { font-size: 24px; }
 }
-.wiki-nav-heading::after{width:8px;height:8px;border-color:#b6d0e7}
-.wiki-nav-section[open]>.wiki-nav-heading{border-bottom-color:#435875}
-.wiki-nav-items{padding:8px 0 12px 11px}
-.wiki-nav-items a,.wiki-nav-items .wiki-nav-sub{
-  position:relative;display:block;margin:0;border:0;border-radius:0;
-  background:transparent;padding:5px 4px 5px 20px;
-  font-size:13px;font-weight:400;line-height:1.55;
-  color:#bdd2e8;text-decoration:none;
+@media (max-width: 760px) {
+  .arena, .compare { grid-template-columns: 1fr; }
+  .flowbar { grid-template-columns: 1fr; gap: 4px; }
+  .flowarrow { text-align: center; transform: rotate(90deg); }
 }
-.wiki-nav-items a::before{content:"•";position:absolute;left:5px;color:#7898b7;font-size:12px}
-.wiki-nav-items a:hover,.wiki-nav-items a:focus-visible{
-  border:0;border-radius:0;background:transparent;color:#f0f9ff;text-decoration:underline;
-  text-underline-offset:3px;outline:none;
+@media (max-width: 620px) {
+  .offers, .rule-grid { grid-template-columns: 1fr; }
+  .widget, .rule { padding: 16px; }
+  .combo-specs .tile { grid-template-columns: 1fr; gap: 8px; padding: 16px 0; }
+  .motion-facts > div { grid-template-columns: 80px minmax(0, 1fr); gap: 12px; }
+  .motion-time-track { flex-direction: column; }
+  .motion-phase { min-height: 44px; }
+  .timeline { grid-template-columns: 1fr; gap: 8px; }
+  .phase, .boss-track > span { font-size: 12px; }
+  .heading { flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+  .heading .motion-chip { white-space: normal; }
+  .stage > span { font-size: 12px; }
+  .shop { padding: 16px; }
+  .shop-top { flex-wrap: wrap; }
 }
-.wiki-nav-items a[aria-current="page"],.wiki-nav-items a[aria-current="location"]{
-  color:#a9ddff;background:transparent;border:0;text-decoration:underline;
-  text-underline-offset:3px;font-weight:650;
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .wiki-sidebar { transition: none; }
 }
-@media(max-width:840px){.wiki-nav{padding:15px 12px 28px}.wiki-nav-heading{min-height:48px}.wiki-nav-items a,.wiki-nav-items .wiki-nav-sub{font-size:14px;padding-block:7px}}
 </style>
 </head>
 <body>
@@ -185,29 +295,39 @@
   <aside class="wiki-sidebar" id="wiki-sidebar" aria-label="資料のサイドメニュー">
     <a class="wiki-brand" href="#overview"><span class="wiki-brand-name">LEIR</span></a>
     <nav class="wiki-nav" aria-label="設計資料">
-      <details class="wiki-nav-section" data-nav-pages="overview">
-        <summary class="wiki-nav-heading">ゲーム全体・企画書</summary>
-        <div class="wiki-nav-items">
-          <a class="wiki-nav-sub" href="#overview" data-page-link="overview">概要</a>
-          <a class="wiki-nav-sub" href="#core">コア体験</a>
-          <a class="wiki-nav-sub" href="#combo">コンボ・ステップ</a>
-          <a class="wiki-nav-sub" href="#timing">攻撃の隙</a>
-          <a class="wiki-nav-sub" href="#boss">ボス戦</a>
-          <a class="wiki-nav-sub" href="#loop">ゲームループ</a>
-          <a class="wiki-nav-sub" href="#shop">ショップ</a>
-          <a class="wiki-nav-sub" href="#enemy">敵・制作順</a>
-          <a class="wiki-nav-sub" href="#world">キャラクター</a>
-        </div>
+      <details class="wiki-nav-section" id="nav-overview" data-nav-pages="overview">
+        <summary class="wiki-category-heading">ゲーム全体</summary>
+        <ul class="wiki-nav-list">
+          <li><a href="#overview" data-page-link="overview">概要</a></li>
+          <li><a href="#core">コア体験</a></li>
+          <li><a href="#combo">コンボ・ステップ</a>
+            <ul><li><a href="#combo-001">攻撃の成立</a></li><li><a href="#combo-002">ステップ挿入規則</a></li></ul>
+          </li>
+          <li><a href="#timing">攻撃の隙</a></li>
+          <li><a href="#boss">ボス戦</a></li>
+          <li><a href="#loop">ゲームループ</a></li>
+          <li><a href="#shop">ショップ</a></li>
+          <li><a href="#enemy">敵・制作順</a></li>
+          <li><a href="#world">キャラクター</a></li>
+        </ul>
       </details>
-      <details class="wiki-nav-section" data-nav-pages="motion motion-wss motion-single shooting">
-        <summary class="wiki-nav-heading">モーション詳細</summary>
-        <div class="wiki-nav-items">
-          <a class="wiki-nav-sub" href="#motion-stance">基本構え</a>
-          <a class="wiki-nav-sub" href="#motion" data-page-link="motion">弱 → 弱 → 強</a>
-          <a class="wiki-nav-sub" href="#motion-wss" data-page-link="motion-wss">弱 → 強 → 強</a>
-          <a class="wiki-nav-sub" href="#motion-single" data-page-link="motion-single">単発強</a>
-          <a class="wiki-nav-sub" href="#shooting" data-page-link="shooting">撮影チェック</a>
-        </div>
+      <details class="wiki-nav-section" id="nav-motion" data-nav-pages="motion-overview motion motion-wss motion-single shooting" open>
+        <summary class="wiki-category-heading">モーション詳細</summary>
+        <ul class="wiki-nav-list">
+          <li><a href="#motion-overview" data-page-link="motion-overview">概要</a></li>
+          <li><a href="#motion-production">制作・編集方針</a></li>
+          <li><a href="#motion-stance">基本構え</a></li>
+          <li><a href="#motion" data-page-link="motion">弱 → 弱 → 強</a>
+            <ul><li><a href="#motion-weak1">弱1</a></li><li><a href="#motion-weak2">弱2</a></li><li><a href="#motion-strong3">強3</a></li></ul>
+          </li>
+          <li><a href="#motion-wss" data-page-link="motion-wss">弱 → 強 → 強</a>
+            <ul><li><a href="#motion-wss-thrust">強2・低い突き</a></li><li><a href="#motion-wss-finish">強3・縦斬り</a></li></ul>
+          </li>
+          <li><a href="#motion-single" data-page-link="motion-single">単発強</a>
+            <ul><li><a href="#motion-single-motion">水平薙ぎ払い</a></li><li><a href="#motion-single-test">踏み込み足の比較</a></li></ul>
+          </li>
+          <li><a href="#shooting" data-page-link="shooting">撮影チェック</a></li>
+        </ul>
       </details>
     </nav>
   </aside>
@@ -215,17 +335,17 @@
     <main id="main-content">
       <div class="wiki-page" id="overview" data-wiki-page="overview">
 <header class="header"><div class="wrap">
-  
+
   <h1>LEIR <span style="color:#7daed6;font-weight:400">/</span><br>無双アクション</h1>
   <p class="lede">敵を<strong>集める</strong> → <strong>斬り払う</strong>。<br>爽快な剣戟を核にした、部屋攻略型3Dローグライト。</p>
   <div class="row"><span class="pill green">戦闘の方向性：決定</span><span class="pill orange">部屋数・数値：仮</span><span class="pill purple">追加ギミック：後日</span></div>
 </div></header>
 <div class="wrap">
-<section class="section" id="core"><div class="heading"><div><span class="kicker">01 / CORE EXPERIENCE</span><h2>3つの柱</h2></div><span class="pill green">方向性確定</span></div>
-  <div class="grid"><div class="tile"><div class="num">01</div><h3>弱攻撃で集める</h3><p class="muted small">素早い広範囲攻撃。敵を散らさず、リアの<strong>前方の一点</strong>へ寄せる。</p></div><div class="tile"><div class="num orange">02</div><h3>強攻撃でなぎ倒す</h3><p class="muted small">範囲殲滅と単体火力を使い分け。<strong>大量撃破</strong>の感触が最優先。</p></div><div class="tile"><div class="num green">03</div><h3>戦闘後に育てる</h3><p class="muted small">撃破で通貨を自動獲得。部屋の間に購入してビルドを伸ばす。</p></div></div>
-  <div class="note" style="margin-top:12px">基本雑魚は<span style="color:#fff">無双寄り</span>：多数が接近・包囲、同時攻撃は控えめ。理不尽な集中攻撃より、気持ちよいリアクションを優先。</div>
+<section class="section" id="core"><div class="heading"><div><h2>3つの柱</h2></div><span class="pill green">方向性確定</span></div>
+  <ul class="document-list"><li><h3>弱攻撃で集める</h3><p class="muted small">素早い広範囲攻撃。敵を散らさず、リアの<strong>前方の一点</strong>へ寄せる。</p></li><li><h3>強攻撃でなぎ倒す</h3><p class="muted small">範囲殲滅と単体火力を使い分け。<strong>大量撃破</strong>の感触が最優先。</p></li><li><h3>戦闘後に育てる</h3><p class="muted small">撃破で通貨を自動獲得。部屋の間に購入してビルドを伸ばす。</p></li></ul>
+  <div class="note" style="margin-top:12px">基本雑魚は<span style="color:var(--text)">無双寄り</span>：多数が接近・包囲、同時攻撃は控えめ。理不尽な集中攻撃より、気持ちよいリアクションを優先。</div>
 </section>
-<section class="section" id="combo"><div class="heading"><div><span class="kicker">02 / MOVESET</span><h2>基本コンボは3本</h2></div><span class="pill green">確定</span></div>
+<section class="section" id="combo"><div class="heading"><div><h2>基本コンボは3本</h2></div><span class="pill green">確定</span></div>
   <div class="widget" role="group" aria-label="コンボ切り替え">
    <input type="radio" id="c0" name="combo" checked><input type="radio" id="c1" name="combo"><input type="radio" id="c2" name="combo">
    <div class="tabs"><label for="c0">単発：強</label><label for="c1">弱 → 弱 → 強</label><label for="c2">弱 → 強 → 強</label></div>
@@ -233,11 +353,11 @@
    <div class="combo" id="p1"><div class="combo-meta"><div class="row"><span class="key">弱</span><span class="chevron">›</span><span class="key">弱</span><span class="chevron">›</span><span class="key heavy">強</span></div><span class="impact">集敵 / 範囲殲滅</span></div><p>雑魚を前方にまとめ、広範囲・高威力の一撃で一掃。</p></div>
    <div class="combo" id="p2"><div class="combo-meta"><div class="row"><span class="key">弱</span><span class="chevron">›</span><span class="key heavy">強</span><span class="chevron">›</span><span class="key heavy">強</span></div><span class="impact">対ボス / 狭範囲・高火力</span></div><p>「弱→強」で止めれば短い反撃機会にも対応。最後の強攻撃は<strong>前隙が長い</strong>。</p></div></div>
   </div>
-  <div class="grid two" style="margin-top:13px"><div class="tile"><h3>攻撃の成立</h3><p class="small">攻撃判定が<strong>発生した時点</strong>でコンボ進行。空振りでも成立。判定前のステップキャンセルは<strong>不発</strong>。</p></div><div class="tile"><h3>ステップ</h3><p class="small">方向入力の短距離ステップ。攻撃中いつでもキャンセル可能。無敵時間・距離は調整対象。</p></div></div>
-  <div class="rule-grid" style="margin-top:12px"><div class="rule good"><h3 style="color:var(--green)">✓ 攻撃の間にステップ1回：継続</h3><div class="row"><span class="key">弱</span><span class="chevron">›</span><span class="key dodge">STEP</span><span class="chevron">›</span><span class="key heavy">強</span><span class="chevron">›</span><span class="key dodge">STEP</span><span class="chevron">›</span><span class="key heavy">強</span></div></div><div class="rule bad"><h3 style="color:var(--red)">× 連続2ステップ：コンボ解除</h3><div class="row"><span class="key">弱</span><span class="chevron">›</span><span class="key dodge">STEP</span><span class="chevron">›</span><span class="key dodge">STEP</span><span class="chevron" style="color:var(--red)">×</span></div></div></div>
-  <p class="muted tiny" style="margin:12px 0 0">※ 攻撃実行ごとに「間へ挟めるステップ1回」を回復。キャンセルされた未成立攻撃は回復しない。コンボの時間切れも別途あり（時間未定）。</p>
+  <div class="combo-specs"><div class="tile" id="combo-001"><h3>攻撃の成立</h3><p>攻撃判定が<strong>発生した時点</strong>でコンボ進行。空振りでも成立。判定前のステップキャンセルは<strong>不発</strong>。</p></div><div class="tile"><h3>ステップ</h3><p>方向入力の短距離ステップ。攻撃中いつでもキャンセル可能。無敵時間・距離は調整対象。</p></div></div>
+  <div class="rule-grid" id="combo-002" aria-label="COMBO-002 ステップ挿入規則"><div class="rule good"><h3 style="color:var(--blue)">✓ 攻撃の間にステップ1回：継続</h3><div class="row"><span class="key">弱</span><span class="chevron">›</span><span class="key dodge">STEP</span><span class="chevron">›</span><span class="key heavy">強</span><span class="chevron">›</span><span class="key dodge">STEP</span><span class="chevron">›</span><span class="key heavy">強</span></div></div><div class="rule bad"><h3 style="color:var(--red)">× 連続2ステップ：コンボ解除</h3><div class="row"><span class="key">弱</span><span class="chevron">›</span><span class="key dodge">STEP</span><span class="chevron">›</span><span class="key dodge">STEP</span><span class="chevron" style="color:var(--red)">×</span></div></div></div>
+  <p class="combo-caveat">※ 攻撃実行ごとに「間へ挟めるステップ1回」を回復。キャンセルされた未成立攻撃は回復しない。コンボの時間切れも別途あり（時間未定）。</p>
 </section>
-<section class="section" id="timing"><div class="heading"><div><span class="kicker">03 / ATTACK TIMING</span><h2>「隙」は前に作る</h2><p class="muted small">ボス用の3段目は、重い<strong>後隙</strong>よりも長い<strong>前隙</strong>でリスクを作る。</p></div><span class="pill green">設計方針</span></div>
+<section class="section" id="timing"><div class="heading"><div><h2>「隙」は前に作る</h2><p class="muted small">ボス用の3段目は、重い<strong>後隙</strong>よりも長い<strong>前隙</strong>でリスクを作る。</p></div><span class="pill green">設計方針</span></div>
   <div class="tile"><div class="legend" style="margin-bottom:9px"><span><i class="dot gray"></i>前隙 / 溜め</span><span><i class="dot orange"></i>攻撃判定が出る</span><span><i class="dot green"></i>後隙 / 復帰</span></div>
     <div class="timelines"><div class="timeline"><span class="timeline-label">通常の一撃</span><div class="track"><span class="phase start p1">前隙</span><span class="phase hit p2">斬撃</span><span class="phase end p3">復帰</span></div></div><div class="timeline"><span class="timeline-label">3段目の強</span><div class="track late"><span class="phase start p1">長い前隙</span><span class="phase hit p2">大技</span><span class="phase end p3">復帰</span></div></div></div>
     <p class="muted tiny" style="margin:12px 0 0">バーの幅は説明用。実フレーム数や相対的な長さは未確定。</p></div>
@@ -255,20 +375,20 @@
     <p class="diagram-caption">ステップは常に出せる。ただし判定前の大技は捨てることになる。</p>
   </div><div class="tile"><h3>この設計で生まれる判断</h3><p class="small">ボスの攻撃再開までに<strong>3段目が間に合うか？</strong></p><div class="row" style="margin:10px 0"><span class="pill green">短い隙</span><span class="chevron">→</span><strong>弱 → 強で止める</strong></div><div class="row"><span class="pill orange">長い隙</span><span class="chevron">→</span><strong>弱 → 強 → 強を狙う</strong></div><div class="note orange" style="margin-top:15px">欲張ったらステップで中断できるが、<strong>大技のダメージは得られない</strong>。</div></div></div>
 </section>
-<section class="section" id="boss"><div class="heading"><div><span class="kicker">04 / BOSS COMBAT</span><h2>ボスの「隙」を読ませる</h2><p class="muted small">まずは1対1・HP制。2〜3種類の攻撃で反撃時間に差をつける。</p></div><span class="pill green">初期仕様</span></div>
-  <div class="grid two"><div class="tile"><h3>短い攻撃 → 短い隙</h3><div class="boss-track"><span class="bt-prepare">予兆</span><span class="bt-attack">攻撃</span><span class="bt-gap" style="grid-column:span 2">小さな隙</span><span class="bt-next" style="grid-column:span 4">次の行動</span></div><p class="muted small" style="margin:10px 0 0">安全に弱強で切り上げる。</p></div><div class="tile"><h3>大技 → 長い隙</h3><div class="boss-track"><span class="bt-prepare" style="grid-column:span 3">長い予兆</span><span class="bt-attack">大技</span><span class="bt-gap" style="grid-column:span 5">大きな反撃チャンス</span><span class="bt-next" style="grid-column:span 2">再開</span></div><p class="muted small" style="margin:10px 0 0">弱強強を出し切るチャンス。</p></div></div>
+<section class="section" id="boss"><div class="heading"><div><h2>ボスの「隙」を読ませる</h2><p class="muted small">まずは1対1・HP制。2〜3種類の攻撃で反撃時間に差をつける。</p></div><span class="pill green">初期仕様</span></div>
+  <ul class="document-list"><li><h3>短い攻撃 → 短い隙</h3><div class="boss-track"><span class="bt-prepare">予兆</span><span class="bt-attack">攻撃</span><span class="bt-gap" style="grid-column:span 2">小さな隙</span><span class="bt-next" style="grid-column:span 4">次の行動</span></div><p class="muted small" style="margin:10px 0 0">安全に弱強で切り上げる。</p></li><li><h3>大技 → 長い隙</h3><div class="boss-track"><span class="bt-prepare" style="grid-column:span 3">長い予兆</span><span class="bt-attack">大技</span><span class="bt-gap" style="grid-column:span 5">大きな反撃チャンス</span><span class="bt-next" style="grid-column:span 2">再開</span></div><p class="muted small" style="margin:10px 0 0">弱強強を出し切るチャンス。</p></li></ul>
   <div class="note" style="margin-top:12px">通常攻撃ではボスを大きく怯ませない。体勢ゲージやスタンは<strong>後から</strong>。雑魚召喚と「雑魚を吹き飛ばしてボスにぶつける」ギミックも拡張候補。</div>
   <p class="muted tiny" style="margin:9px 0 0">※ 予兆・隙の図はコンセプト図。確定フレーム数ではない。</p>
 </section>
-<section class="section" id="loop"><div class="heading"><div><span class="kicker">05 / RUN STRUCTURE</span><h2>戦闘 → ショップ → 次の部屋</h2></div><span class="pill orange">5＋1部屋は仮</span></div>
+<section class="section" id="loop"><div class="heading"><div><h2>戦闘 → ショップ → 次の部屋</h2></div><span class="pill orange">5＋1部屋は仮</span></div>
   <div class="flowbar"><div class="flowbox">戦闘<small>雑魚・継続増援</small></div><div class="flowarrow">➜</div><div class="flowbox">部屋クリア<small>条件達成で終了</small></div><div class="flowarrow">➜</div><div class="flowbox" style="border-color:#856d50">ショップ<small>購入・リロール</small></div></div>
   <div class="loop-tail">↶ 次の部屋へ繰り返す <span class="pill orange">最後はボス</span></div>
-  <div class="grid"><div class="tile"><h3>討伐戦</h3><div class="num">N体</div><p class="small muted" style="margin:8px 0 0">規定数を倒したらクリア</p></div><div class="tile"><h3>生存戦</h3><div class="num orange">N秒</div><p class="small muted" style="margin:8px 0 0">生存でクリア。倒すほど通貨増</p></div><div class="tile"><h3>出現方式</h3><div class="num green">継続</div><p class="small muted" style="margin:8px 0 0">敵全滅を待たずに補充、同時数には上限</p></div></div>
+  <ul class="document-list"><li><h3>討伐戦</h3><div class="num">N体</div><p class="small muted" style="margin:8px 0 0">規定数を倒したらクリア</p></li><li><h3>生存戦</h3><div class="num orange">N秒</div><p class="small muted" style="margin:8px 0 0">生存でクリア。倒すほど通貨増</p></li><li><h3>出現方式</h3><div class="num green">継続</div><p class="small muted" style="margin:8px 0 0">敵全滅を待たずに補充、同時数には上限</p></li></ul>
   <p class="muted small" style="margin:12px 0 0">少数の平坦なアリーナをランダムに再利用。通常5部屋＋ボス1部屋を仮置き。HP 0で敗北。時間内討伐型は当面なし。</p>
 </section>
-<section class="section" id="shop"><div class="heading"><div><span class="kicker">06 / SHOP UX CONCEPT</span><h2>ショップ画面のイメージ</h2><p class="muted small">部屋クリア後に表示。3枠に基本・特殊強化が混在。</p></div><span class="pill green">挙動確定 / 見た目は仮</span></div>
+<section class="section" id="shop"><div class="heading"><div><h2>ショップ画面のイメージ</h2><p class="muted small">部屋クリア後に表示。3枠に基本・特殊強化が混在。</p></div><span class="pill green">挙動確定 / 見た目は仮</span></div>
   <div class="shop" aria-label="ショップUIモックアップ。表示数値と品目は例示">
-   <div class="shop-top"><div><div class="eyebrow">ROOM CLEAR / UPGRADE</div><div class="shop-title">旅の支度</div></div><div class="currency">◆ 1,250 <span style="font-size:11px;opacity:.7">G</span></div></div>
+   <div class="shop-top"><div><div class="shop-title">旅の支度</div></div><div class="currency">◆ 1,250 <span style="font-size:11px;opacity:.7">G</span></div></div>
    <div class="offers">
     <div class="offer"><div class="offer-kind"><span class="pill green" style="padding:2px 7px">基本</span><span class="muted">Ⅰ</span></div><div class="offer-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6L42 25 32 58 22 25Z" fill="#76c9fb" opacity=".95"/><path d="M32 6V58M22 25H42" fill="none" stroke="#e4f8ff" stroke-width="2"/><path d="M16 39H48" stroke="#b9d6e9" stroke-width="4" stroke-linecap="round"/></svg></div><div class="offer-name">攻撃力アップ</div><div class="offer-desc">通常攻撃と強攻撃の威力を上昇</div><div class="buy">◆ 300 で購入</div></div>
     <div class="offer special"><div class="offer-kind"><span class="pill purple" style="padding:2px 7px">特殊</span><span style="color:var(--purple)">NEW</span></div><div class="offer-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M11 46Q34 6 55 29Q36 17 21 49" stroke="#cab6ff" stroke-width="8" stroke-linecap="round" fill="none" opacity=".86"/><path d="M15 19L20 8L24 19L34 23L23 26L20 37L16 26L6 23Z" fill="#ffdf9f"/></svg></div><div class="offer-name">旋風の追撃</div><div class="offer-desc">強攻撃時に追撃が発生する（例）</div><div class="buy">◆ 700 で購入</div></div>
@@ -279,88 +399,99 @@
   <div class="grid" style="margin-top:12px"><div class="tile" style="border-color:#5c7d93"><h3>① どれか1つ購入</h3><div class="row"><span class="pill green">1枠購入</span><span class="chevron">→</span><span class="pill">3枠すべて再抽選</span></div><p class="muted small" style="margin:8px 0 0">購入が続けられる限り繰り返せる。</p></div><div class="tile"><h3>② 手動リロール</h3><div class="row"><span class="pill orange">通貨消費</span><span class="chevron">→</span><span class="pill">3枠すべて再抽選</span></div><p class="muted small" style="margin:8px 0 0">価格は同ショップ内で上昇、次の部屋でリセット。</p></div><div class="tile"><h3>③ 特殊スキルを育成</h3><div class="row"><span class="pill purple">特殊を取得</span><span class="chevron">→</span><span class="pill purple">Lv UPも抽選候補</span></div><p class="muted small" style="margin:8px 0 0">別枠を増やさず3枠の中に登場。</p></div></div>
   <p class="muted tiny" style="margin:10px 0 0">※ 通貨1,250G・品名・アイコン・価格は画面デザイン用のダミー。クリックできる購入UIではなく配置イメージ。</p>
 </section>
-<section class="section" id="enemy"><div class="heading"><div><span class="kicker">07 / ENEMIES & PRODUCTION</span><h2>小さく作って、確かめながら追加</h2></div><span class="pill green">実装順確定</span></div>
-  <div class="step-cards"><div class="stepcard" data-no="PHASE 01"><h3>雑魚敵 1種類</h3><span class="small">集敵・怯み・吹き飛び・大量撃破</span></div><div class="stepcard" data-no="PHASE 02"><h3>単独ボス</h3><span class="small">HP制・攻撃予兆・大小の隙</span></div><div class="stepcard" data-no="PHASE 03"><h3>雑魚敵 2種類目</h3><span class="small">群れの中に行動差をつける</span></div><div class="stepcard" data-no="PHASE 04"><h3>中ボス級の敵</h3><span class="small">ウェーブ / 部屋に1〜2体</span></div></div>
+<section class="section" id="enemy"><div class="heading"><div><h2>小さく作って、確かめながら追加</h2></div><span class="pill green">実装順確定</span></div>
+  <ol class="production-order"><li><h3>雑魚敵 1種類</h3><span class="small">集敵・怯み・吹き飛び・大量撃破</span></li><li><h3>単独ボス</h3><span class="small">HP制・攻撃予兆・大小の隙</span></li><li><h3>雑魚敵 2種類目</h3><span class="small">群れの中に行動差をつける</span></li><li><h3>中ボス級の敵</h3><span class="small">ウェーブ / 部屋に1〜2体</span></li></ol>
   <div class="compare" style="margin-top:12px"><div class="vs"><span class="pill green">初回プロトタイプ</span><strong>1部屋だけ</strong><div class="legend">雑魚1種 ＋ リアの弱/強 ＋ ステップ</div><div class="bar"><i style="width:40%"></i></div><p class="small muted">「集めて斬る」を何度も繰り返したくなるか検証。ショップやボスはまだ不要。</p></div><div class="vs"><span class="pill purple">後から広げる</span><strong>ローグライト化</strong><div class="legend">部屋目標 ＋ ショップ ＋ スキル成長</div><div class="bar"><i style="width:75%;background:#a898eb"></i></div><p class="small muted">基本戦闘 → ボス戦を確かめた後、周回の面白さを積み上げる。</p></div></div>
   <div class="note orange" style="margin-top:12px">拡張候補：雑魚を吹き飛ばしてボスへ衝突させる ／ 体勢崩し ／ ボスの雑魚召喚。いずれも<strong>基礎戦闘完成後</strong>に判断。</div>
 </section>
-<section class="section" id="world"><div class="heading"><div><span class="kicker">08 / CHARACTER & OPEN QUESTIONS</span><h2>キャラクターと保留事項</h2></div></div>
-  <div class="char"><div class="tile"><h3>リア / Leir</h3><p class="small">金髪の外ハネショートボブ、青い瞳。ネイビーの短いジャケット、白シャツ、ダークグレーの短パン、茶色の編み上げブーツ。片手剣を使う身軽な若い冒険者。</p><p class="small muted" style="margin-bottom:0">女性寄りの中性的な造形 / 王道ファンタジー / 柔らかいアニメ調3D。長髪・マントなど複雑な揺れ物は避ける。</p><div class="row" style="margin-top:15px"><span class="pill">C++20</span><span class="pill">DirectX 12</span><span class="pill">Blender / Tripo</span><span class="pill orange">HestiaEngine 検討</span></div></div><div class="tile"><h3>未決定 → プロトタイプで検証</h3><div class="list-row"><span>各攻撃の当たり判定・モーション</span><span class="pill orange">調整</span></div><div class="list-row"><span>前隙 / 無敵時間 / コンボ猶予</span><span class="pill orange">調整</span></div><div class="list-row"><span>同時出現数 / 増援ペース</span><span class="pill orange">調整</span></div><div class="list-row"><span>強化費用・抽選率・特殊スキル</span><span class="pill orange">設計</span></div><div class="list-row"><span>1ランの部屋数・プレイ時間</span><span class="pill orange">仮置き</span></div></div></div>
+<section class="section" id="world"><div class="heading"><div><h2>キャラクターと保留事項</h2></div></div>
+  <div class="char"><div class="character-profile"><h3>リア / Leir</h3><ul class="character-traits"><li>金髪の外ハネショートボブ、青い瞳。</li><li>ネイビーの短いジャケット、白シャツ、ダークグレーの短パン、茶色の編み上げブーツ。</li><li>片手剣を使う身軽な若い冒険者。</li></ul><ul class="character-traits"><li>女性寄りの中性的な造形 / 王道ファンタジー / 柔らかいアニメ調3D。</li><li>長髪・マントなど複雑な揺れ物は避ける。</li></ul><div class="row" style="margin-top:15px"><span class="pill">C++20</span><span class="pill">DirectX 12</span><span class="pill">Blender / Tripo</span><span class="pill orange">HestiaEngine 検討</span></div></div><div class="spec-panel"><h3>未決定 → プロトタイプで検証</h3><ul class="spec-list"><li><span>各攻撃の当たり判定・モーション</span><span class="pill orange">調整</span></li><li><span>前隙 / 無敵時間 / コンボ猶予</span><span class="pill orange">調整</span></li><li><span>同時出現数 / 増援ペース</span><span class="pill orange">調整</span></li><li><span>強化費用・抽選率・特殊スキル</span><span class="pill orange">設計</span></li><li><span>1ランの部屋数・プレイ時間</span><span class="pill orange">仮置き</span></li></ul></div></div>
 </section>
 
 
       </div><!-- /overview .wrap -->
       </div><!-- /overview -->
+<article class="wiki-page" id="motion-overview" data-wiki-page="motion-overview">
+        <div class="wrap">
+          <header class="wiki-page-header">
+            <h1>モーション概要</h1>
+            <p>リアの攻撃モーションに共通する制作・編集方針と基本構え。各コンボの詳細は個別ページに記載する。</p>
+          </header>
+          <div class="note">方向は<strong>リア本人の右／左</strong>。正面から見ると左右が反転する。反時計回りは<strong>上から見た回転方向</strong>。斬撃の見た目と実際の攻撃判定は別々に調整できる。</div>
+          <section class="section motion-section" id="motion-production">
+            <div class="heading"><div><h2>制作・編集の方針</h2></div></div>
+            <ul class="document-list"><li><h3>実写撮影（3段コンボ）</h3><p class="small muted">最初は3段を通しで演じ、必要区間を段ごとに切り出す。撮影時に0.4秒・0.65秒を厳密に再現する必要はない。</p></li><li><h3>Blenderで仕上げる</h3><p class="small muted">姿勢・接地・速度カーブ・開始/終端・剣の軌道を調整。ゲーム内で各段をブレンドする。</p></li><li><h3>移動・判定の管理</h3><p class="small muted">Root Motionでゲーム内移動量を制御しない。移動や攻撃判定はゲーム側で扱う。</p></li><li><h3>抽出経路は検証中</h3><p class="small muted">実写→Viggleと、実写→Muse→Viggleの対応機能・品質は未比較。利用可能な入力方法を検証する。</p></li></ul>
+            <div class="note">制作上の優先順位は<strong>斬撃方向・足運び・終端姿勢</strong>。手首の角度や厳密な速度曲線を撮影段階で演じ切る必要はない。</div>
+          </section>
+          <section class="section motion-section" id="motion-stance">
+            <div class="heading"><div><h2>共通の基本構え</h2></div></div>
+            <dl class="motion-facts">
+              <div><dt>足</dt><dd>左足を少し前</dd></div>
+              <div><dt>上体</dt><dd>ほぼ正面・自然な半身</dd></div>
+              <div><dt>剣</dt><dd>右腰に下げ、剣先は斜め下</dd></div>
+            </dl>
+            <p class="small muted">弱1は剣が右上にある姿勢からモーションを始め、待機との差は短いブレンドで一気に補う。多少の姿勢の飛びは許容し、攻撃のレスポンスを優先する。単発強では逆に右肩への振りかぶりを見せる。</p>
+          </section>
+        </div>
+      </article>
       <article class="wiki-page" id="motion" data-wiki-page="motion">
         <div class="wrap">
           <header class="wiki-page-header">
-            <div class="eyebrow">ANIMATION DESIGN / 弱 → 弱 → 強</div>
+
             <h1>弱 → 弱 → 強</h1>
             <p class="muted">リアの片手剣コンボ。弱攻撃の鋭さと、強3の低い回転斬りの重さを両立する。</p>
             <div class="row"><span class="pill green">動きの大枠：採用</span><span class="pill orange">秒数・細部：仮</span></div>
           </header>
-          <div class="note">方向は<strong>リア本人の右／左</strong>。正面から見ると左右が反転する。反時計回りは<strong>上から見た回転方向</strong>。斬撃の見た目と実際の攻撃判定は別々に調整できる。</div>
 
-          <section class="section motion-section" id="motion-stance">
-            <div class="heading"><div><span class="kicker">BASE STANCE</span><h2>共通の基本構え</h2></div></div>
-            <div class="motion-facts">
-              <div><small>足</small><strong>左足を少し前</strong></div>
-              <div><small>上体</small><strong>ほぼ正面・自然な半身</strong></div>
-              <div><small>剣</small><strong>右腰に下げ、剣先は斜め下</strong></div>
-            </div>
-            <p class="small muted">弱1は剣が右上にある姿勢からモーションを始め、待機との差は短いブレンドで一気に補う。多少の姿勢の飛びは許容し、攻撃のレスポンスを優先する。単発強では逆に右肩への振りかぶりを見せる。</p>
-          </section>
-          <div class="motion-overview">
-            <div class="tile"><span class="motion-chip orange">弱1</span><h3>右上 → 左下</h3><p class="small muted">浅い20〜30°の斜め斬り<br>右足を半歩前へ / 0.40秒</p></div>
-            <div class="tile"><span class="motion-chip blue">弱2</span><h3>左下 → 右上</h3><p class="small muted">約45°の斬り上げ<br>踏み込みなし / 0.40秒</p></div>
-            <div class="tile"><span class="motion-chip purple">強3</span><h3>360°回転斬り</h3><p class="small muted">低く跳躍して回転<br>左足踏み込み / 0.65秒（仮）</p></div>
-          </div>
+
+
+          <ol class="motion-overview">
+            <li><span class="motion-chip orange">弱1</span><h3>右上 → 左下</h3><p class="small muted">浅い20〜30°の斜め斬り<br>右足を半歩前へ / 0.40秒</p></li>
+            <li><span class="motion-chip blue">弱2</span><h3>左下 → 右上</h3><p class="small muted">約45°の斬り上げ<br>踏み込みなし / 0.40秒</p></li>
+            <li><span class="motion-chip purple">強3</span><h3>360°回転斬り</h3><p class="small muted">低く跳躍して回転<br>左足踏み込み / 0.65秒（仮）</p></li>
+          </ol>
           <section class="section motion-section" id="motion-weak1">
-            <div class="heading"><div><span class="kicker">MOVE 01 / LIGHT</span><h2>弱1 — コンパクトな斜め斬り</h2></div><span class="motion-chip orange">0.40秒</span></div>
+            <div class="heading"><div><h2>弱1 — コンパクトな斜め斬り</h2></div><span class="motion-chip orange">0.40秒</span></div>
             <p class="motion-lead">待機中の剣は右腰だが、弱1のモーションクリップは<strong>剣が右上にある姿勢</strong>から開始する。右足を半歩踏み込みながら右上→左下へ鋭く斬る。待機との姿勢差は短いブレンドで許容する。</p>
-            <div class="motion-facts"><div><small>軌道</small><strong>右上 → 左下 / 20〜30°</strong></div><div><small>足</small><strong>右足を半歩前へ</strong></div><div><small>終端姿勢</small><strong>左腰・剣先は左下</strong></div></div>
+            <dl class="motion-facts"><div><dt>軌道</dt><dd>右上 → 左下 / 20〜30°</dd></div><div><dt>足</dt><dd>右足を半歩前へ</dd></div><div><dt>終端姿勢</dt><dd>左腰・剣先は左下</dd></div></dl>
             <ol class="motion-steps"><li>待機は剣を右腰に下げるが、弱1の開始姿勢では剣を右上に置く。長い準備動作は省略する。</li><li>右足の踏み込みと同時に腰・肩・右腕を連動。上半身の大回転は不要。</li><li>急加速して浅く斬り、着地と斬撃終盤をおおむね合わせる。</li><li>上体はほぼ正面を保ち、最後に軽く左へひねる。剣は左腰付近まで振り抜き、次段へつなぐ。</li></ol>
             <div class="motion-time"><div class="motion-time-track"><span style="flex:6" class="motion-phase prep">0.00–0.06<br>踏み込み</span><span style="flex:12" class="motion-phase hit">0.06–0.18<br>急加速・斬撃</span><span style="flex:7" class="motion-phase follow">0.18–0.25<br>着地・減速</span><span style="flex:15" class="motion-phase settle">0.25–0.40<br>次段へ接続</span></div><p class="muted tiny">時間配分は撮影・編集のための仮案。</p></div>
             <div class="note orange">避ける：斬る前に逆側へ剣を動かす、大きく振りかぶる、等速で振る。</div>
           </section>
           <section class="section motion-section" id="motion-weak2">
-            <div class="heading"><div><span class="kicker">MOVE 02 / LIGHT</span><h2>弱2 — 斜め斬り上げ</h2></div><span class="motion-chip blue">0.40秒</span></div>
+            <div class="heading"><div><h2>弱2 — 斜め斬り上げ</h2></div><span class="motion-chip blue">0.40秒</span></div>
             <p class="motion-lead">弱1の終端姿勢（剣が左腰・左下）から直接、<strong>左下→右上</strong>へ切り返す。軽快さを保ちながら、上方向の動きを明確にする。</p>
-            <div class="motion-facts"><div><small>軌道</small><strong>左下 → 右上 / 約45°</strong></div><div><small>足</small><strong>追加踏み込みなし</strong></div><div><small>終端姿勢</small><strong>右肩〜頭の横</strong></div></div>
+            <dl class="motion-facts"><div><dt>軌道</dt><dd>左下 → 右上 / 約45°</dd></div><div><dt>足</dt><dd>追加踏み込みなし</dd></div><div><dt>終端姿勢</dt><dd>右肩〜頭の横</dd></div></dl>
             <ol class="motion-steps"><li>弱1で左下に振り抜いた剣を、その位置から斬り上げる。</li><li>上体を軽く右へひねりながら腰・肩を切り返す。自然に少し身体を起こすが高さの変化は固定しない。</li><li>頭上へ大きく振り上げず、右肩〜頭の横に収める。</li><li>強3で右肩後方へ引いて溜められる位置で終了。</li></ol>
             <div class="note">弱1の完全な逆再生にしない。斬り上げ角度・身体の切り返し・剣の高さで変化をつける。速度の細部はBlender側で調整。</div>
           </section>
           <section class="section motion-section" id="motion-strong3">
-            <div class="heading"><div><span class="kicker">MOVE 03 / HEAVY FINISH</span><h2>強3 — 低い跳躍360°回転斬り</h2></div><span class="motion-chip purple">0.65秒・仮</span></div>
+            <div class="heading"><div><h2>強3 — 低い跳躍360°回転斬り</h2></div><span class="motion-chip purple">0.65秒・仮</span></div>
             <p class="motion-lead">左足を踏み込み、軽く沈んで溜める。<strong>低い跳躍で約270°回転</strong>し、着地しながら<strong>残り約90°を斬り抜く</strong>。</p>
-            <div class="motion-facts"><div><small>回転方向</small><strong>上から見て反時計回り</strong></div><div><small>足運び</small><strong>左足踏み込み → 低く跳躍</strong></div><div><small>終端姿勢</small><strong>左膝を曲げたサイドランジ</strong></div></div>
+            <dl class="motion-facts"><div><dt>回転方向</dt><dd>上から見て反時計回り</dd></div><div><dt>足運び</dt><dd>左足踏み込み → 低く跳躍</dd></div><div><dt>終端姿勢</dt><dd>左膝を曲げたサイドランジ</dd></div></dl>
             <ol class="motion-steps"><li>弱2の終端から剣を右肩後方へ軽く引き、左足を踏み込んで沈む。</li><li>地面を蹴って低く跳ぶ。大ジャンプではなく、両足が少し浮く程度。</li><li>反時計回りに回転しながら剣を身体の外側へ広げる。<strong>空中から斬り始める</strong>。</li><li>空中で約270°回り、着地と同時に重心を左へ移しつつ残り90°を斬る。</li><li>左膝を曲げ、右脚を横へ伸ばす低いサイドランジで、剣を左下まで振り抜く。最後は正面を向く。</li></ol>
             <div class="motion-time"><div class="motion-time-track"><span style="flex:25" class="motion-phase prep">0.00–0.25<br>溜め・左足</span><span style="flex:7" class="motion-phase hit">0.25–0.32<br>蹴り</span><span style="flex:20" class="motion-phase follow">0.32–0.52<br>空中270°</span><span style="flex:13" class="motion-phase settle">0.52–0.65<br>着地90°</span></div><p class="muted tiny">強3の尺は仮。自然さに応じて0.70〜0.80秒程度も再検討可能。後隙0.35秒はゲームロジック側で管理。</p></div>
             <div class="note orange">足裏を固定して無理に捻らない。右膝も伸ばしきらない。腕・剣先の細かな軌道は撮影後に調整する。</div>
           </section>
-          <section class="section motion-section" id="motion-production">
-            <div class="heading"><div><span class="kicker">PRODUCTION NOTES</span><h2>制作・編集の方針</h2></div></div>
-            <div class="grid two"><div class="tile"><h3>実写撮影</h3><p class="small muted">最初は3段を通しで演じ、必要区間を段ごとに切り出す。撮影時に0.4秒・0.65秒を厳密に再現する必要はない。</p></div><div class="tile"><h3>Blenderで仕上げる</h3><p class="small muted">姿勢・接地・速度カーブ・開始/終端・剣の軌道を調整。ゲーム内で各段をブレンドする。</p></div><div class="tile"><h3>移動・判定の管理</h3><p class="small muted">Root Motionでゲーム内移動量を制御しない。移動や攻撃判定はゲーム側で扱う。</p></div><div class="tile"><h3>抽出経路は検証中</h3><p class="small muted">実写→Viggleと、実写→Muse→Viggleの対応機能・品質は未比較。利用可能な入力方法を検証する。</p></div></div>
-            <div class="note">制作上の優先順位は<strong>斬撃方向・足運び・終端姿勢</strong>。手首の角度や厳密な速度曲線を撮影段階で演じ切る必要はない。</div>
-          </section>
-          
+
+
         </div>
       </article>
       <article class="wiki-page" id="motion-wss" data-wiki-page="motion-wss">
         <div class="wrap">
           <header class="wiki-page-header">
-            <div class="eyebrow">ATTACK MOTION / 対単体</div>
+            <p class="small muted">対単体</p>
             <h1>弱 → 強 → 強</h1>
             <p class="muted">鋭い突きから、両手で地面へ叩きつける高威力の縦斬りへ。</p>
             <div class="row"><span class="pill green">大まかな動き：採用</span><span class="pill orange">時間・細部：仮</span></div>
           </header>
-          <div class="motion-overview">
-            <div class="tile"><span class="motion-chip orange">弱1</span><h3>右上 → 左下</h3><p class="small muted">共通の浅い斜め斬り。右足を半歩前へ。終端は剣が左腰。</p></div>
-            <div class="tile"><span class="motion-chip blue">強2</span><h3>低い突き</h3><p class="small muted">腹部付近へ直線的に。追加の踏み込みなし。</p></div>
-            <div class="tile"><span class="motion-chip purple">強3-2</span><h3>両手の縦斬り</h3><p class="small muted">高い構えで一瞬溜めて、地面へ叩きつける。</p></div>
-          </div>
+          <ol class="motion-overview">
+            <li><span class="motion-chip orange">弱1</span><h3>右上 → 左下</h3><p class="small muted">共通の浅い斜め斬り。右足を半歩前へ。終端は剣が左腰。</p></li>
+            <li><span class="motion-chip blue">強2</span><h3>低い突き</h3><p class="small muted">腹部付近へ直線的に。追加の踏み込みなし。</p></li>
+            <li><span class="motion-chip purple">強3-2</span><h3>両手の縦斬り</h3><p class="small muted">高い構えで一瞬溜めて、地面へ叩きつける。</p></li>
+          </ol>
           <section class="section motion-section" id="motion-wss-thrust">
-            <div class="heading"><div><span class="kicker">MOVE 02 / HEAVY</span><h2>強2 — 腹部付近への低い突き</h2></div></div>
+            <div class="heading"><div><h2>強2 — 腹部付近への低い突き</h2></div></div>
             <p class="motion-lead">弱1の左腰・左下の終端から、剣を中央へ戻して<strong>前方の腹部付近へまっすぐ突く</strong>。弱2の斬り上げと見た目を区別する。</p>
             <div class="motion-facts">
               <div><small>足</small><strong>踏み込みなし・右足前</strong></div>
@@ -374,7 +505,7 @@
             </ol>
           </section>
           <section class="section motion-section" id="motion-wss-finish">
-            <div class="heading"><div><span class="kicker">MOVE 03 / HEAVY FINISH</span><h2>強3-2 — 地面へ叩きつける縦斬り</h2></div><span class="motion-chip purple">両手持ち</span></div>
+            <div class="heading"><div><h2>強3-2 — 地面へ叩きつける縦斬り</h2></div><span class="motion-chip purple">両手持ち</span></div>
             <p class="motion-lead">強2の剣を引き戻しながら頭上へ振り上げる途中で<strong>左手を添える</strong>。高い姿勢で一瞬静止し、左足を大きく踏み込んで全身で斬り下ろす。</p>
             <div class="motion-facts">
               <div><small>振りかぶり</small><strong>高い姿勢・頭上で一瞬停止</strong></div>
@@ -394,7 +525,7 @@
       <article class="wiki-page" id="motion-single" data-wiki-page="motion-single">
         <div class="wrap">
           <header class="wiki-page-header">
-            <div class="eyebrow">ATTACK MOTION / 単発</div>
+
             <h1>単発強 — 水平薙ぎ払い</h1>
             <p class="muted">右肩で軽く溜め、一気に踏み込んで胸の高さを右から左へ広く斬る。</p>
             <div class="row"><span class="pill green">斬撃・終端：採用</span><span class="pill orange">左足踏み込み：仮</span></div>
@@ -405,7 +536,7 @@
             <div><small>終端</small><strong>左側へ大きく振り抜いて静止</strong></div>
           </div>
           <section class="section motion-section" id="motion-single-motion">
-            <div class="heading"><div><span class="kicker">SINGLE HEAVY</span><h2>踏み込み水平薙ぎ払い</h2></div></div>
+            <div class="heading"><div><h2>踏み込み水平薙ぎ払い</h2></div></div>
             <ol class="motion-steps">
               <li>待機時は剣を右腰で下げる。<strong>右肩付近まで引き上げ、軽く溜める</strong>。弱1と違い準備動作を見せる。</li>
               <li>溜めてから一気に<strong>左足を前へ踏み込む（仮）</strong>。踏み込みの着地と斬撃を連動させる。</li>
@@ -414,11 +545,11 @@
             </ol>
           </section>
           <section class="section motion-section" id="motion-single-test">
-            <div class="heading"><div><span class="kicker">SHOOTING TEST</span><h2>踏み込み足は撮影で比較</h2></div></div>
-            <div class="grid two">
-              <div class="tile"><span class="pill orange">仮採用</span><h3 style="margin-top:9px">左足踏み込み</h3><p class="small muted">基本構えで左足が少し前にある状態から、さらに踏み込んで薙ぐ。</p></div>
-              <div class="tile"><h3>比較案：右足踏み込み</h3><p class="small muted">身体のひねり、接地、斬撃の勢い、自然さで比較する。</p></div>
-            </div>
+            <div class="heading"><div><h2>踏み込み足は撮影で比較</h2></div></div>
+            <ul class="document-list">
+              <li><span class="pill orange">仮採用</span><h3 style="margin-top:9px">左足踏み込み</h3><p class="small muted">基本構えで左足が少し前にある状態から、さらに踏み込んで薙ぐ。</p></li>
+              <li><h3>比較案：右足踏み込み</h3><p class="small muted">身体のひねり、接地、斬撃の勢い、自然さで比較する。</p></li>
+            </ul>
             <p class="small muted" style="margin-top:14px">「右肩で溜めてから、一気に踏み込む」タイミングは採用済み。細かな足の処理は撮影・Blenderで調整する。</p>
           </section>
         </div>
@@ -426,31 +557,31 @@
       <article class="wiki-page" id="shooting" data-wiki-page="shooting">
         <div class="wrap">
           <header class="wiki-page-header">
-            <div class="eyebrow">SHOOTING CHECK</div>
+
             <h1>撮影チェック</h1>
             <p class="muted">剣の方向と足運びを優先。秒数や細かい関節の動きは撮影後に調整する。</p>
           </header>
           <div class="note">基本構え：<strong>左足を少し前、上体はほぼ正面、剣は右腰で下げる</strong>。弱1の開始姿勢は剣が右上にある状態からでよい。</div>
           <section class="section">
             <div class="heading"><div><h2>弱 → 弱 → 強</h2></div></div>
-            <div class="shooting-cards">
-              <div class="shooting-card"><div class="shooting-card-top"><span class="motion-chip orange">弱1</span><span>約0.4秒・仮</span></div><h3>右上 → 左下</h3><p>右足を半歩前へ。浅い斜め斬り（20〜30°）。上体はほぼ正面で軽く左へ。</p><div class="shooting-end">終わり：左腰、剣先は左下。</div></div>
-              <div class="shooting-card"><div class="shooting-card-top"><span class="motion-chip blue">弱2</span><span>約0.4秒・仮</span></div><h3>左下 → 右上</h3><p>追加踏み込みなしで約45°斬り上げ。上体を軽く右へ。</p><div class="shooting-end">終わり：右肩〜頭の横。</div></div>
-              <div class="shooting-card"><div class="shooting-card-top"><span class="motion-chip purple">強3-1</span><span>約0.65秒・仮</span></div><h3>低い360°回転</h3><p>左足を踏み込み、低く跳んで反時計回り。空中約270°、着地で残り約90°。</p><div class="shooting-end">終わり：左膝を曲げたサイドランジ、剣は左下。</div></div>
-            </div>
+            <ol class="shooting-list">
+              <li class="shooting-item"><div class="shooting-item-top"><span class="motion-chip orange">弱1</span><span>約0.4秒・仮</span></div><h3>右上 → 左下</h3><p>右足を半歩前へ。浅い斜め斬り（20〜30°）。上体はほぼ正面で軽く左へ。</p><div class="shooting-end">終わり：左腰、剣先は左下。</div></li>
+              <li class="shooting-item"><div class="shooting-item-top"><span class="motion-chip blue">弱2</span><span>約0.4秒・仮</span></div><h3>左下 → 右上</h3><p>追加踏み込みなしで約45°斬り上げ。上体を軽く右へ。</p><div class="shooting-end">終わり：右肩〜頭の横。</div></li>
+              <li class="shooting-item"><div class="shooting-item-top"><span class="motion-chip purple">強3-1</span><span>約0.65秒・仮</span></div><h3>低い360°回転</h3><p>左足を踏み込み、低く跳んで反時計回り。空中約270°、着地で残り約90°。</p><div class="shooting-end">終わり：左膝を曲げたサイドランジ、剣は左下。</div></li>
+            </ol>
           </section>
           <section class="section">
             <div class="heading"><div><h2>弱 → 強 → 強</h2></div></div>
-            <div class="shooting-cards">
-              <div class="shooting-card"><div class="shooting-card-top"><span class="motion-chip orange">弱1</span><span>共通</span></div><h3>右上 → 左下</h3><p>上記と同じ共通の弱1。</p></div>
-              <div class="shooting-card"><div class="shooting-card-top"><span class="motion-chip blue">強2</span></div><h3>低い突き</h3><p>追加踏み込みなし。腹部付近へ低めに突き、上体は軽く前傾。</p><div class="shooting-end">終わり：引き戻して頭上へ振りかぶる。</div></div>
-              <div class="shooting-card"><div class="shooting-card-top"><span class="motion-chip purple">強3-2</span></div><h3>両手の縦斬り</h3><p>振り上げの途中で左手を添え、頭上で一瞬静止。左足を大きく踏み込み、地面へ叩きつける。</p><div class="shooting-end">終わり：低く前傾。剣を地面で短く止めて引き上げる。</div></div>
-            </div>
+            <ol class="shooting-list">
+              <li class="shooting-item"><div class="shooting-item-top"><span class="motion-chip orange">弱1</span><span>共通</span></div><h3>右上 → 左下</h3><p>上記と同じ共通の弱1。</p></li>
+              <li class="shooting-item"><div class="shooting-item-top"><span class="motion-chip blue">強2</span></div><h3>低い突き</h3><p>追加踏み込みなし。腹部付近へ低めに突き、上体は軽く前傾。</p><div class="shooting-end">終わり：引き戻して頭上へ振りかぶる。</div></li>
+              <li class="shooting-item"><div class="shooting-item-top"><span class="motion-chip purple">強3-2</span></div><h3>両手の縦斬り</h3><p>振り上げの途中で左手を添え、頭上で一瞬静止。左足を大きく踏み込み、地面へ叩きつける。</p><div class="shooting-end">終わり：低く前傾。剣を地面で短く止めて引き上げる。</div></li>
+            </ol>
           </section>
           <section class="section">
             <div class="heading"><div><h2>単発強</h2></div></div>
-            <div class="shooting-card">
-              <div class="shooting-card-top"><span class="motion-chip purple">水平薙ぎ払い</span><span>左足踏み込みは仮</span></div>
+            <div class="shooting-item">
+              <div class="shooting-item-top"><span class="motion-chip purple">水平薙ぎ払い</span><span>左足踏み込みは仮</span></div>
               <h3>胸の高さを右 → 左</h3>
               <p>右肩で軽く溜めてから一気に踏み込み、胸の高さを水平に斬る。剣を左側まで振り抜いて上体も左へ。</p>
               <div class="shooting-end">終わり：一瞬静止して復帰。右足踏み込みも撮影して比較。</div>
@@ -516,9 +647,6 @@
   if (!pages.length || !sidebar || !menuButton || !backdrop) return;
 
   const navLinks = Array.from(sidebar.querySelectorAll('a[href^="#"]'));
-  const navSections = Array.from(sidebar.querySelectorAll('.wiki-nav-section'));
-  // <summary> headings are independent expand/collapse buttons only.
-  // Child links remain regular anchors, and multiple groups may stay open at once.
   const closeMenu = (restoreFocus = false) => {
     const wasOpen = document.body.classList.contains("wiki-menu-open");
     document.body.classList.remove("wiki-menu-open");
@@ -551,20 +679,19 @@
     const pageId = selected ? selected.dataset.wikiPage : "overview";
 
     for (const page of pages) page.hidden = page.dataset.wikiPage !== pageId;
-    // Expand the group of the destination, but do not navigate when its heading is clicked.
-    const currentSection = navSections.find(section => (section.dataset.navPages || "").split(" ").includes(pageId));
-    if (currentSection) currentSection.open = true;
     for (const link of navLinks) {
       link.removeAttribute("aria-current");
-      if (link.dataset.pageLink === pageId) link.setAttribute("aria-current", "page");
-      else if (target && target.id === link.getAttribute("href").slice(1)) link.setAttribute("aria-current", "location");
+      if (link.getAttribute("href") === "#" + (target ? target.id : pageId)) {
+        link.setAttribute("aria-current", link.dataset.pageLink === pageId ? "page" : "location");
+      }
     }
     document.title = ({
+      "motion-overview": "モーション概要",
       "motion": "弱→弱→強",
       "motion-wss": "弱→強→強",
       "motion-single": "単発強",
       "shooting": "撮影チェック"
-    }[pageId] || "ゲーム全体") + " — LEIR";
+    }[pageId] || "ゲーム全体") + " — LEIR 開発Wiki";
 
     // Run after changing display state so deep links scroll to visible content.
     requestAnimationFrame(() => {
