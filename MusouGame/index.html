@@ -11,17 +11,157 @@
 
 /* Keyboard focus for progressively enhanced combo labels. */
 .tabs label:focus-visible{outline:2px solid white;outline-offset:2px}
+
+
+/* Design wiki layout: persistent desktop sidebar, mobile drawer, and page views. */
+.skip-link{position:fixed;left:12px;top:-80px;z-index:1300;background:#d7eeff;color:#132036;padding:10px 16px;border-radius:8px;font-weight:800}
+.skip-link:focus{top:12px}
+.wiki-layout{display:grid;grid-template-columns:238px minmax(0,1fr);max-width:1600px;margin:0 auto;min-height:100vh}
+.wiki-content{min-width:0}
+.wiki-content .wrap{width:min(1050px,calc(100% - 46px))}
+.wiki-sidebar{position:sticky;top:0;align-self:start;height:100vh;height:100dvh;overflow-y:auto;scrollbar-width:thin;background:#101929;border-right:1px solid #2e405a;display:flex;flex-direction:column;z-index:32}
+.wiki-brand{display:flex;flex-direction:column;gap:2px;padding:26px 22px 22px;border-bottom:1px solid #2b3c53}
+.wiki-brand-name{font-size:28px;line-height:1.1;font-weight:900;letter-spacing:-.045em;color:#fff}
+.wiki-brand-sub{font-size:10px;font-weight:800;letter-spacing:.16em;color:#93bbdb}
+.wiki-nav{padding:18px 11px 30px}
+.wiki-nav-group{padding:0 0 19px;margin-bottom:16px;border-bottom:1px solid #283950}
+.wiki-nav-label{font-size:11px;letter-spacing:.11em;font-weight:800;color:#879cb7;padding:4px 12px 10px}
+.wiki-nav a{display:block;border-radius:8px;margin:2px 0;transition:background .15s,color .15s,border-color .15s}
+.wiki-nav-main{padding:10px 12px;color:#e1eeff;font-weight:800;font-size:13px;border-left:3px solid transparent}
+.wiki-nav-sub{padding:6px 12px 6px 24px;color:#a4b8d0;font-size:12px;border-left:3px solid transparent}
+.wiki-nav a:hover,.wiki-nav a:focus-visible{background:#233650;color:#fff;outline:none}
+.wiki-nav a[aria-current="page"]{background:#243e58;color:#fff;border-left-color:#80bde8}
+.wiki-nav a[aria-current="location"]{color:#bfe5ff;background:#1a2d44;border-left-color:#527da8}
+.wiki-sidebar-bottom{padding:16px 19px 23px;color:#8ca3c0;font-size:11px;line-height:1.8;margin-top:auto;border-top:1px solid #283950;overflow-wrap:anywhere}
+.wiki-sidebar-bottom code,.wiki-page-bottom code{color:#b5d5ec;font-size:11px}
+.wiki-mobile-bar,.wiki-backdrop{display:none}
+.wiki-page[hidden]{display:none!important}
+.wiki-page{padding-bottom:32px}
+.wiki-page-header{padding:51px 0 26px;border-bottom:1px solid #31425a;margin-bottom:22px}
+.wiki-page-header h1{font-size:clamp(29px,4.5vw,49px);letter-spacing:-.04em;line-height:1.17;margin:12px 0 14px;color:#f0f7ff}
+.wiki-page-header p{font-size:clamp(14px,1.75vw,17px);max-width:760px}
+.wiki-page-header .row{margin-top:16px}
+.wiki-page .section,.wiki-page .wiki-inpage{scroll-margin-top:74px}
+.wiki-page[id],.wiki-page .motion-section{scroll-margin-top:74px}
+.wiki-inpage{display:flex;flex-wrap:wrap;gap:7px;padding:16px 0;margin-bottom:8px}
+.wiki-inpage a{border:1px solid #3c5570;background:#18293e;border-radius:8px;color:#d3e8fb;padding:7px 13px;font-size:12px;font-weight:700}
+.wiki-inpage a:hover{border-color:#80bde8}
+.motion-overview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:8px}
+.motion-overview .tile{min-width:0}
+.motion-overview h3{font-size:16px;margin:9px 0}
+.motion-overview p{margin:0}
+.motion-chip{display:inline-flex;align-items:center;justify-content:center;padding:3px 11px;white-space:nowrap;border-radius:7px;font-size:12px;font-weight:900;border:1px solid #6b788a;color:#fff;background:#253951}
+.motion-chip.orange{background:#59402d;border-color:#b08057;color:#ffe6bf}
+.motion-chip.blue{background:#214665;border-color:#4c8bb9;color:#d4edff}
+.motion-chip.purple{background:#49345d;border-color:#8c70ad;color:#ead7ff}
+.motion-section{scroll-margin-top:20px}
+.motion-lead{font-size:15px;color:#ceddef;line-height:1.9}
+.motion-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:19px 0}
+.motion-facts>div{background:#101c2e;border:1px solid #344d65;border-radius:10px;padding:12px 14px}
+.motion-facts small{display:block;color:#93aeca;font-size:11px;margin-bottom:4px}
+.motion-facts strong{font-size:13px}
+.motion-steps{margin:14px 0 18px;padding-left:24px;color:#d4e4f4}
+.motion-steps li{margin-bottom:9px;line-height:1.75}
+.motion-time{padding:13px;background:#111b2a;border:1px solid #334860;border-radius:10px;margin-bottom:16px}
+.motion-time-track{display:flex;gap:3px;min-height:55px}
+.motion-phase{display:grid;place-items:center;text-align:center;line-height:1.3;font-size:11px;font-weight:800;border-radius:4px;min-width:0;padding:5px 3px}
+.motion-phase.prep{background:#46617b;color:#fff}
+.motion-phase.hit{background:#be8054;color:#201408}
+.motion-phase.follow{background:#385d70;color:#ecf5ff}
+.motion-phase.settle{background:#3f6456;color:#e3fff1}
+.motion-time p{margin:9px 0 0}
+.wiki-page-bottom{padding:20px 3px 32px;font-size:12px;color:#93a7bf}
+.wiki-page-bottom a{color:#a4d5ff;text-decoration:underline;text-underline-offset:3px}
+.shooting-cards{display:grid;gap:13px}
+.shooting-card{padding:21px 23px;border:1px solid #3a526b;background:linear-gradient(155deg,#1b2b40,#111d2d);border-radius:15px}
+.shooting-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#adc1d8;font-size:12px}
+.shooting-card h2{font-size:clamp(21px,3vw,29px);margin:14px 0 8px}
+.shooting-card p{line-height:1.8}
+.shooting-end{padding:10px 14px;background:#0e1b2c;border-left:3px solid #75afe0;color:#d5e8f9;font-size:13px;border-radius:0 8px 8px 0}
+.check-items{display:grid;gap:11px;margin:13px 0 21px}
+.check-items label{display:flex;align-items:flex-start;gap:12px;background:#142339;border:1px solid #334a65;padding:12px 14px;border-radius:10px;cursor:pointer;font-size:14px}
+.check-items label:has(input:checked){border-color:#53836e;background:#173027}
+.check-items label input{width:19px;height:19px;flex:0 0 19px;accent-color:#7ec8a0;margin-top:2px}
+.check-items label span{line-height:1.6}
+.check-items label input:checked+span{color:#a4ddbc}
+@media(max-width:1100px){.wiki-layout{grid-template-columns:213px minmax(0,1fr)}.wiki-content .wrap{width:calc(100% - 34px)}}
+@media(max-width:840px){
+ .wiki-layout{display:block}
+ .wiki-mobile-bar{display:flex;position:sticky;top:0;z-index:45;align-items:center;gap:14px;min-height:55px;padding:8px 16px;background:#101a2b;border-bottom:1px solid #304359;box-shadow:0 4px 14px #0003}
+ .wiki-menu-toggle{display:inline-flex;align-items:center;gap:7px;border:1px solid #46617b;border-radius:9px;background:#1d344b;color:#e5f1ff;font-size:13px;font-weight:800;padding:6px 11px;cursor:pointer}
+ .wiki-menu-toggle span:first-child{font-size:21px;line-height:1}
+ .wiki-mobile-brand{font-weight:900;letter-spacing:.02em}
+ .wiki-mobile-brand span{font-size:11px;color:#92b5d1;font-weight:650}
+ .wiki-sidebar{position:fixed;inset:0 auto 0 0;z-index:60;width:min(300px,86vw);height:100vh;height:100dvh;transform:translateX(-105%);transition:transform .2s ease;box-shadow:12px 0 40px #0004}
+ .wiki-backdrop{position:fixed;inset:0;background:#050a12ad;z-index:55}
+ body.wiki-menu-open{overflow:hidden}
+ body.wiki-menu-open .wiki-sidebar{transform:translateX(0)}
+ body.wiki-menu-open .wiki-backdrop{display:block}
+ .wiki-content .wrap{width:calc(100% - 34px)}
+ .wiki-page .section,.wiki-page .wiki-inpage,.wiki-page[id]{scroll-margin-top:72px}
+ .wiki-page-header{padding-top:34px}
+}
+@media(max-width:620px){
+ .motion-overview,.motion-facts{grid-template-columns:1fr}
+ .motion-overview{gap:8px}
+ .motion-facts{gap:7px}
+ .wiki-page-header h1{font-size:31px}
+ .motion-time-track{flex-direction:column}
+ .motion-phase{min-height:37px}
+}
+@media(max-width:430px){
+ .wiki-content .wrap{width:calc(100% - 20px)}
+ .wiki-page-header{padding-top:28px}
+ .shooting-card{padding:17px}
+ .wiki-mobile-brand span{font-size:10px}
+}
+@media(prefers-reduced-motion:reduce){.wiki-sidebar{transition:none}}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main-content">本文へスキップ</a>
+<div class="wiki-mobile-bar">
+  <button type="button" class="wiki-menu-toggle" id="wiki-menu-toggle" aria-controls="wiki-sidebar" aria-expanded="false" aria-label="メニューを開く"><span aria-hidden="true">☰</span><span>メニュー</span></button>
+  <a href="#overview" class="wiki-mobile-brand">LEIR <span>/ DESIGN WIKI</span></a>
+</div>
+<div class="wiki-backdrop" id="wiki-backdrop" aria-hidden="true"></div>
+<div class="wiki-layout">
+  <aside class="wiki-sidebar" id="wiki-sidebar" aria-label="資料のサイドメニュー">
+    <a class="wiki-brand" href="#overview"><span class="wiki-brand-name">LEIR</span><span class="wiki-brand-sub">GAME DESIGN WIKI</span></a>
+    <nav class="wiki-nav" aria-label="設計資料">
+      <div class="wiki-nav-group">
+        <div class="wiki-nav-label">ゲームデザイン</div>
+        <a class="wiki-nav-main" href="#overview" data-page-link="overview">ゲーム全体・企画書</a>
+        <a class="wiki-nav-sub" href="#core">コア体験</a>
+        <a class="wiki-nav-sub" href="#combo">コンボ・ステップ</a>
+        <a class="wiki-nav-sub" href="#timing">攻撃の隙</a>
+        <a class="wiki-nav-sub" href="#boss">ボス戦</a>
+        <a class="wiki-nav-sub" href="#loop">ゲームループ</a>
+        <a class="wiki-nav-sub" href="#shop">ショップ</a>
+        <a class="wiki-nav-sub" href="#enemy">敵・制作順</a>
+        <a class="wiki-nav-sub" href="#world">キャラクター</a>
+      </div>
+      <div class="wiki-nav-group">
+        <div class="wiki-nav-label">モーション制作</div>
+        <a class="wiki-nav-main" href="#motion" data-page-link="motion">攻撃モーション詳細</a>
+        <a class="wiki-nav-sub" href="#motion-weak1">弱1：斜め斬り</a>
+        <a class="wiki-nav-sub" href="#motion-weak2">弱2：斬り上げ</a>
+        <a class="wiki-nav-sub" href="#motion-strong3">強3：回転斬り</a>
+        <a class="wiki-nav-main" href="#shooting" data-page-link="shooting">撮影チェックシート</a>
+      </div>
+    </nav>
+    <div class="wiki-sidebar-bottom">仕様の正本：<code>MusouGame/Design/*.md</code><br>HTMLは閲覧用の資料。</div>
+  </aside>
+  <div class="wiki-content">
+    <main id="main-content">
+      <div class="wiki-page" id="overview" data-wiki-page="overview">
 <header class="header"><div class="wrap">
-  <div class="eyebrow">GAME DESIGN BLUEPRINT / 2026.10.22</div>
+  <div class="eyebrow">GAME DESIGN WIKI / 2026.11.01</div>
   <h1>LEIR <span style="color:#7daed6;font-weight:400">/</span><br>無双アクション</h1>
   <p class="lede">敵を<strong>集める</strong> → <strong>斬り払う</strong>。<br>爽快な剣戟を核にした、部屋攻略型3Dローグライト。</p>
   <div class="row"><span class="pill green">戦闘の方向性：決定</span><span class="pill orange">部屋数・数値：仮</span><span class="pill purple">追加ギミック：後日</span></div>
 </div></header>
 <div class="wrap"><nav class="topnav" aria-label="目次"><a href="#core">コア体験</a><a href="#combo">コンボ</a><a href="#timing">攻撃の隙</a><a href="#boss">ボス戦</a><a href="#loop">ゲームループ</a><a href="#shop">ショップUI</a><a href="#enemy">敵・開発順</a><a href="#world">リア・保留事項</a></nav>
-<main>
 <section class="section" id="core"><div class="heading"><div><span class="kicker">01 / CORE EXPERIENCE</span><h2>3つの柱</h2></div><span class="pill green">方向性確定</span></div>
   <div class="grid"><div class="tile"><div class="num">01</div><h3>弱攻撃で集める</h3><p class="muted small">素早い広範囲攻撃。敵を散らさず、リアの<strong>前方の一点</strong>へ寄せる。</p></div><div class="tile"><div class="num orange">02</div><h3>強攻撃でなぎ倒す</h3><p class="muted small">範囲殲滅と単体火力を使い分け。<strong>大量撃破</strong>の感触が最優先。</p></div><div class="tile"><div class="num green">03</div><h3>戦闘後に育てる</h3><p class="muted small">撃破で通貨を自動獲得。部屋の間に購入してビルドを伸ばす。</p></div></div>
   <div class="note" style="margin-top:12px">基本雑魚は<span style="color:#fff">無双寄り</span>：多数が接近・包囲、同時攻撃は控えめ。理不尽な集中攻撃より、気持ちよいリアクションを優先。</div>
@@ -88,8 +228,86 @@
 <section class="section" id="world"><div class="heading"><div><span class="kicker">08 / CHARACTER & OPEN QUESTIONS</span><h2>キャラクターと保留事項</h2></div></div>
   <div class="char"><div class="tile"><h3>リア / Leir</h3><p class="small">金髪の外ハネショートボブ、青い瞳。ネイビーの短いジャケット、白シャツ、ダークグレーの短パン、茶色の編み上げブーツ。片手剣を使う身軽な若い冒険者。</p><p class="small muted" style="margin-bottom:0">女性寄りの中性的な造形 / 王道ファンタジー / 柔らかいアニメ調3D。長髪・マントなど複雑な揺れ物は避ける。</p><div class="row" style="margin-top:15px"><span class="pill">C++20</span><span class="pill">DirectX 12</span><span class="pill">Blender / Tripo</span><span class="pill orange">HestiaEngine 検討</span></div></div><div class="tile"><h3>未決定 → プロトタイプで検証</h3><div class="list-row"><span>各攻撃の当たり判定・モーション</span><span class="pill orange">調整</span></div><div class="list-row"><span>前隙 / 無敵時間 / コンボ猶予</span><span class="pill orange">調整</span></div><div class="list-row"><span>同時出現数 / 増援ペース</span><span class="pill orange">調整</span></div><div class="list-row"><span>強化費用・抽選率・特殊スキル</span><span class="pill orange">設計</span></div><div class="list-row"><span>1ランの部屋数・プレイ時間</span><span class="pill orange">仮置き</span></div></div></div>
 </section>
-<div class="foot">LEIR — GAME DESIGN BLUEPRINT / v0.2 · 1ファイルHTML · CSSのみでタブ切り替え · オフライン閲覧対応</div>
-</main></div>
+<div class="foot">LEIR — GAME DESIGN WIKI · オフライン単一HTML · デザイン資料の正本はMarkdown</div>
+
+      </div><!-- /overview .wrap -->
+      </div><!-- /overview -->
+      <article class="wiki-page" id="motion" data-wiki-page="motion">
+        <div class="wrap">
+          <header class="wiki-page-header">
+            <div class="eyebrow">ANIMATION DESIGN / 弱 → 弱 → 強</div>
+            <h1>攻撃モーション詳細仕様</h1>
+            <p class="muted">リアの片手剣コンボ。弱攻撃の鋭さと、強3の低い回転斬りの重さを両立する。</p>
+            <div class="row"><span class="pill green">動きの大枠：採用</span><span class="pill orange">秒数・細部：仮</span></div>
+          </header>
+          <div class="note">方向は<strong>リア本人の右／左</strong>。正面から見ると左右が反転する。反時計回りは<strong>上から見た回転方向</strong>。斬撃の見た目と実際の攻撃判定は別々に調整できる。</div>
+          <nav class="wiki-inpage" aria-label="モーションの目次"><a href="#motion-weak1">弱1</a><a href="#motion-weak2">弱2</a><a href="#motion-strong3">強3</a><a href="#motion-production">制作・調整</a><a href="#shooting">撮影用の短縮版</a></nav>
+          <div class="motion-overview">
+            <div class="tile"><span class="motion-chip orange">弱1</span><h3>右上 → 左下</h3><p class="small muted">浅い20〜30°の斜め斬り<br>右足を半歩前へ / 0.40秒</p></div>
+            <div class="tile"><span class="motion-chip blue">弱2</span><h3>左下 → 右上</h3><p class="small muted">約45°の斬り上げ<br>踏み込みなし / 0.40秒</p></div>
+            <div class="tile"><span class="motion-chip purple">強3</span><h3>360°回転斬り</h3><p class="small muted">低く跳躍して回転<br>左足踏み込み / 0.65秒（仮）</p></div>
+          </div>
+          <section class="section motion-section" id="motion-weak1">
+            <div class="heading"><div><span class="kicker">MOVE 01 / LIGHT</span><h2>弱1 — コンパクトな斜め斬り</h2></div><span class="motion-chip orange">0.40秒</span></div>
+            <p class="motion-lead">右胸〜右脇付近の構えから、<strong>右足で半歩踏み込みながら</strong>右上→左下へ鋭く振り抜く。剣を大きく引き直さない。</p>
+            <div class="motion-facts"><div><small>軌道</small><strong>右上 → 左下 / 20〜30°</strong></div><div><small>足</small><strong>右足を半歩前へ</strong></div><div><small>終端姿勢</small><strong>左腰・剣先は左下</strong></div></div>
+            <ol class="motion-steps"><li>中段構え。右肘を軽く曲げ、剣は右胸〜右脇付近。</li><li>右足の踏み込みと同時に腰・肩・右腕を連動。上半身の大回転は不要。</li><li>急加速して浅く斬り、着地と斬撃終盤をおおむね合わせる。</li><li>減速しながら左腰付近まで振り抜き、弱2の斬り返しへ接続。</li></ol>
+            <div class="motion-time"><div class="motion-time-track"><span style="flex:6" class="motion-phase prep">0.00–0.06<br>踏み込み</span><span style="flex:12" class="motion-phase hit">0.06–0.18<br>急加速・斬撃</span><span style="flex:7" class="motion-phase follow">0.18–0.25<br>着地・減速</span><span style="flex:15" class="motion-phase settle">0.25–0.40<br>次段へ接続</span></div><p class="muted tiny">時間配分は撮影・編集のための仮案。</p></div>
+            <div class="note orange">避ける：斬る前に逆側へ剣を動かす、大きく振りかぶる、等速で振る。</div>
+          </section>
+          <section class="section motion-section" id="motion-weak2">
+            <div class="heading"><div><span class="kicker">MOVE 02 / LIGHT</span><h2>弱2 — 斜め斬り上げ</h2></div><span class="motion-chip blue">0.40秒</span></div>
+            <p class="motion-lead">弱1の終端姿勢（剣が左腰・左下）から直接、<strong>左下→右上</strong>へ切り返す。軽快さを保ちながら、上方向の動きを明確にする。</p>
+            <div class="motion-facts"><div><small>軌道</small><strong>左下 → 右上 / 約45°</strong></div><div><small>足</small><strong>追加踏み込みなし</strong></div><div><small>終端姿勢</small><strong>右肩〜頭の横</strong></div></div>
+            <ol class="motion-steps"><li>弱1で左下に振り抜いた剣を、その位置から斬り上げる。</li><li>腰・肩を切り返し、上体を軽く起こしながら斬る。</li><li>頭上へ大きく振り上げず、右肩〜頭の横に収める。</li><li>強3で右肩後方へ引いて溜められる位置で終了。</li></ol>
+            <div class="note">弱1の完全な逆再生にしない。斬り上げ角度・身体の切り返し・剣の高さで変化をつける。速度の細部はBlender側で調整。</div>
+          </section>
+          <section class="section motion-section" id="motion-strong3">
+            <div class="heading"><div><span class="kicker">MOVE 03 / HEAVY FINISH</span><h2>強3 — 低い跳躍360°回転斬り</h2></div><span class="motion-chip purple">0.65秒・仮</span></div>
+            <p class="motion-lead">左足を踏み込み、軽く沈んで溜める。<strong>低い跳躍で約270°回転</strong>し、着地しながら<strong>残り約90°を斬り抜く</strong>。</p>
+            <div class="motion-facts"><div><small>回転方向</small><strong>上から見て反時計回り</strong></div><div><small>足運び</small><strong>左足踏み込み → 低く跳躍</strong></div><div><small>終端姿勢</small><strong>左膝を曲げたサイドランジ</strong></div></div>
+            <ol class="motion-steps"><li>弱2の終端から剣を右肩後方へ軽く引き、左足を踏み込んで沈む。</li><li>地面を蹴って低く跳ぶ。大ジャンプではなく、両足が少し浮く程度。</li><li>反時計回りに回転しながら剣を身体の外側へ広げる。<strong>空中から斬り始める</strong>。</li><li>空中で約270°回り、着地と同時に重心を左へ移しつつ残り90°を斬る。</li><li>左膝を曲げ、右脚を横へ伸ばす低いサイドランジで、剣を左下まで振り抜く。最後は正面を向く。</li></ol>
+            <div class="motion-time"><div class="motion-time-track"><span style="flex:25" class="motion-phase prep">0.00–0.25<br>溜め・左足</span><span style="flex:7" class="motion-phase hit">0.25–0.32<br>蹴り</span><span style="flex:20" class="motion-phase follow">0.32–0.52<br>空中270°</span><span style="flex:13" class="motion-phase settle">0.52–0.65<br>着地90°</span></div><p class="muted tiny">強3の尺は仮。自然さに応じて0.70〜0.80秒程度も再検討可能。後隙0.35秒はゲームロジック側で管理。</p></div>
+            <div class="note orange">足裏を固定して無理に捻らない。右膝も伸ばしきらない。腕・剣先の細かな軌道は撮影後に調整する。</div>
+          </section>
+          <section class="section motion-section" id="motion-production">
+            <div class="heading"><div><span class="kicker">PRODUCTION NOTES</span><h2>制作・編集の方針</h2></div></div>
+            <div class="grid two"><div class="tile"><h3>実写撮影</h3><p class="small muted">最初は3段を通しで演じ、必要区間を段ごとに切り出す。撮影時に0.4秒・0.65秒を厳密に再現する必要はない。</p></div><div class="tile"><h3>Blenderで仕上げる</h3><p class="small muted">姿勢・接地・速度カーブ・開始/終端・剣の軌道を調整。ゲーム内で各段をブレンドする。</p></div><div class="tile"><h3>移動・判定の管理</h3><p class="small muted">Root Motionでゲーム内移動量を制御しない。移動や攻撃判定はゲーム側で扱う。</p></div><div class="tile"><h3>抽出経路は検証中</h3><p class="small muted">実写→Viggleと、実写→Muse→Viggleの対応機能・品質は未比較。利用可能な入力方法を検証する。</p></div></div>
+            <div class="note">制作上の優先順位は<strong>斬撃方向・足運び・終端姿勢</strong>。手首の角度や厳密な速度曲線を撮影段階で演じ切る必要はない。</div>
+          </section>
+          <div class="wiki-page-bottom">設計原本：<code>Design/AttackMotion_WeakWeakStrong.md</code>（詳細の優先ソース）</div>
+        </div>
+      </article>
+      <article class="wiki-page" id="shooting" data-wiki-page="shooting">
+        <div class="wrap">
+          <header class="wiki-page-header">
+            <div class="eyebrow">FIELD GUIDE / 撮影用</div>
+            <h1>攻撃モーション 撮影チェック</h1>
+            <p class="muted">撮影中にスマホで見るための短縮版。細かい秒数や手首の角度より、<strong>自然な動き</strong>を優先。</p>
+            <div class="row"><span class="pill green">3段を通して撮影</span><span class="pill orange">秒数合わせは不要</span></div>
+          </header>
+          <div class="shooting-cards">
+            <section class="shooting-card"><div class="shooting-card-top"><span class="motion-chip orange">弱1</span><span>約0.4秒</span></div><h2>右上 → 左下</h2><p><strong>右足を半歩前へ</strong>出しながら、浅い斜め斬り（20〜30°）。コンパクトに速く振る。</p><div class="shooting-end">終わり：剣は左腰、剣先は左下。</div></section>
+            <section class="shooting-card"><div class="shooting-card-top"><span class="motion-chip blue">弱2</span><span>約0.4秒</span></div><h2>左下 → 右上</h2><p><strong>踏み込みなし</strong>で約45°の斬り上げ。そのまま切り返す。</p><div class="shooting-end">終わり：剣は右肩〜頭の横。</div></section>
+            <section class="shooting-card"><div class="shooting-card-top"><span class="motion-chip purple">強3</span><span>約0.65秒・仮</span></div><h2>低い360°回転</h2><p><strong>左足を踏み込み</strong>、低く跳んで反時計回り。空中約270°、着地しながら約90°斬る。</p><div class="shooting-end">終わり：左膝を曲げた低いサイドランジ。剣は左下。</div></section>
+          </div>
+          <section class="section shooting-checklist"><div class="heading"><div><span class="kicker">BEFORE RECORDING</span><h2>撮影前に確認</h2></div></div>
+            <div class="check-items">
+              <label><input type="checkbox"><span><strong>右足 → そのまま → 左足</strong>の足運びになっている</span></label>
+              <label><input type="checkbox"><span>弱1：右上→左下 ／ 弱2：左下→右上</span></label>
+              <label><input type="checkbox"><span>強3は高く跳ばず、着地しながら左下へ振り抜く</span></label>
+              <label><input type="checkbox"><span>全身と足先が映り、十分な距離を確保できている</span></label>
+              <label><input type="checkbox"><span>安全な小道具・滑りにくい床・周囲のスペースを確認</span></label>
+            </div>
+            <p class="muted small">斬撃の速度カーブ、剣の細かな軌道、クリップの接続は撮影後にBlenderで調整する。</p>
+          </section>
+          <div class="wiki-page-bottom"><a href="#motion">詳しい仕様を見る</a> ｜ 設計原本：<code>Design/AttackMotion_ShootingChecklist.md</code></div>
+        </div>
+      </article>
+    </main>
+  </div><!-- /wiki-content -->
+</div><!-- /wiki-layout -->
+
 <script>
 "use strict";
 
@@ -123,6 +341,67 @@
     if (event.target.matches('input[name="combo"]')) updateState();
   });
   updateState();
+})();
+
+
+// Wiki page routing: anchors keep the single offline HTML linkable.
+(() => {
+  const pages = Array.from(document.querySelectorAll("[data-wiki-page]"));
+  const sidebar = document.getElementById("wiki-sidebar");
+  const menuButton = document.getElementById("wiki-menu-toggle");
+  const backdrop = document.getElementById("wiki-backdrop");
+  if (!pages.length || !sidebar || !menuButton || !backdrop) return;
+
+  const navLinks = Array.from(sidebar.querySelectorAll('a[href^="#"]'));
+  const closeMenu = (restoreFocus = false) => {
+    const wasOpen = document.body.classList.contains("wiki-menu-open");
+    document.body.classList.remove("wiki-menu-open");
+    menuButton.setAttribute("aria-expanded", "false");
+    menuButton.setAttribute("aria-label", "メニューを開く");
+    if (wasOpen && restoreFocus) menuButton.focus();
+  };
+  const openMenu = () => {
+    document.body.classList.add("wiki-menu-open");
+    menuButton.setAttribute("aria-expanded", "true");
+    menuButton.setAttribute("aria-label", "メニューを閉じる");
+    const firstLink = sidebar.querySelector("a");
+    if (firstLink) firstLink.focus();
+  };
+
+  menuButton.addEventListener("click", () => {
+    if (document.body.classList.contains("wiki-menu-open")) closeMenu(true);
+    else openMenu();
+  });
+  backdrop.addEventListener("click", () => closeMenu(true));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && document.body.classList.contains("wiki-menu-open")) closeMenu(true);
+  });
+  navLinks.forEach(link => link.addEventListener("click", () => closeMenu()));
+
+  const activate = () => {
+    const hash = decodeURIComponent(location.hash.slice(1));
+    const target = hash ? document.getElementById(hash) : null;
+    const selected = target ? target.closest("[data-wiki-page]") : null;
+    const pageId = selected ? selected.dataset.wikiPage : "overview";
+
+    for (const page of pages) page.hidden = page.dataset.wikiPage !== pageId;
+    for (const link of navLinks) {
+      link.removeAttribute("aria-current");
+      if (link.dataset.pageLink === pageId) link.setAttribute("aria-current", "page");
+      else if (target && target.id === link.getAttribute("href").slice(1)) link.setAttribute("aria-current", "location");
+    }
+    document.title = pageId === "motion" ? "攻撃モーション詳細 — LEIR" :
+      pageId === "shooting" ? "撮影チェック — LEIR" : "LEIR — Game Design Wiki";
+
+    // Run after changing display state so deep links scroll to visible content.
+    requestAnimationFrame(() => {
+      if (target) target.scrollIntoView({block:"start"});
+      else window.scrollTo({top:0,behavior:"instant"});
+    });
+    closeMenu();
+  };
+  window.addEventListener("hashchange", activate);
+  activate();
 })();
 </script>
 </body></html>
