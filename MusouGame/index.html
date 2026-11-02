@@ -325,7 +325,7 @@ figcaption { margin-top: 12px; font-size: 13px; color: var(--muted); }
           <li><a href="#boss">ボス戦</a></li>
           <li><a href="#loop">ゲームループ</a></li>
           <li><a href="#shop">ショップ</a></li>
-          <li><a href="#enemy">敵・制作順</a></li>
+          <li><a href="#enemy">敵・制作順</a><ul><li><a href="#enemy-behavior">雑魚敵共通State・攻撃</a></li><li><a href="#enemy-hit">リアの被弾</a></li></ul></li>
           <li><a href="#world">キャラクター概要</a></li>
         </ul>
       </details>
@@ -430,6 +430,25 @@ figcaption { margin-top: 12px; font-size: 13px; color: var(--muted); }
   <div class="compare" style="margin-top:12px"><div class="vs"><span class="pill green">初回プロトタイプ</span><strong>1部屋だけ</strong><div class="legend">雑魚1種 ＋ リアの弱/強 ＋ ステップ</div><div class="bar"><i style="width:40%"></i></div><p class="small muted">「集めて斬る」を何度も繰り返したくなるか検証。ショップやボスはまだ不要。</p></div><div class="vs"><span class="pill purple">後から広げる</span><strong>ローグライト化</strong><div class="legend">部屋目標 ＋ ショップ ＋ スキル成長</div><div class="bar"><i style="width:75%;background:#a898eb"></i></div><p class="small muted">基本戦闘 → ボス戦を確かめた後、周回の面白さを積み上げる。</p></div></div>
   <div class="note orange" style="margin-top:12px">拡張候補：雑魚を吹き飛ばしてボスへ衝突させる ／ 体勢崩し ／ ボスの雑魚召喚。いずれも<strong>基礎戦闘完成後</strong>に判断。</div>
 </section>
+<section class="section" id="enemy-behavior">
+ <div class="heading"><div><h2>雑魚敵の共通Stateと攻撃</h2><p class="muted small">基本雑魚・強い雑魚に共通する行動の枠組み。敵固有の特殊行動は後から追加できる。</p></div><span class="pill green">構成確定</span></div>
+ <div class="grid">
+  <div class="tile"><h3>非戦闘・位置調整</h3><ul class="spec-list"><li><strong>Idle</strong><span>非戦闘待機</span></li><li><strong>Move</strong><span>接近・距離調整・撤退</span></li><li><strong>Threaten</strong><span>威嚇・攻撃待機</span></li><li><strong>Attack</strong><span>攻撃実行</span></li></ul></div>
+  <div class="tile"><h3>被弾・終了</h3><ul class="spec-list"><li><strong>Stagger</strong><span>怯み・軽ノックバック</span></li><li><strong>Launch</strong><span>吹き飛び・浮き</span></li><li><strong>Down</strong><span>ダウン・復帰</span></li><li><strong>Dead</strong><span>死亡・消滅</span></li></ul></div>
+ </div>
+ <p class="muted small" style="margin-top:12px">代表的な流れ：<strong>Idle → Move → Threaten → Attack → Threaten</strong>。Threatenは攻撃待機、爪を引く予兆はAttack内部の動作。認識とCombatGroupの攻撃許可はStateとは別管理。詳細な遷移条件は実機調整。</p>
+ <div class="tile" style="margin-top:14px"><div class="heading"><div><h3>基本雑魚：片爪の打ち出し</h3></div><span class="pill green">1種類で確定</span></div>
+ <ol><li>攻撃開始時に<strong>左右の爪をランダム選択</strong></li><li>短い予兆として選んだ爪を後方へ引く。<strong>打ち出す直前まで追尾</strong></li><li><strong>打ち出し開始時に方向を固定</strong>し、爪を前方へ素早く突き出す</li><li>爪を通常位置へ戻す。本体はほぼ動かない</li></ol>
+ <p class="muted small">3パーツのTransformをコードで動かす。リーチ・秒数・判定・補間は実機調整。魔力を使う追加攻撃は初期仕様に含めない。</p></div>
+ <p class="muted small" style="margin-top:12px">強い雑魚の攻撃・SA・被弾耐性は、敵の種類を設計するときに決める。共通Stateの時点では確定しない。</p>
+</section>
+<section class="section" id="enemy-hit"><div class="heading"><div><h2>リアの被弾</h2></div><span class="pill green">方向性確定</span></div>
+ <div class="grid">
+  <div class="tile"><h3>ダメージは受ける、操作は止めない</h3><p>基本雑魚からの被弾では<strong>HPが減る</strong>。ただし怯み・ノックバック・コンボ中断はなく、移動やステップも継続できる。</p></div>
+  <div class="tile"><h3>短い被弾無敵</h3><p>暫定<strong>約0.2秒</strong>。ほぼ同時の複数ヒットによるダメージ重複を防ぐ。数秒単位の長い無敵は設けない。</p></div>
+ </div>
+ <p class="muted small" style="margin-top:12px">軽い上半身の揺れ、エフェクト・SE・HP表示で命中を伝える。無敵中の追加ダメージは無効。ステップ無敵とは別扱い。ボス・中ボスの強攻撃による被弾反応は後日検討。</p>
+</section>
 <section class="section" id="world"><div class="heading"><div><h2>キャラクターと保留事項</h2></div></div><p>立ち絵・キャラシ・雑魚敵のビジュアルは <a href="#characters">キャラクターページ</a> にまとめる。</p>
   <div class="char"><div class="character-profile"><h3>リア / Leir</h3><ul class="character-traits"><li>金髪の外ハネショートボブ、青い瞳。</li><li>ネイビーの短いジャケット、白シャツ、ダークグレーの短パン、茶色の編み上げブーツ。</li><li>片手剣を使う身軽な若い冒険者。</li></ul><ul class="character-traits"><li>女性寄りの中性的な造形 / 王道ファンタジー / 柔らかいアニメ調3D。</li><li>長髪・マントなど複雑な揺れ物は避ける。</li></ul><div class="row" style="margin-top:15px"><span class="pill">C++20</span><span class="pill">DirectX 12</span><span class="pill">Blender / Tripo</span><span class="pill orange">HestiaEngine 検討</span></div></div><div class="spec-panel"><h3>未決定 → プロトタイプで検証</h3><ul class="spec-list"><li><span>各攻撃の当たり判定・モーション</span><span class="pill orange">調整</span></li><li><span>前隙 / 無敵時間 / コンボ猶予</span><span class="pill orange">調整</span></li><li><span>同時出現数 / 増援ペース</span><span class="pill orange">調整</span></li><li><span>強化費用・抽選率・特殊スキル</span><span class="pill orange">設計</span></li><li><span>1ランの部屋数・プレイ時間</span><span class="pill orange">仮置き</span></li></ul></div></div>
 </section>
@@ -470,7 +489,7 @@ figcaption { margin-top: 12px; font-size: 13px; color: var(--muted); }
       <div><dt>質感</dt><dd>不透明の魔力外皮。流線＋波紋のNormal Mapを試す。リムライトなし</dd></div>
       <div><dt>アニメ</dt><dd>本体と爪のTransformによる簡易モーション</dd></div>
      </dl>
-     <p class="small">敵AI・被弾・衝突は <a href="#enemy">敵・制作順</a>、正本のDesign/Enemies.mdを参照。</p>
+     <p class="small">基本攻撃は<strong>左右ランダムに片爪を後ろへ引き、前へ打ち出す1種類</strong>。攻撃直前まで追尾し、方向を固定して突き出す。モーションはコード制御。<a href="#enemy-behavior">共通State・基本攻撃の仕様</a>を参照。</p>
     </div>
    </div>
    <h3>デザインシート</h3>
