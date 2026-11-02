@@ -81,6 +81,7 @@
       }
     }
     document.title = ({
+      "characters": "キャラクター",
       "motion-overview": "モーション概要",
       "motion": "弱→弱→強",
       "motion-wss": "弱→強→強",

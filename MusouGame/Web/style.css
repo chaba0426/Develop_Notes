@@ -274,3 +274,21 @@ figcaption { margin-top: 12px; font-size: 13px; color: var(--muted); }
   html { scroll-behavior: auto; }
   .wiki-sidebar { transition: none; }
 }
+
+/* キャラクター立ち絵・キャラクターシート */
+.character-gallery-lead { display:grid; grid-template-columns:minmax(180px,260px) minmax(0,1fr); align-items:start; gap:28px; margin:16px 0 28px; }
+.character-portrait { margin:0; min-width:0; }
+.character-portrait a,.character-sheet a { display:block; overflow:hidden; border:1px solid var(--line); border-radius:6px; background:var(--surface); }
+.character-portrait img { display:block; width:100%; height:auto; max-height:420px; object-fit:contain; }
+.character-portrait-wide img { max-height:340px; }
+.character-sheet { margin-top:16px; }
+.character-sheet img { display:block; width:100%; height:auto; }
+.character-facts { margin:16px 0; }
+.character-facts > div { display:grid; grid-template-columns:108px minmax(0,1fr); gap:18px; padding:9px 0; border-bottom:1px solid var(--line); }
+.character-facts dt { font-weight:700; }
+.character-facts dd { margin:0; }
+@media (max-width:700px) {
+ .character-gallery-lead { grid-template-columns:1fr; gap:16px; }
+ .character-portrait { max-width:330px; }
+ .character-facts > div { grid-template-columns:88px minmax(0,1fr); gap:12px; }
+}

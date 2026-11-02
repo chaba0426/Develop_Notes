@@ -31,7 +31,15 @@
           <li><a href="#loop">ゲームループ</a></li>
           <li><a href="#shop">ショップ</a></li>
           <li><a href="#enemy">敵・制作順</a></li>
-          <li><a href="#world">キャラクター</a></li>
+          <li><a href="#world">キャラクター概要</a></li>
+        </ul>
+      </details>
+      <details class="wiki-nav-section" id="nav-characters" data-nav-pages="characters">
+        <summary class="wiki-category-heading">キャラクター</summary>
+        <ul class="wiki-nav-list">
+          <li><a href="#characters" data-page-link="characters">一覧</a></li>
+          <li><a href="#character-leir">リア</a></li>
+          <li><a href="#character-magic-minion">雑魚敵：魔法生物</a></li>
         </ul>
       </details>
       <details class="wiki-nav-section" id="nav-motion" data-nav-pages="motion-overview motion motion-wss motion-single shooting" open>
@@ -127,13 +135,54 @@
   <div class="compare" style="margin-top:12px"><div class="vs"><span class="pill green">初回プロトタイプ</span><strong>1部屋だけ</strong><div class="legend">雑魚1種 ＋ リアの弱/強 ＋ ステップ</div><div class="bar"><i style="width:40%"></i></div><p class="small muted">「集めて斬る」を何度も繰り返したくなるか検証。ショップやボスはまだ不要。</p></div><div class="vs"><span class="pill purple">後から広げる</span><strong>ローグライト化</strong><div class="legend">部屋目標 ＋ ショップ ＋ スキル成長</div><div class="bar"><i style="width:75%;background:#a898eb"></i></div><p class="small muted">基本戦闘 → ボス戦を確かめた後、周回の面白さを積み上げる。</p></div></div>
   <div class="note orange" style="margin-top:12px">拡張候補：雑魚を吹き飛ばしてボスへ衝突させる ／ 体勢崩し ／ ボスの雑魚召喚。いずれも<strong>基礎戦闘完成後</strong>に判断。</div>
 </section>
-<section class="section" id="world"><div class="heading"><div><h2>キャラクターと保留事項</h2></div></div>
+<section class="section" id="world"><div class="heading"><div><h2>キャラクターと保留事項</h2></div></div><p>立ち絵・キャラシ・雑魚敵のビジュアルは <a href="#characters">キャラクターページ</a> にまとめる。</p>
   <div class="char"><div class="character-profile"><h3>リア / Leir</h3><ul class="character-traits"><li>金髪の外ハネショートボブ、青い瞳。</li><li>ネイビーの短いジャケット、白シャツ、ダークグレーの短パン、茶色の編み上げブーツ。</li><li>片手剣を使う身軽な若い冒険者。</li></ul><ul class="character-traits"><li>女性寄りの中性的な造形 / 王道ファンタジー / 柔らかいアニメ調3D。</li><li>長髪・マントなど複雑な揺れ物は避ける。</li></ul><div class="row" style="margin-top:15px"><span class="pill">C++20</span><span class="pill">DirectX 12</span><span class="pill">Blender / Tripo</span><span class="pill orange">HestiaEngine 検討</span></div></div><div class="spec-panel"><h3>未決定 → プロトタイプで検証</h3><ul class="spec-list"><li><span>各攻撃の当たり判定・モーション</span><span class="pill orange">調整</span></li><li><span>前隙 / 無敵時間 / コンボ猶予</span><span class="pill orange">調整</span></li><li><span>同時出現数 / 増援ペース</span><span class="pill orange">調整</span></li><li><span>強化費用・抽選率・特殊スキル</span><span class="pill orange">設計</span></li><li><span>1ランの部屋数・プレイ時間</span><span class="pill orange">仮置き</span></li></ul></div></div>
 </section>
 
 
       </div><!-- /overview .wrap -->
       </div><!-- /overview -->
+
+<article class="wiki-page" id="characters" data-wiki-page="characters">
+ <div class="wrap">
+  <header class="wiki-page-header"><h1>キャラクター</h1><p>リアと基本雑魚の立ち絵・キャラクターシート。参考画像と確定仕様を分けて管理する。</p></header>
+  <section class="section" id="character-leir">
+   <div class="heading"><div><h2>リア / Leir</h2></div><span class="pill green">基本外見確定</span></div>
+   <div class="character-gallery-lead">
+    <figure class="character-portrait"><a href="../Assets/leir_portrait.webp" aria-label="リアの立ち絵を拡大"><img src="../Assets/leir_portrait.webp" alt="金髪と青い瞳、ネイビーの短いジャケットと白シャツ、片手剣を持つリアの立ち絵" loading="lazy" width="333" height="850"></a><figcaption>立ち絵（参考）</figcaption></figure>
+    <div><p>女性寄りで中性的な若い冒険者。俊敏な片手剣アクションを使う。</p>
+     <dl class="character-facts">
+      <div><dt>髪・目</dt><dd>金髪ショートボブ・青い瞳</dd></div>
+      <div><dt>服装</dt><dd>ネイビーの短丈ジャケット、白シャツ、ダークグレーの短パン、茶色い編み上げブーツ</dd></div>
+      <div><dt>武器</dt><dd>片手剣</dd></div>
+      <div><dt>雰囲気</dt><dd>柔らかなアニメ調3D。装飾や揺れ物は控えめ</dd></div>
+     </dl><p class="small">3D生成用の武器なしTポーズとは用途を分ける。</p>
+    </div>
+   </div>
+   <h3>キャラクターシート</h3>
+   <figure class="character-sheet"><a href="../Assets/leir.webp" aria-label="リアのキャラクターシートを開く"><img src="../Assets/leir.webp" alt="リアの正面、側面、背面、表情、衣装、装備、攻撃ポーズのキャラクターシート" loading="lazy" width="956" height="1000"></a><figcaption>正面・側面・背面／表情・衣装・装備の参考資料。</figcaption></figure>
+  </section>
+  <section class="section" id="character-magic-minion">
+   <div class="heading"><div><h2>雑魚敵：魔法生物</h2></div><span class="pill orange">デザイン仮ロック</span></div>
+   <div class="character-gallery-lead">
+    <figure class="character-portrait character-portrait-wide"><a href="../Assets/magic_minion_portrait.webp" aria-label="魔法生物の立ち絵を拡大"><img src="../Assets/magic_minion_portrait.webp" alt="赤みのある灰色の滑らかな本体と朱色の魔力紋様、鋭い目、浮遊する爪を持つ口のない魔法生物" loading="lazy" width="650" height="496"></a><figcaption>通常個体（参考）</figcaption></figure>
+    <div><p>魔力が凝縮して生まれた意思ある下級魔物。大群で出現する。</p>
+     <dl class="character-facts">
+      <div><dt>構造</dt><dd>本体1＋浮遊する爪2。口・足はなし</dd></div>
+      <div><dt>造形</dt><dd>鋭い外形、滑らかな内部曲面。岩肌・装甲の稜線を避ける</dd></div>
+      <div><dt>通常個体</dt><dd>赤みのある灰色、朱色紋様。目・紋様だけ局所発光</dd></div>
+      <div><dt>侵食個体</dt><dd>同じモデルの紫系リカラー＋局所発光</dd></div>
+      <div><dt>質感</dt><dd>不透明の魔力外皮。流線＋波紋のNormal Mapを試す。リムライトなし</dd></div>
+      <div><dt>アニメ</dt><dd>本体と爪のTransformによる簡易モーション</dd></div>
+     </dl>
+     <p class="small">敵AI・被弾・衝突は <a href="#enemy">敵・制作順</a>、正本のDesign/Enemies.mdを参照。</p>
+    </div>
+   </div>
+   <h3>デザインシート</h3>
+   <figure class="character-sheet"><a href="../Assets/magic_minion.webp" aria-label="魔法生物のキャラクターシートを開く"><img src="../Assets/magic_minion.webp" alt="魔法生物の三面図、表情、通常・侵食個体、ノーマルマップ、基本モーションのデザインシート" loading="lazy" width="1200" height="800"></a><figcaption>三面図・表情・個体差・質感・モーションの参考ラフ。実機の完成表現とは異なる。</figcaption></figure>
+  </section>
+ </div>
+</article>
 <article class="wiki-page" id="motion-overview" data-wiki-page="motion-overview">
         <div class="wrap">
           <header class="wiki-page-header">

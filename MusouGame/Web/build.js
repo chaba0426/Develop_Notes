@@ -26,6 +26,18 @@ function generate() {
   assert.ok(!js.toLowerCase().includes("</script"), "Closing script tag inside JS");
   let html = replaceOnce(source, cssMarker, "<style>\n" + css + "</style>");
   html = replaceOnce(html, jsMarker, "<script>\n" + js + "</script>");
+  // Reference WebP images remain separate in the editor source but are embedded
+  // into the generated single-file HTML for reliable offline viewing.
+  const assetPattern = /((?:src|href)=")\.\.\/Assets\/([a-z0-9_-]+\.webp)"/gi;
+  const cache = new Map();
+  html = html.replace(assetPattern, (_, attr, fileName) => {
+    if (!cache.has(fileName)) {
+      const imagePath = path.resolve(web, "..", "Assets", fileName);
+      cache.set(fileName, "data:image/webp;base64," + fs.readFileSync(imagePath).toString("base64"));
+    }
+    return attr + cache.get(fileName) + '"';
+  });
+  assert.ok(!html.includes("../Assets/"), "Unbundled asset path");
   assert.ok(html.includes("</html>"), "Missing closing HTML tag");
   return html;
 }
