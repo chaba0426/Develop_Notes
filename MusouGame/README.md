@@ -23,7 +23,8 @@
 | 攻撃モーションの撮影用チェックシート | [Design/AttackMotion_ShootingChecklist.md](Design/AttackMotion_ShootingChecklist.md) |
 | 雑魚・ボス・中ボス、敵AI、拡張案 | [Design/Enemies.md](Design/Enemies.md) |
 | 部屋、クリア条件、通貨、ショップ、成長 | [Design/Roguelite.md](Design/Roguelite.md) |
-| 草原ステージの景観・地形・配置・Blender→FBX/JSON制作方針 | [Design/Stage_Grassland.md](Design/Stage_Grassland.md) |
+| ステージ共通制作仕様（Blender、FBX＋JSON、マテリアル、シェーダー、コリジョン） | [Design/Stage_Common.md](Design/Stage_Common.md) |
+| 草原ステージ固有要件（景観、地形、川、道、植生） | [Design/Stage_Grassland.md](Design/Stage_Grassland.md) |
 
 ## ステータスの読み方
 
@@ -36,7 +37,7 @@
 
 1部屋・雑魚敵1種・リアの弱/強攻撃とステップで、「集めて斬り払う」を繰り返したくなるか。ショップ・ボス・ローグライト要素は初回プロトタイプには含めない。
 
-最終更新: 2026-11-03。実装値（フレーム数、倍率、価格など）は特記がなければ未確定。
+最終更新: 2026-11-05。実装値（フレーム数、倍率、価格など）は特記がなければ未確定。
 
 ## テンプレートへの情報の追加
 
