@@ -23,6 +23,7 @@
 | 攻撃モーションの撮影用チェックシート | [Design/AttackMotion_ShootingChecklist.md](Design/AttackMotion_ShootingChecklist.md) |
 | 雑魚・ボス・中ボス、敵AI、拡張案 | [Design/Enemies.md](Design/Enemies.md) |
 | 部屋、クリア条件、通貨、ショップ、成長 | [Design/Roguelite.md](Design/Roguelite.md) |
+| 草原ステージの景観・地形・配置・Blender→FBX/JSON制作方針 | [Design/Stage_Grassland.md](Design/Stage_Grassland.md) |
 
 ## ステータスの読み方
 
