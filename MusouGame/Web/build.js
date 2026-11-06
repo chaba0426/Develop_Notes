@@ -26,6 +26,8 @@ function generate() {
   assert.ok(!js.toLowerCase().includes("</script"), "Closing script tag inside JS");
   let html = replaceOnce(source, cssMarker, "<style>\n" + css + "</style>");
   html = replaceOnce(html, jsMarker, "<script>\n" + js + "</script>");
+  // The editor source is inside Web/, while the generated HTML is in MusouGame/.
+  html = replaceOnce(html, 'href="../../index.html" data-wiki-home', 'href="../index.html" data-wiki-home');
   // Reference WebP images remain separate in the editor source but are embedded
   // into the generated single-file HTML for reliable offline viewing.
   const assetPattern = /((?:src|href)=")\.\.\/Assets\/([a-z0-9_-]+\.webp)"/gi;
