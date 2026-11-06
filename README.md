@@ -1,17 +1,34 @@
-# Develop_Notes
+# Develop Notes
 
-開発中の設計メモ・技術ノートを置くためのPrivate Repository。
+HestiaEngineとLEIRの設計資料・開発ノートをまとめたリポジトリです。
 
-## HestiaEngine Design
+- **開発Wiki トップページ**: [index.html](index.html)
+- **GitHub Pages**（公開設定後）: https://chaba0426.github.io/Develop_Notes/
 
-- [Subsystem / Boundary API / Game Facade Design](HestiaDesign/SubsystemApiFacadeDesign.md)
+## HestiaEngine
 
-今後、HestiaEngine関連の設計資料は `HestiaDesign/` にまとめる。
+C++製ゲームエンジンの設計資料です。
 
-## Musou Game / LEIR
+- [設計方針](HestiaDesign/ClassDesign.md)
+- [Subsystem / Boundary API / Game Facade](HestiaDesign/SubsystemApiFacadeDesign.md)
+- [命名規則](HestiaDesign/NamingConvention.md)
+- [クラス設計資料](HestiaDesign/Class/)
 
+現在はMarkdownをGitHub上で閲覧します。必要に応じて専用のHTML Wikiへ拡張します。
+
+## LEIR / 無双アクション
+
+3Dアクションゲームの企画・仕様資料です。
+
+- [開発Wiki（ブラウザ閲覧）](MusouGame/index.html)
 - [設計資料の索引（AI・開発者向け）](MusouGame/README.md)
-- [開発Wiki（企画・仕様のブラウザ閲覧）](MusouGame/index.html)
-- [表示テンプレート・情報整理のルール](MusouGame/DESIGN.md)
+- [設計Markdown](MusouGame/Design/)
+- [表示テンプレート・情報整理ルール](MusouGame/DESIGN.md)
 
-LEIRの資料は、既存のHTMLテンプレートを共通の器として使い、仕様を蓄積・参照する開発Wikiとして運用する。仕様の正本は `MusouGame/Design/*.md`、資料の入口と更新手順は `MusouGame/README.md`。
+LEIRでは `MusouGame/Design/*.md` を仕様の正本として管理し、`MusouGame/index.html` を閲覧用に同期します。編集元と生成手順は [MusouGame/README.md](MusouGame/README.md) を参照してください。
+
+## GitHub Pages
+
+`main` ブランチの `/(root)` をGitHub Pagesの公開元にすると、ルートの `index.html` がサイトの入口になります。既存の `MusouGame/index.html` はサブページとしてそのまま利用できます。
+
+公開時は、設計資料だけでなくリポジトリのGit履歴も公開対象になるため、公開前に内容を確認してください。

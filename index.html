@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8fa">
+  <meta name="description" content="HestiaEngineとLEIRの設計・仕様をまとめた開発Wiki。ゲームエンジンの設計資料と3Dアクションゲームの企画・制作ノート。">
+  <title>Develop Notes — 開発Wiki</title>
+  <style>
+    :root{color-scheme:light;--bg:#f7f8fa;--surface:#fff;--ink:#202937;--muted:#657182;--line:#e2e6ec;--nav:#f4f6f9;--blue:#2766a7;--blue-soft:#ecf4fc;--shadow:0 7px 27px rgba(25,43,66,.04)}
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:30px}
+    body{margin:0;color:var(--ink);background:var(--bg);font:15px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif}
+    a{color:var(--blue);text-decoration:none}
+    a:hover{text-decoration:underline}
+    a:focus-visible,summary:focus-visible{outline:3px solid #5ba0d8;outline-offset:3px;border-radius:3px}
+    .skip{position:absolute;left:-9999px;top:8px;z-index:100;background:#fff;padding:7px 12px}
+    .skip:focus{left:10px}
+    .sidebar{position:fixed;inset:0 auto 0 0;width:256px;overflow:auto;background:var(--nav);border-right:1px solid var(--line);padding:32px 22px}
+    .brand{display:flex;align-items:center;gap:12px;margin-bottom:38px;color:var(--ink)}
+    .brand:hover{text-decoration:none}
+    .logo{display:grid;place-items:center;width:36px;height:36px;border-radius:11px;background:#2b5d8b;color:white;font-weight:800;font-size:18px}
+    .brand-text{font-size:18px;font-weight:800;letter-spacing:-.025em}
+    .brand-text small{display:block;font-weight:500;font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;line-height:1.4}
+    .nav-label{margin:24px 0 9px;padding-left:10px;color:#7a8695;font-weight:700;font-size:11px;letter-spacing:.12em}
+    .nav-link{display:block;padding:9px 10px;color:#495a6e;border-radius:8px;font-size:14px;font-weight:550}
+    .nav-link:hover{background:#e8edf4;color:#1e3d62;text-decoration:none}
+    .sidebar-bottom{margin-top:36px;padding:16px 10px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+    .sidebar-bottom a{display:block;margin-top:9px}
+    .mobile-head{display:none}
+    .main{margin-left:256px;min-width:0}
+    .container{width:min(1100px,100%);margin:0 auto;padding:0 54px 80px}
+    .hero{padding:76px 0 49px;border-bottom:1px solid var(--line)}
+    .eyebrow{font-size:12px;letter-spacing:.15em;font-weight:800;color:#52779b;text-transform:uppercase}
+    h1{margin:12px 0 16px;font-size:clamp(34px,4vw,54px);font-weight:800;line-height:1.27;letter-spacing:-.06em}
+    .lead{max-width:720px;margin:0;color:#59687b;font-size:16px;line-height:1.95}
+    .hero-meta{display:flex;gap:22px;flex-wrap:wrap;margin-top:28px;color:var(--muted);font-size:13px}
+    .hero-meta strong{color:var(--ink);font-weight:750}
+    .intro{padding:33px 0 16px;color:var(--muted)}
+    .section{padding:37px 0 45px;border-bottom:1px solid var(--line)}
+    .section-head{display:flex;gap:18px;align-items:center;justify-content:space-between;margin-bottom:17px}
+    .section-kicker{color:#5c87b5;font-weight:800;letter-spacing:.13em;font-size:11px}
+    h2{font-size:29px;letter-spacing:-.04em;line-height:1.4;margin:3px 0 0}
+    .section-desc{margin:0 0 24px;color:var(--muted);max-width:730px}
+    .section-action{flex-shrink:0;border:1px solid #cfd9e5;padding:9px 16px;border-radius:9px;font-weight:700;font-size:13px;background:white}
+    .section-action:hover{background:var(--blue-soft);text-decoration:none;border-color:#b2cce2}
+    .project-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:22px 0 30px}
+    .fact{background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:15px 18px;box-shadow:var(--shadow)}
+    .fact b{display:block;font-size:13px;margin-bottom:5px}
+    .fact span{font-size:13px;color:var(--muted)}
+    .group-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+    .doc-group{background:var(--surface);border:1px solid var(--line);border-radius:13px;overflow:hidden;box-shadow:var(--shadow)}
+    .doc-group h3{font-size:15px;margin:0;padding:18px 20px 14px;border-bottom:1px solid var(--line)}
+    .doc-list{list-style:none;margin:0;padding:4px 0}
+    .doc-list li+li{border-top:1px solid #f0f2f5}
+    .doc-list a{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 20px;color:#384e65;font-size:14px}
+    .doc-list a:hover{background:#f5f9fd;text-decoration:none;color:var(--blue)}
+    .doc-list a::after{content:"↗";font-size:15px;color:#98a6b7}
+    .hint{font-size:12px;color:var(--muted);margin:17px 0 0}
+    .guide{padding:38px 0 0}
+    .guide h2{font-size:22px;margin-bottom:13px}
+    .guide p{color:var(--muted);max-width:780px}
+    code{padding:2px 5px;background:#e9edf4;border-radius:4px;font-size:.91em;color:#354b66}
+    footer{margin-top:45px;padding-top:21px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12px;color:#7c8795}
+    @media(max-width:1050px){.container{padding-left:34px;padding-right:34px}.project-summary{grid-template-columns:1fr}}
+    @media(max-width:760px){
+      .sidebar{display:none}.main{margin:0}
+      .mobile-head{position:sticky;top:0;display:block;z-index:20;background:rgba(248,249,251,.97);border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}
+      .mobile-head .topline{display:flex;align-items:center;justify-content:space-between;padding:12px 18px}
+      .mobile-head .topbrand{font-weight:800;color:var(--ink);font-size:17px}
+      .mobile-head summary{list-style:none;cursor:pointer;background:white;border:1px solid var(--line);border-radius:7px;padding:4px 11px;font-weight:700;color:#42566f;font-size:13px}
+      .mobile-head summary::-webkit-details-marker{display:none}
+      .mobile-links{padding:0 18px 14px;display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+      .mobile-links a{display:block;padding:9px;background:white;border:1px solid var(--line);border-radius:7px;font-size:13px}
+      .container{padding:0 20px 45px}.hero{padding:43px 0 34px}.lead{font-size:14px}
+      .section{padding:29px 0 35px}.section-head{align-items:flex-start;flex-direction:column;gap:12px}
+      .group-grid{grid-template-columns:1fr;gap:13px}
+      .project-summary{gap:8px}.fact{padding:12px 15px}
+      .doc-group h3{padding:15px 16px 11px}.doc-list a{padding:10px 16px}
+      footer{margin-top:30px}
+    }
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  </style>
+</head>
+<body>
+<a class="skip" href="#main">本文へスキップ</a>
+<aside class="sidebar" aria-label="開発Wiki ナビゲーション">
+  <a class="brand" href="#top"><span class="logo">D</span><span class="brand-text">Develop Notes<small>Development Wiki</small></span></a>
+  <nav>
+    <div class="nav-label">INDEX</div>
+    <a class="nav-link" href="#top">トップ</a>
+    <a class="nav-link" href="#hestia">HestiaEngine</a>
+    <a class="nav-link" href="#leir">LEIR / 無双アクション</a>
+    <div class="nav-label">GUIDE</div>
+    <a class="nav-link" href="#documents">資料の読み方</a>
+    <a class="nav-link" href="https://github.com/chaba0426/Develop_Notes">GitHub リポジトリ ↗</a>
+  </nav>
+  <div class="sidebar-bottom">ゲーム開発の設計・仕様をまとめた個人Wiki。<a href="./MusouGame/index.html">LEIR 開発Wikiを開く ↗</a></div>
+</aside>
+<header class="mobile-head">
+  <div class="topline"><a class="topbrand" href="#top">Develop Notes</a><details><summary>メニュー ☰</summary><nav class="mobile-links" aria-label="モバイルナビゲーション"><a href="#hestia">HestiaEngine</a><a href="#leir">LEIR</a><a href="#documents">資料の読み方</a><a href="https://github.com/chaba0426/Develop_Notes">GitHub</a></nav></details></div>
+</header>
+<div class="main">
+<main class="container" id="main">
+  <section class="hero" id="top" aria-labelledby="site-title">
+    <div class="eyebrow">Development wiki / design notes</div>
+    <h1 id="site-title">設計と実装の記録。</h1>
+    <p class="lead">ゲームエンジン <strong>HestiaEngine</strong> と、3Dアクションゲーム <strong>LEIR</strong> の開発資料をまとめたWiki。設計意図・仕様・制作方針を、プロジェクトごとに整理しています。</p>
+    <div class="hero-meta"><span><strong>02</strong> Projects</span><span>技術設計 / ゲーム仕様</span><span>Markdownを正本として管理</span></div>
+  </section>
+
+  <p class="intro">プロジェクトを選ぶと、設計資料や開発Wikiにアクセスできます。公開用の閲覧ページと、編集・AI参照用のMarkdownは分けて管理しています。</p>
+
+  <section class="section" id="hestia" aria-labelledby="hestia-title">
+    <div class="section-head"><div><div class="section-kicker">PROJECT 01 / GAME ENGINE</div><h2 id="hestia-title">HestiaEngine</h2></div><a class="section-action" href="https://github.com/chaba0426/Develop_Notes/tree/main/HestiaDesign">設計資料を開く ↗</a></div>
+    <p class="section-desc">C++による自作ゲームエンジンの設計ノート。エンジン全体の責務、API境界、クラス構成、アセットとマテリアルの扱いを整理しています。現在の資料はGitHub上のMarkdownで閲覧できます。</p>
+    <div class="project-summary" aria-label="主な設計領域">
+      <div class="fact"><b>アーキテクチャ</b><span>Application / Engine / サブシステム</span></div>
+      <div class="fact"><b>アセット</b><span>AssetSystem / AssetType</span></div>
+      <div class="fact"><b>マテリアル</b><span>Material / MaterialShader</span></div>
+    </div>
+    <div class="group-grid">
+      <div class="doc-group">
+        <h3>設計方針・全体構成</h3>
+        <ul class="doc-list">
+          <li><a href="https://github.com/chaba0426/Develop_Notes/blob/main/HestiaDesign/ClassDesign.md">クラス設計方針</a></li>
+          <li><a href="https://github.com/chaba0426/Develop_Notes/blob/main/HestiaDesign/SubsystemApiFacadeDesign.md">Subsystem / API / Facade設計</a></li>
+          <li><a href="https://github.com/chaba0426/Develop_Notes/blob/main/HestiaDesign/NamingConvention.md">命名規則</a></li>
+        </ul>
+      </div>
+      <div class="doc-group">
+        <h3>基本クラス</h3>
+        <ul class="doc-list">
+          <li><a href="https://github.com/chaba0426/Develop_Notes/blob/main/HestiaDesign/Class/Application.md">Application</a></li>
+          <li><a href="https://github.com/chaba0426/Develop_Notes/blob/main/HestiaDesign/Class/Engine.md">Engine</a></li>
+          <li><a href="https://github.com/chaba0426/Develop_Notes/blob/main/HestiaDesign/Class/Time.md">Time</a></li>
+        </ul>
+      </div>
+      <div class="doc-group">
+        <h3>アセット管理</h3>
+        <ul class="doc-list">
+          <li><a href="https://github.com/chaba0426/Develop_Notes/blob/main/HestiaDesign/Class/AssetSystem.md">AssetSystem</a></li>
+          <li><a href="https://github.com/chaba0426/Develop_Notes/blob/main/HestiaDesign/Class/AssetType.md">AssetType</a></li>
+        </ul>
+      </div>
+      <div class="doc-group">
+        <h3>描画リソース</h3>
+        <ul class="doc-list">
+          <li><a href="https://github.com/chaba0426/Develop_Notes/blob/main/HestiaDesign/Class/Material.md">Material</a></li>
+          <li><a href="https://github.com/chaba0426/Develop_Notes/blob/main/HestiaDesign/Class/MaterialShader.md">MaterialShader</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="leir" aria-labelledby="leir-title">
+    <div class="section-head"><div><div class="section-kicker">PROJECT 02 / 3D ACTION GAME</div><h2 id="leir-title">LEIR — 無双アクション</h2></div><a class="section-action" href="./MusouGame/index.html">開発Wikiを開く ↗</a></div>
+    <p class="section-desc">多数の敵を集めて斬り払う爽快感を中心にした、部屋攻略型3Dアクション。ゲームループ、キャラクター、攻撃モーション、敵AI、ステージ制作などをまとめています。ブラウザで読める専用Wikiがあります。</p>
+    <div class="project-summary" aria-label="主な開発要素">
+      <div class="fact"><b>戦闘</b><span>コンボ / ステップ / リアクション</span></div>
+      <div class="fact"><b>キャラクター</b><span>主人公リア / エネミー設計</span></div>
+      <div class="fact"><b>ステージ</b><span>草原 / 遺跡 / アセット配置</span></div>
+    </div>
+    <div class="group-grid">
+      <div class="doc-group">
+        <h3>開発Wiki / ゲームデザイン</h3>
+        <ul class="doc-list">
+          <li><a href="./MusouGame/index.html#overview">ゲーム概要</a></li>
+          <li><a href="./MusouGame/index.html#combo">コンボ・戦闘設計</a></li>
+          <li><a href="./MusouGame/index.html#characters">キャラクター</a></li>
+          <li><a href="./MusouGame/index.html#motion-overview">攻撃モーション概要</a></li>
+          <li><a href="./MusouGame/index.html#motion">弱 → 弱 → 強</a></li>
+          <li><a href="./MusouGame/index.html#motion-wss">弱 → 強 → 強</a></li>
+        </ul>
+      </div>
+      <div class="doc-group">
+        <h3>設計の正本 / Markdown</h3>
+        <ul class="doc-list">
+          <li><a href="https://github.com/chaba0426/Develop_Notes/blob/main/MusouGame/README.md">全仕様の索引</a></li>
+          <li><a href="https://github.com/chaba0426/Develop_Notes/blob/main/MusouGame/Design/Stage_Common.md">ステージ共通仕様</a></li>
+          <li><a href="https://github.com/chaba0426/Develop_Notes/blob/main/MusouGame/Design/Stage_Grassland.md">草原ステージ</a></li>
+          <li><a href="https://github.com/chaba0426/Develop_Notes/blob/main/MusouGame/Design/Stage_Ruins.md">遺跡ステージ</a></li>
+          <li><a href="https://github.com/chaba0426/Develop_Notes/blob/main/MusouGame/Design/Enemies.md">敵AI・敵キャラクター</a></li>
+          <li><a href="https://github.com/chaba0426/Develop_Notes/blob/main/MusouGame/DESIGN.md">Wikiの表示・更新ルール</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="hint">LEIRのWikiは <code>MusouGame/index.html</code>、仕様の正本は <code>MusouGame/Design/*.md</code> です。</p>
+  </section>
+
+  <section class="guide" id="documents" aria-labelledby="guide-title">
+    <h2 id="guide-title">資料の読み方</h2>
+    <p>技術や仕様の記述はMarkdownを正本として管理し、HTMLは閲覧しやすく整理した表示用の資料です。実装・設計の判断時には、各プロジェクトの最新のMarkdownとリポジトリを参照してください。</p>
+  </section>
+  <footer><span>Develop Notes / Personal Development Wiki</span><a href="https://github.com/chaba0426/Develop_Notes">View on GitHub ↗</a></footer>
+</main>
+</div>
+</body>
+</html>
